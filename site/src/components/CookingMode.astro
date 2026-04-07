@@ -433,15 +433,35 @@ const i18nJson = JSON.stringify(i18nStrings);
       const label = document.createElement('label');
       label.className = 'cm-ing-label';
 
+      // Native checkbox (visually hidden, functionally active)
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.className = 'cm-ing-checkbox';
       checkbox.id = `cm-ing-${idx}`;
 
+      // Custom visual checkbox
+      const checkVis = document.createElement('span');
+      checkVis.className = 'cm-ing-check-vis';
+      checkVis.innerHTML = `<svg class="cm-check-icon" viewBox="0 0 12 10" fill="none">
+        <polyline points="1,5 4.5,9 11,1" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+
+      // Name + note column
+      const nameWrap = document.createElement('div');
+      nameWrap.className = 'cm-ing-name-wrap';
       const nameSpan = document.createElement('span');
       nameSpan.className = 'cm-ing-name';
       nameSpan.textContent = ing.name;
+      nameWrap.appendChild(nameSpan);
+      if (ing.note) {
+        const noteSpan = document.createElement('span');
+        noteSpan.className = 'cm-ing-prep-note';
+        noteSpan.textContent = ing.note;
+        nameWrap.appendChild(noteSpan);
+      }
 
+      // Amount pill
       const amtSpan = document.createElement('span');
       amtSpan.className = 'cm-ing-amount';
       amtSpan.textContent = getScaledAmount(ing);
@@ -458,7 +478,8 @@ const i18nJson = JSON.stringify(i18nStrings);
       });
 
       label.appendChild(checkbox);
-      label.appendChild(nameSpan);
+      label.appendChild(checkVis);
+      label.appendChild(nameWrap);
       label.appendChild(amtSpan);
       li.appendChild(label);
       ingredientList.appendChild(li);
@@ -469,7 +490,13 @@ const i18nJson = JSON.stringify(i18nStrings);
 
   function updatePrepProgress() {
     const total = ingredients.length;
-    prepProgress.innerHTML = `${checkedCount} / ${total} <span id="cm-prep-ready-label">${T.prepReady}</span>`;
+    const pct = total > 0 ? (checkedCount / total) * 100 : 0;
+    prepProgress.innerHTML = `
+      <div class="cm-prep-progress-row">
+        <span class="cm-prep-count">${checkedCount} <span class="cm-prep-sep">/</span> ${total}</span>
+        <span class="cm-prep-label">${T.prepReady}</span>
+      </div>
+      <div class="cm-prep-bar-wrap"><div class="cm-prep-bar" style="width:${pct}%"></div></div>`;
     const allDone = checkedCount === total && total > 0;
     startCookBtn.classList.toggle('cm-btn-glow', allDone);
   }
@@ -840,83 +867,196 @@ const i18nJson = JSON.stringify(i18nStrings);
   margin: 0 auto;
 }
 
+/* ── Prep progress bar ───────────────────────────────────────────── */
 .cm-prep-progress {
-  font-size: 1rem;
-  color: var(--accent);
-  font-weight: 700;
   margin-bottom: 20px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  letter-spacing: 0.04em;
 }
 
+.cm-prep-progress-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cm-prep-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+
+.cm-prep-sep {
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0 4px;
+}
+
+.cm-prep-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cm-prep-bar-wrap {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cm-prep-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Ingredient list ─────────────────────────────────────────────── */
 .cm-ingredient-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .cm-ingredient-item {
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s;
-}
-
-.cm-ingredient-item:last-child {
-  border-bottom: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  transition: border-color 0.25s, background 0.25s, transform 0.2s, opacity 0.3s;
+  overflow: hidden;
 }
 
 .cm-ingredient-item.cm-ing-checked {
   background: rgba(63, 185, 80, 0.06);
+  border-color: rgba(63, 185, 80, 0.35);
+  opacity: 0.65;
 }
 
 .cm-ing-label {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 14px 16px;
   cursor: pointer;
-  min-height: 48px;
+  min-height: 52px;
+  user-select: none;
 }
 
 .cm-ing-label:hover {
-  background: var(--bg-elevated);
+  background: rgba(255,255,255,0.03);
 }
 
+/* Native checkbox hidden — click still works via label */
 .cm-ing-checkbox {
-  width: 18px;
-  height: 18px;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Custom checkbox visual */
+@keyframes cm-check-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.cm-ing-check-vis {
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
-  cursor: pointer;
-  accent-color: var(--accent);
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+
+.cm-ing-checked .cm-ing-check-vis {
+  background: var(--green);
+  border-color: var(--green);
+  animation: cm-check-pop 0.3s ease forwards;
+}
+
+.cm-check-icon {
+  width: 12px;
+  height: 10px;
+  color: #0d1117;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.15s ease 0.05s, transform 0.2s ease 0.05s;
+}
+
+.cm-ing-checked .cm-check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Name + note column */
+.cm-ing-name-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .cm-ing-name {
-  flex: 1;
   color: var(--text);
   font-size: 0.95rem;
-  transition: color 0.2s, text-decoration 0.2s;
+  font-weight: 600;
+  transition: color 0.25s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cm-ing-checked .cm-ing-name {
   color: var(--text-muted);
   text-decoration: line-through;
+  text-decoration-color: var(--green);
 }
 
+.cm-ing-prep-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Amount pill */
 .cm-ing-amount {
-  color: var(--accent);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   white-space: nowrap;
   flex-shrink: 0;
+  color: var(--accent);
+  background: rgba(230, 168, 23, 0.1);
+  border: 1px solid rgba(230, 168, 23, 0.25);
+  padding: 3px 10px;
+  border-radius: 12px;
+  transition: color 0.25s, background 0.25s, border-color 0.25s;
 }
 
 .cm-ing-checked .cm-ing-amount {
   color: var(--text-muted);
+  background: transparent;
+  border-color: var(--border);
 }
 
 /* ── Footer ──────────────────────────────────────────────────────── */
