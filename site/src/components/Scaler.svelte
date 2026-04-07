@@ -49,6 +49,29 @@
     return `${fmt(raw)}${ing.unit}`;
   }
 
+  // ── Prose dynamic amounts ────────────────────────────────────────
+  function updateProseAmts(sv: number) {
+    if (typeof document === 'undefined') return;
+    const m = baseServings > 0 ? sv / baseServings : 0;
+    document.querySelectorAll<HTMLElement>('.dyn-amt').forEach(span => {
+      const base = parseFloat(span.dataset.base ?? '0');
+      const unit = decodeURIComponent(span.dataset.unit ?? '');
+      const scale = span.dataset.scale ?? 'linear';
+      if (scale === 'to_taste' || scale === 'fixed' || isNaN(base)) return;
+      const raw = base * m;
+      let display: string;
+      if (scale === 'discrete') {
+        const snapped = Math.max(0.5, Math.round(raw * 2) / 2);
+        const w = Math.floor(snapped);
+        display = snapped === w ? String(w) : (w === 0 ? '½' : `${w}½`);
+      } else {
+        display = fmt(raw);
+      }
+      span.textContent = display + unit;
+    });
+  }
+  $: updateProseAmts(servings);
+
   // ── Easter egg ───────────────────────────────────────────────────
   function getEaster(v: number, isNaN_: boolean, isInf: boolean): string | null {
     for (const [trigger, msg] of i18n.easter) {

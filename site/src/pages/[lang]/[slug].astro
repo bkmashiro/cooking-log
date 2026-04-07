@@ -43,11 +43,13 @@ const cleaned = prose
   .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')
   .replace(/^\s*---\s*$/m, '')
   .replace(/<!--\s*SCALED_TABLE:START[\s\S]*?SCALED_TABLE:END\s*-->/g, '')
-  // Replace {{N}} ingredient refs with base amounts for the static prose view
+  // Replace {{N}} ingredient refs with dynamic-amount spans (updated by Scaler.svelte)
   .replace(/\{\{(\d+)\}\}/g, (_, i) => {
     const ing = ingredientData[parseInt(i)];
     if (!ing) return '';
-    return ing.amount != null ? `${ing.amount}${ing.unit}` : '';
+    if (ing.amount == null) return `<span class="dyn-amt" data-scale="to_taste">${ing.unit || ''}</span>`;
+    const unit = encodeURIComponent(ing.unit);
+    return `<span class="dyn-amt" data-base="${ing.amount}" data-unit="${unit}" data-scale="${ing.scale}">${ing.amount}${ing.unit}</span>`;
   })
   .trimStart();
 const htmlContent = marked.parse(cleaned) as string;
