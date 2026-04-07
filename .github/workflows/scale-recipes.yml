@@ -1,0 +1,82 @@
+name: 🧮 Scale Recipe Ingredients
+
+on:
+  push:
+    paths:
+      - 'dishes/**.md'
+  workflow_dispatch:
+    inputs:
+      all:
+        description: 'Regenerate all dishes (backfill)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  scale:
+    name: Compute ingredient quantities across all serving sizes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Install PyYAML
+        run: pip install pyyaml --quiet
+
+      - name: 🔍 Determine which files to process
+        id: files
+        run: |
+          if [[ "${{ inputs.all }}" == "true" ]]; then
+            echo "args=--all" >> $GITHUB_OUTPUT
+          else
+            # Get dish .md files changed in this push
+            CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'dishes/*.md' 2>/dev/null | tr '\n' ' ')
+            if [ -z "$CHANGED" ]; then
+              echo "No dish files changed, trying --all as fallback"
+              echo "args=--all" >> $GITHUB_OUTPUT
+            else
+              echo "args=$CHANGED" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: 🧮 Generate scaled tables
+        run: |
+          python .github/scripts/scale_ingredients.py ${{ steps.files.outputs.args }}
+
+      - name: 🔎 Check for changes
+        id: diff
+        run: |
+          git diff --quiet dishes/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: 💾 Commit generated tables
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dishes/
+          git commit -m "📐 auto-scale: regenerate ingredient tables
+
+          Triggered by: ${{ github.event_name }}
+          Processed: ${{ steps.files.outputs.args }}"
+          git push
+
+      - name: 📊 Summary
+        run: |
+          TOTAL=$(ls dishes/*.md 2>/dev/null | wc -l | tr -d ' ')
+          echo "### 🧮 Scaling complete" >> $GITHUB_STEP_SUMMARY
+          echo "**Total dishes in codex:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ steps.diff.outputs.changed }}" == "true" ]]; then
+            echo "**Tables updated:** ✅ committed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Tables updated:** no changes needed" >> $GITHUB_STEP_SUMMARY
+          fi
