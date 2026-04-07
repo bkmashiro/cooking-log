@@ -55,6 +55,12 @@ dishes/
 
 ---
 
+## ウェブサイト
+
+🌐 **[wok.yuzhes.com](https://wok.yuzhes.com)** — 中国語 / English / 日本語 対応
+
+---
+
 ## メトリクス
 
 - **記録済み料理数：** 増加中

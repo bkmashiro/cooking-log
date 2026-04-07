@@ -55,6 +55,12 @@ dishes/
 
 ---
 
+## 网站
+
+🌐 **[wok.yuzhes.com](https://wok.yuzhes.com)** — 在线版本，支持中文 / English / 日本語
+
+---
+
 ## 指标
 
 - **已记录菜品：** 持续增长

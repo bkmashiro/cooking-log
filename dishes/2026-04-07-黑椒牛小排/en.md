@@ -57,4 +57,9 @@
 
 ## Feedback
 
-> *(to be filled in)*
+**2026-04-07 — First attempt**
+
+- ✅ Overall success — **a pinch of sugar in the sauce** makes a noticeable difference
+- 🫙 Used **Lee Kum Kee black pepper sauce** as the base, with garlic and red onion, finished with a light starch slurry — worked great
+- 🔥 Induction hob makes browning harder — recommend **air-drying the meat overnight in the fridge**, then searing with minimal oil (also reduces splatter); crust forms much more easily
+- 🔪 **Remove the silverskin/sinew** before cooking — it becomes very tough and chewy if left on
