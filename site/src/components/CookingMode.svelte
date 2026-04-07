@@ -303,10 +303,11 @@
   }
   // scalerServings param ensures reactive re-render when servings change
   function renderStep(text: string, _sv: number): string {
-    // 1. {{食材名}} → scaled amount (backward-compat: no-op if none present)
-    let out = text.replace(/\{\{([^}]+)\}\}/g, (_, name) => {
-      const ing = ingredients.find(i => i.name === name.trim());
-      if (!ing) return `<span class="cm-step-ing-missing">{{${name}}}</span>`;
+    // 1. {{N}} → scaled amount for ingredient at index N in recipe.yaml
+    //    Language-neutral: same index works in zh/en/ja step files
+    let out = text.replace(/\{\{(\d+)\}\}/g, (_, idx) => {
+      const ing = ingredients[parseInt(idx)];
+      if (!ing) return `<span class="cm-step-ing-missing">{{${idx}}}</span>`;
       const p = scaleAmtParts(ing);
       return `<span class="cm-step-ing">${p.num}${p.unit ? `<small>${p.unit}</small>` : ''}</span>`;
     });
