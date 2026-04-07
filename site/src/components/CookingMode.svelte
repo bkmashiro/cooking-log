@@ -451,7 +451,7 @@
               style={stepStyles[idx]}
             >
               <span class="cm-step-num">{idx + 1}</span>
-              <div class="cm-step-text">{@html renderStep(step, scalerServings)}</div>
+              <div class="cm-step-text">{@html renderStep(step, $servingsStore)}</div>
             </div>
           {/each}
         </div>
