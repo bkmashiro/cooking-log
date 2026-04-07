@@ -15,7 +15,8 @@
 | Ingredient | ¼x<br/>(½ serving) | ½x<br/>(1 serving) | 1x<br/>(2 servings✦) | 1½x<br/>(3 servings) | 2x<br/>(4 servings) | 2½x<br/>(5 servings) |
 |:---|---:|---:|---:|---:|---:|---:|
 | **Short Ribs** | 125g | 250g | **500g** | 750g | 1000g | 1250g |
-| **Crushed Black Pepper** *(coarser grind preferred)* | 0.4 tsp | ¾ tsp | **1½ tsp** | 2¼ tsp | 3 tsp | 3¾ tsp |
+| **Black Pepper** *(for marinade, coarser grind preferred)* | ¼ tsp | ½ tsp | **1 tsp** | 1½ tsp | 2 tsp | 2½ tsp |
+| **Black Pepper** *(for sauce)* | 0.1 tsp | ¼ tsp | **½ tsp** | ¾ tsp | 1 tsp | 1¼ tsp |
 | **Salt** | ¼ tsp | ½ tsp | **1 tsp** | 1½ tsp | 2 tsp | 2½ tsp |
 | **Garlic** *(minced)* | 1 cloves | 1½ cloves | **3 cloves** | 4½ cloves | 6 cloves | 7½ cloves |
 | **Onion** *(julienned)* | ½ medium | ½ medium | **½ medium** | 1 medium | 1 medium | 1 medium |
