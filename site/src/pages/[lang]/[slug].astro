@@ -56,7 +56,7 @@ while ((match = stepRegex.exec(prose)) !== null) {
 
 // ── i18n strings for the scaler UI ──────────────────────────────
 const scalerI18n = {
-  zh: { label: '份量', unit: '人份', ingredient: '食材', amount: '用量',
+  zh: { label: '份量', unit: '人份', ingredient: '食材', amount: '用量', toTaste: '适量',
         easter: [
           [0,       '在喂空气？虚空不需要食物。'],
           [-1,      '负数份量？时光倒流烹饪法，尚未开发。'],
@@ -65,7 +65,7 @@ const scalerI18n = {
           ['nan',   '这不是一个数字。厨房不接受哲学输入。'],
           ['inf',   '∞人份。宇宙热寂之前能做完吗？'],
         ]},
-  en: { label: 'Servings', unit: '', ingredient: 'Ingredient', amount: 'Amount',
+  en: { label: 'Servings', unit: '', ingredient: 'Ingredient', amount: 'Amount', toTaste: 'to taste',
         easter: [
           [0,       'Cooking for no one? Feeding the void?'],
           [-1,      'Negative servings? Time-travel cooking not yet supported.'],
@@ -74,7 +74,7 @@ const scalerI18n = {
           ['nan',   'Not a number. The kitchen does not accept philosophical input.'],
           ['inf',   '∞ servings. Will you finish before heat death of the universe?'],
         ]},
-  ja: { label: '人数', unit: '人前', ingredient: '食材', amount: '分量',
+  ja: { label: '人数', unit: '人前', ingredient: '食材', amount: '分量', toTaste: '適量',
         easter: [
           [0,       '0人前？空気に料理を？'],
           [-1,      'マイナスの人数？タイムトラベル料理法、未実装。'],
@@ -170,9 +170,9 @@ function fmt(v: number): string {
   return v.toFixed(1).replace(/\.0$/, '');
 }
 
-function scaleAmt(ing: any, mult: number): string {
-  if (ing.scale === 'to_taste') return ing.unit || '—';
-  if (ing.scale === 'fixed' || ing.amount == null) return ing.amount != null ? `${ing.amount}${ing.unit}` : '适量';
+function scaleAmt(ing: any, mult: number, toTaste: string): string {
+  if (ing.scale === 'to_taste') return toTaste;
+  if (ing.scale === 'fixed' || ing.amount == null) return ing.amount != null ? `${ing.amount}${ing.unit}` : toTaste;
   const raw = ing.amount * mult;
   if (ing.scale === 'discrete') {
     const snapped = Math.max(0.5, Math.round(raw * 2) / 2);
@@ -209,22 +209,29 @@ function render(section: HTMLElement, servings: number) {
 
   const isNaN_ = isNaN(servings);
   const isInf = !isNaN_ && !isFinite(servings);
-  const isInvalid = isNaN_ || isInf || servings < 0;
 
   const msg = getEaster(servings, isNaN_, isInf, i18n.easter);
-  if (msg || isInvalid) {
+
+  // NaN / Infinity: can't calculate — show only the quip
+  if (isNaN_ || isInf) {
     easter.textContent = msg ?? '🤔';
     easter.hidden = false;
     table.hidden = true;
     return;
   }
 
-  easter.hidden = true;
+  // Valid number (even 0, negative, 999): show quip if any, but always render table
+  if (msg) {
+    easter.textContent = msg;
+    easter.hidden = false;
+  } else {
+    easter.hidden = true;
+  }
   table.hidden = false;
 
-  const mult = base > 0 ? servings / base : 1;
+  const mult = base > 0 ? servings / base : 0;
   tbody.innerHTML = ingredients.map((ing: any) => {
-    const amt = scaleAmt(ing, mult);
+    const amt = scaleAmt(ing, mult, i18n.toTaste);
     const note = ing.note ? ` <em class="ing-note">(${ing.note})</em>` : '';
     return `<tr><td><strong>${ing.name}</strong>${note}</td><td>${amt}</td></tr>`;
   }).join('');
