@@ -230,7 +230,7 @@ function render(section: HTMLElement, servings: number) {
   }).join('');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initScaler() {
   const section = document.querySelector('.scaler-section') as HTMLElement;
   if (!section) return;
 
@@ -252,5 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
   input.addEventListener('input', update);
 
   render(section, base);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScaler);
+} else {
+  initScaler();
+}
 </script>
