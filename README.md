@@ -1,70 +1,80 @@
-# 🔥 The Sacred Cooking Codex
+<div align="right">
+  🌐 <strong>中文</strong> | <a href="README.en.md">English</a> | <a href="README.ja.md">日本語</a>
+</div>
 
-> *"Every commit is a meal. Every merge is a feast. Every revert is a failed dish."*
+# 🔥 神圣烹饪典籍
 
----
-
-## What Is This
-
-A **version-controlled record of culinary conquests**, maintained with the same rigor one would apply to production code — because food deserves CI/CD too.
-
-Each dish gets its own file. Each day gets its own entry. Feedback is committed. Mistakes are documented. Nothing is lost to the void of memory.
-
-This is not a recipe blog. This is **infrastructure**.
+> *"每一次 commit 都是一道菜。每一次 merge 都是一场盛宴。每一次 revert 都是一道失败的料理。"*
 
 ---
 
-## Repository Structure
+## 这是什么
+
+一份**用版本控制管理的厨艺征服记录**，以对待生产代码的严谨态度维护——因为食物也值得 CI/CD。
+
+每道菜都有自己的文件。每一天都有自己的条目。反馈被 commit。错误被记录。没有任何东西会消散在记忆的熵中。
+
+这不是美食博客。这是**基础设施**。
+
+---
+
+## 仓库结构
 
 ```
-cooking-log.md        # The index. The ledger. The source of truth.
+cooking-log.md              # 目录。账本。唯一真相来源。
 dishes/
-  YYYY-MM-DD-菜名.md  # One file per dish. Immutable history.
+  YYYY-MM-DD-菜名/
+    recipe.yaml             # 唯一数据源（多语言食材定义）
+    zh.md                   # 中文：步骤、要点、反馈
+    en.md                   # English prose
+    ja.md                   # 日本語テキスト
 ```
 
 ---
 
-## Conventions
+## 规范
 
-- 📐 **All recipes are calibrated for 2 people** — no more, no less
-- 🌿 Ingredients are listed with exact quantities. Approximations are a code smell.
-- 🔁 Feedback is recorded after each cook and may trigger recipe patches in future commits
-- ✅ All commits are signed. Unsigned food is unsigned food.
-
----
-
-## Commit Message Format
-
-| Prefix | Meaning |
-|--------|---------|
-| 🍳 | New dish added |
-| 📝 | Recipe update or correction |
-| 💬 | Feedback recorded |
-| 📁 | Structural changes |
-| 🔥 | Something went wrong (hopefully rare) |
+- 📐 **默认基准份量：2人份** — CI 自动生成 ½、1、2、3、4、5 人份换算
+- 🌿 食材用量精确标注，「适量」是 code smell
+- 🔁 每次烹饪后记录反馈，可触发食谱 patch
+- 🌐 所有菜谱支持中文 / English / 日本語
+- ✅ 所有 commit 均已签名。未签名的食物不是食物。
 
 ---
 
-## Metrics
+## Commit 格式
 
-- **Dishes logged:** growing
-- **Failed experiments:** *classified*
-- **Uptime:** since 2026-04-07
+| 前缀 | 含义 |
+|------|------|
+| 🍳 | 新菜入库 |
+| 📝 | 食谱修正 |
+| 💬 | 反馈记录 |
+| 📐 | 自动生成份量换算表 |
+| 📁 | 结构调整 |
+| 🔥 | 出事了（希望不常见） |
 
 ---
 
-## Philosophy
+## 指标
 
-Most people cook and forget. A dish is made, consumed, and dissolved into the entropy of daily life. No trace remains. No lessons retained.
+- **已记录菜品：** 持续增长
+- **失败实验：** *机密*
+- **上线时间：** 2026-04-07 至今
 
-**Not here.**
+---
 
-Here, every pinch of salt is accounted for. Every rest time is documented. Every "I should've added more pepper" lives forever in the git log.
+## 哲学
 
-*Fork it. Star it. Cook from it. Just don't blame us if it's too spicy.*
+大多数人做完就忘。一道菜被做出来、被消耗掉、消散在日常生活的熵中。没有痕迹，没有经验积累。
+
+**但不是这里。**
+
+在这里，每一撮盐都有据可查。每一次静置时间都被记录。每一句「下次少放点胡椒」都永远活在 git log 里。
+
+*Fork 它。Star 它。用它做菜。只是别怪我们太辣。*
 
 ---
 
 <div align="center">
-  <sub>Maintained by an AI sous-chef who takes version control very seriously.</sub>
+  <sub>由一个对版本控制极其认真的 AI 副厨维护。</sub>
 </div>
