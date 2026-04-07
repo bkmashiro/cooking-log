@@ -23,12 +23,14 @@ export interface Ingredient {
 export interface RecipeYaml {
   dish: MultiLang;
   date: string;
+  url_slug?: string;
   base_servings: number;
   ingredients: Ingredient[];
 }
 
 export interface Dish {
-  slug: string;
+  slug: string;      // directory name (internal identifier)
+  urlSlug: string;   // ASCII URL-safe slug for routes
   recipe: RecipeYaml;
   prose: Record<Lang, string>;
 }
@@ -77,8 +79,13 @@ export function getAllDishes(): Dish[] {
         ja: readProse(dishDir, 'ja'),
       };
 
+      // Use explicit url_slug if set, otherwise fall back to directory name
+      // (directory names with non-ASCII chars get percent-encoded in URLs)
+      const urlSlug = recipe.url_slug || entry.name;
+
       dishes.push({
         slug: entry.name,
+        urlSlug,
         recipe,
         prose,
       });

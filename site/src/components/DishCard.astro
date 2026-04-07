@@ -13,7 +13,7 @@ interface Props {
 const { dish, currentLang } = Astro.props;
 
 const dishName = dish.recipe.dish[currentLang] || dish.recipe.dish.zh;
-const slug = encodeURIComponent(dish.slug);
+const slug = dish.urlSlug;
 ---
 
 <div class="dish-entry">

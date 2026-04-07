@@ -11,7 +11,7 @@ export function getStaticPaths() {
   for (const dish of dishes) {
     for (const lang of LANGS) {
       paths.push({
-        params: { lang, slug: dish.slug },
+        params: { lang, slug: dish.urlSlug },
         props: { dish },
       });
     }
@@ -38,10 +38,10 @@ const cleaned = proseWithoutH1.replace(/^\*\*[^*]+:\*\*[^\n]*\n\n?---\n\n?/, '')
 
 const htmlContent = marked.parse(cleaned) as string;
 
-// Build alternates for lang switcher
+// Build alternates for lang switcher — all point to the same urlSlug
 const alternates: Partial<Record<Lang, string>> = {};
 for (const l of LANGS) {
-  alternates[l] = `/${l}/${encodeURIComponent(slug)}/`;
+  alternates[l] = `/${l}/${dish.urlSlug}/`;
 }
 ---
 
