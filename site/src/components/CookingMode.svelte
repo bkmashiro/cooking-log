@@ -235,11 +235,6 @@
     return `transform: translateY(calc(-50%${offset})) scale(${scale}); opacity: ${opacity};`;
   });
 
-  function toggleChecked(idx: number, e: Event) {
-    checked[idx] = (e.target as HTMLInputElement).checked;
-    checked = checked;
-  }
-
   function boldify(text: string): string {
     return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   }
@@ -285,14 +280,14 @@
       <ul class="cm-ing-list">
         {#each ingredients as ing, idx}
           {@const parts = scaleAmtParts(ing)}
-          <li class="cm-ing-item" class:cm-checked={checked[idx]}>
-            <label class="cm-ing-label">
-              <input
-                type="checkbox"
-                class="cm-ing-checkbox"
-                checked={checked[idx]}
-                on:change={(e) => toggleChecked(idx, e)}
-              />
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+          <li
+            class="cm-ing-item"
+            class:cm-checked={checked[idx]}
+            on:click={() => { checked[idx] = !checked[idx]; checked = checked; }}
+          >
+            <div class="cm-ing-label">
               <span class="cm-ing-check-vis"></span>
               <div class="cm-ing-name-wrap">
                 <span class="cm-ing-name">{ing.name}</span>
@@ -302,7 +297,7 @@
                 <span class="cm-ing-amt-num">{parts.num}</span>
                 {#if parts.unit}<span class="cm-ing-amt-unit">{parts.unit}</span>{/if}
               </span>
-            </label>
+            </div>
           </li>
         {/each}
       </ul>
@@ -618,14 +613,6 @@
   user-select: none;
 }
 .cm-ing-label:hover { background: rgba(255,255,255,0.03); }
-
-/* Hidden native checkbox */
-.cm-ing-checkbox {
-  position: absolute;
-  opacity: 0;
-  width: 0; height: 0;
-  pointer-events: none;
-}
 
 /* Custom checkbox visual */
 @keyframes cm-pop {
