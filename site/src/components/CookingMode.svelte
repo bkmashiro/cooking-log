@@ -16,7 +16,7 @@
     done: string; exit: string; step: string; of: string;
     timer: string; start: string; pause: string; reset: string;
     min: string; timerDone: string; allPrepped: string; tapToExpand: string;
-    toTaste: string;
+    toTaste: string; servUnit: string;
   };
   // Reactive servings from the shared store (set by Scaler.svelte)
   $: scalerServings = $servingsStore;
@@ -362,6 +362,11 @@
     <header class="cm-header">
       <span class="cm-dish-name">{dishName}</span>
       <span class="cm-badge cm-badge-prep">{t.prepMode}</span>
+      <div class="cm-srv-ctrl">
+        <button class="cm-srv-btn" on:click={() => servingsStore.update(v => Math.max(1, v - 1))}>−</button>
+        <span class="cm-srv-val">{$servingsStore}{t.servUnit}</span>
+        <button class="cm-srv-btn" on:click={() => servingsStore.update(v => v + 1)}>+</button>
+      </div>
       <button class="cm-exit-btn" on:click={closeOverlay}>✕</button>
     </header>
 
@@ -382,7 +387,7 @@
       <!-- Ingredient checklist -->
       <ul class="cm-ing-list">
         {#each ingredients as ing, idx}
-          {@const parts = scaleAmtParts(ing)}
+          {@const parts = scaleAmtParts(ing, $servingsStore)}
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
           <li
@@ -423,6 +428,11 @@
       <div class="cm-cook-meta">
         <span class="cm-badge cm-badge-cook">{t.cookMode}</span>
         <span class="cm-step-counter">{t.step} {currentStep + 1}{t.of}{steps.length}</span>
+      </div>
+      <div class="cm-srv-ctrl">
+        <button class="cm-srv-btn" on:click={() => servingsStore.update(v => Math.max(1, v - 1))}>−</button>
+        <span class="cm-srv-val">{$servingsStore}{t.servUnit}</span>
+        <button class="cm-srv-btn" on:click={() => servingsStore.update(v => v + 1)}>+</button>
       </div>
       <button class="cm-exit-btn" on:click={closeOverlay}>✕</button>
     </header>
@@ -633,6 +643,35 @@
   transition: border-color 0.15s, color 0.15s;
 }
 .cm-exit-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ── Servings stepper (inside cooking mode) ──────────────────────── */
+.cm-srv-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.cm-srv-btn {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+  padding: 0;
+}
+.cm-srv-btn:hover { border-color: var(--accent); background: rgba(230,168,23,0.08); }
+.cm-srv-val {
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 28px;
+  text-align: center;
+  color: var(--fg-muted);
+}
 
 /* ── Progress bar (cook) ─────────────────────────────────────────── */
 .cm-progress-wrap {
