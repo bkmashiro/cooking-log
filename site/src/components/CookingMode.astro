@@ -439,13 +439,9 @@ const i18nJson = JSON.stringify(i18nStrings);
       checkbox.className = 'cm-ing-checkbox';
       checkbox.id = `cm-ing-${idx}`;
 
-      // Custom visual checkbox
+      // Custom visual checkbox (checkmark drawn via CSS ::after)
       const checkVis = document.createElement('span');
       checkVis.className = 'cm-ing-check-vis';
-      checkVis.innerHTML = `<svg class="cm-check-icon" viewBox="0 0 12 10" fill="none">
-        <polyline points="1,5 4.5,9 11,1" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
 
       // Name + note column
       const nameWrap = document.createElement('div');
@@ -536,38 +532,27 @@ const i18nJson = JSON.stringify(i18nStrings);
     const pct = total > 1 ? (currentStep / (total - 1)) * 100 : 100;
     progressBar.style.width = `${pct}%`;
 
-    // Update step visibility states
+    // ── Slot-machine drum: position each step with CSS transform ──
+    const SLOT_H = 90; // px per slot (matches CSS)
     const stepEls = stepsContainer.querySelectorAll('.cm-step-item');
     stepEls.forEach((el, idx) => {
-      el.classList.remove('cm-step-current', 'cm-step-prev', 'cm-step-prev2',
-                          'cm-step-next', 'cm-step-next2', 'cm-step-hidden');
-
-      if (idx === currentStep) {
-        el.classList.add('cm-step-current');
-        el.setAttribute('aria-current', 'step');
-      } else if (idx === currentStep - 1) {
-        el.classList.add('cm-step-prev');
-        el.removeAttribute('aria-current');
-      } else if (idx < currentStep - 1) {
-        el.classList.add('cm-step-prev2');
-        el.removeAttribute('aria-current');
-      } else if (idx === currentStep + 1) {
-        el.classList.add('cm-step-next');
-        el.removeAttribute('aria-current');
-      } else if (idx === currentStep + 2) {
-        el.classList.add('cm-step-next2');
-        el.removeAttribute('aria-current');
-      } else {
-        el.classList.add('cm-step-hidden');
-        el.removeAttribute('aria-current');
-      }
+      const rel = idx - currentStep;
+      let scale, opacity;
+      if      (rel === 0)  { scale = 1;    opacity = 1; }
+      else if (rel === -1) { scale = 0.75; opacity = 0.28; }
+      else if (rel < -1)   { scale = 0.65; opacity = 0; }
+      else if (rel === 1)  { scale = 0.80; opacity = 0.65; }
+      else if (rel === 2)  { scale = 0.70; opacity = 0.38; }
+      else if (rel === 3)  { scale = 0.62; opacity = 0.18; }
+      else                 { scale = 0.58; opacity = 0; }
+      // translateY(-50%) centres the item on top:50% of the container;
+      // then offset by rel slots
+      el.style.transform = `translateY(calc(-50% + ${rel * SLOT_H}px)) scale(${scale})`;
+      el.style.opacity   = String(opacity);
+      el.classList.toggle('cm-step-current', rel === 0);
+      if (rel === 0) el.setAttribute('aria-current', 'step');
+      else           el.removeAttribute('aria-current');
     });
-
-    // Scroll current step into view
-    const currentEl = stepsContainer.querySelector('.cm-step-current');
-    if (currentEl) {
-      currentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
 
     // Nav buttons
     prevBtn.textContent = T.prev;
@@ -977,32 +962,36 @@ const i18nJson = JSON.stringify(i18nStrings);
   flex-shrink: 0;
   border: 2px solid var(--border);
   border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--bg);
   transition: border-color 0.2s, background 0.2s;
   position: relative;
 }
 
+/* CSS checkmark via ::after */
+.cm-ing-check-vis::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 11px;
+  border: 2px solid transparent;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) scale(0);
+  transform-origin: center center;
+  transition: transform 0.18s ease 0.04s, border-color 0.15s;
+}
+
 .cm-ing-checked .cm-ing-check-vis {
   background: var(--green);
   border-color: var(--green);
-  animation: cm-check-pop 0.3s ease forwards;
+  animation: cm-check-pop 0.28s ease forwards;
 }
 
-.cm-check-icon {
-  width: 12px;
-  height: 10px;
-  color: #0d1117;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: opacity 0.15s ease 0.05s, transform 0.2s ease 0.05s;
-}
-
-.cm-ing-checked .cm-check-icon {
-  opacity: 1;
-  transform: scale(1);
+.cm-ing-checked .cm-ing-check-vis::after {
+  border-color: #0d1117;
+  transform: rotate(45deg) scale(1);
 }
 
 /* Name + note column */
@@ -1147,101 +1136,71 @@ const i18nJson = JSON.stringify(i18nStrings);
   overflow: hidden;
 }
 
+/* ── Step drum / slot-machine ────────────────────────────────────── */
 .cm-steps-panel {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 24px;
   position: relative;
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-.cm-steps-panel::-webkit-scrollbar { width: 4px; }
-.cm-steps-panel::-webkit-scrollbar-track { background: transparent; }
-.cm-steps-panel::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 2px;
-  transition: background 0.2s;
-}
-.cm-steps-panel::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-.cm-steps-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 640px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 24px 0 60px;
-}
-
-/* ── Step items ──────────────────────────────────────────────────── */
-.cm-step-item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  padding: 16px 20px;
-  border-radius: var(--radius);
-  border-left: 4px solid transparent;
-  /* Animate size/opacity/padding changes */
-  transition: opacity 0.3s ease, max-height 0.35s ease, padding 0.3s ease,
-              background 0.25s ease, border-color 0.25s ease,
-              box-shadow 0.3s ease, transform 0.3s ease;
-  max-height: 300px;
   overflow: hidden;
-  cursor: default;
+  /* Fade top & bottom so items dissolve as they roll off */
+  -webkit-mask-image: linear-gradient(
+    to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  mask-image: linear-gradient(
+    to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
 }
 
-/* Current step — enlarged, highlighted, slide-in animation */
-@keyframes cm-step-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Center highlight rail */
+.cm-steps-panel::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 50%;
+  height: 90px;           /* matches SLOT_H in JS */
+  transform: translateY(-50%);
+  background: var(--bg-elevated);
+  border: 1px solid rgba(230, 168, 23, 0.18);
+  border-left: 3px solid rgba(230, 168, 23, 0.55);
+  border-radius: var(--radius);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Container anchored so items' top:50% is panel center */
+.cm-steps-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 0;              /* zero-height anchor point */
+}
+
+/* Each step is absolutely positioned relative to the anchor */
+.cm-step-item {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  border-left: 3px solid transparent;
+  transform-origin: center center;
+  /* transform & opacity set by JS; background/border animate via CSS */
+  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.38s ease,
+              background 0.25s, border-color 0.25s, box-shadow 0.25s;
+  cursor: default;
+  z-index: 5;
+  will-change: transform, opacity;
 }
 
 .cm-step-current {
-  background: var(--bg-elevated);
   border-left-color: var(--accent);
-  font-size: 1.25rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(230, 168, 23, 0.12), 0 2px 8px rgba(0,0,0,0.3);
-  animation: cm-step-in 0.35s ease forwards;
-}
-
-.cm-step-current .cm-step-num {
-  color: var(--accent);
-  font-size: 1rem;
-  min-width: 28px;
-  padding-top: 4px;
-}
-
-.cm-step-current .cm-step-text {
-  color: var(--text);
-  line-height: 1.7;
-}
-
-/* Completed steps — collapse away */
-.cm-step-prev,
-.cm-step-prev2,
-.cm-step-hidden {
-  max-height: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  opacity: 0 !important;
-  pointer-events: none;
-}
-
-/* Upcoming steps — visible but dimmed */
-.cm-step-next {
-  opacity: 0.6;
-  font-size: 1rem;
-  background: rgba(255,255,255,0.015);
-}
-
-.cm-step-next2 {
-  opacity: 0.35;
-  font-size: 0.92rem;
+  z-index: 10;
 }
 
 .cm-step-num {
@@ -1249,19 +1208,31 @@ const i18nJson = JSON.stringify(i18nStrings);
   color: var(--text-muted);
   min-width: 24px;
   flex-shrink: 0;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  padding-top: 2px;
+  transition: color 0.25s;
+}
+
+.cm-step-current .cm-step-num {
+  color: var(--accent);
+  font-size: 0.9rem;
 }
 
 .cm-step-text {
   flex: 1;
   color: var(--text-muted);
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  transition: color 0.25s, font-size 0.25s;
 }
 
-.cm-step-text strong {
+.cm-step-current .cm-step-text {
   color: var(--text);
-  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.65;
 }
+
+.cm-step-text strong { color: inherit; font-weight: 700; }
 
 /* ── Timer panel ─────────────────────────────────────────────────── */
 .cm-timer-panel {
@@ -1419,17 +1390,21 @@ const i18nJson = JSON.stringify(i18nStrings);
 
   .cm-steps-panel {
     flex: 1;
-    padding: 12px;
-    overflow-y: auto;
+    min-height: 260px;
   }
 
-  .cm-steps-container {
-    padding: 16px 0;
-    max-width: 100%;
+  .cm-steps-panel::before {
+    left: 12px;
+    right: 12px;
   }
 
-  .cm-step-current {
-    font-size: 1.1rem;
+  .cm-step-item {
+    left: 16px;
+    right: 16px;
+  }
+
+  .cm-step-current .cm-step-text {
+    font-size: 1.05rem;
   }
 
   /* Timer becomes bottom bar */
