@@ -25,8 +25,7 @@
   let open = false;
   let mode: 'prep' | 'cook' = 'prep';
   let currentStep = 0;
-  let checked: boolean[] = [];
-  $: checked = ingredients.map(() => false);
+  let checked: boolean[] = ingredients.map(() => false);
   $: checkedCount = checked.filter(Boolean).length;
   $: prepPct = ingredients.length ? (checkedCount / ingredients.length) * 100 : 0;
 
@@ -331,7 +330,7 @@
           <li
             class="cm-ing-item"
             class:cm-checked={checked[idx]}
-            on:click={() => { checked[idx] = !checked[idx]; checked = checked; }}
+            on:click={() => { const c = [...checked]; c[idx] = !c[idx]; checked = c; }}
           >
             <div class="cm-ing-label">
               <span class="cm-ing-check-vis"></span>
