@@ -1,0 +1,71 @@
+name: 🍽️ New Recipe Proposal (Feature Request)
+description: Propose a dish to be added to the codex.
+labels: ["enhancement", "recipe-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Recipe RFC (Request for Cooking)
+        Propose a new dish for the kitchen backlog. All proposals subject to appetite review.
+
+  - type: input
+    id: dish-name
+    attributes:
+      label: Proposed Dish
+      placeholder: e.g. 红酒炖牛小排
+    validations:
+      required: true
+
+  - type: dropdown
+    id: cuisine
+    attributes:
+      label: Cuisine Type
+      options:
+        - Chinese (中餐)
+        - Western (西餐)
+        - Japanese (日料)
+        - Korean (韩餐)
+        - Fusion / Chaotic Neutral
+        - Unknown / TBD
+    validations:
+      required: true
+
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Estimated Complexity
+      options:
+        - O(1) — Instant noodles tier
+        - O(log n) — Simple stir fry
+        - O(n) — Requires actual effort
+        - O(n²) — Multi-step, multi-pan
+        - O(2ⁿ) — Why would anyone do this
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Why should this dish be added? What problem does it solve?
+      placeholder: It's cold outside and I want something braised.
+    validations:
+      required: true
+
+  - type: textarea
+    id: ingredients
+    attributes:
+      label: Known Ingredients
+      placeholder: List what you know. Unknowns are acceptable at RFC stage.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have not already eaten this dish today
+          required: false
+        - label: I am genuinely willing to cook this
+          required: true
+        - label: I accept that this may require a trip to the supermarket
+          required: true

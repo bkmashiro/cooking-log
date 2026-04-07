@@ -1,0 +1,73 @@
+name: 🔥 Dish Failed (Bug Report)
+description: Something went wrong in production (the kitchen).
+labels: ["bug", "incident"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Incident Report
+        A culinary incident has occurred. Please provide full details so we can patch the recipe.
+
+  - type: input
+    id: dish
+    attributes:
+      label: Affected Dish
+      description: Which recipe failed?
+      placeholder: e.g. 黑椒牛小排
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Incident Severity
+      options:
+        - P0 — Inedible (production is down)
+        - P1 — Edible but deeply disappointing
+        - P2 — Minor degradation (a bit salty)
+        - P3 — Aesthetic issue only (looked bad, tasted fine)
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      placeholder: Should have been tender, juicy, perfectly seared...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      placeholder: Was dry, burned on the outside, raw in the middle...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Heated pan to X temperature
+        2. Added oil
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Stove type, pan used, etc.
+      placeholder: |
+        - Stove: Gas / Induction / Electric
+        - Pan: Cast iron / Non-stick / Wok
+        - Mood: Hungry / Impatient / Overconfident
+
+  - type: textarea
+    id: attempted-fix
+    attributes:
+      label: Attempted Hotfix
+      placeholder: Added more salt. Made it worse.

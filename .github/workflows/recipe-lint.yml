@@ -1,0 +1,68 @@
+name: 🧑‍🍳 Recipe Linter
+
+on:
+  push:
+    paths:
+      - 'dishes/**'
+  pull_request:
+    paths:
+      - 'dishes/**'
+
+jobs:
+  lint:
+    name: Quality Assurance (Kitchen Inspection)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛒 Checkout the pantry
+        uses: actions/checkout@v4
+
+      - name: 🔍 Inspect dish files
+        run: |
+          echo "🧑‍🍳 Kitchen inspection underway..."
+          FAILED=0
+
+          for file in dishes/*.md; do
+            echo ""
+            echo "📄 Inspecting: $file"
+
+            # Check required sections exist
+            for section in "## 做法" "## 注意要点" "## 反馈"; do
+              if ! grep -q "$section" "$file"; then
+                echo "  ❌ Missing section: $section"
+                FAILED=1
+              else
+                echo "  ✅ Found: $section"
+              fi
+            done
+
+            # Check serving size mentioned
+            if ! grep -qi "2人份\|两人份\|2 people\|serves 2" "$file"; then
+              echo "  ⚠️  Warning: serving size not explicitly stated (expected 2人份)"
+            else
+              echo "  ✅ Serving size confirmed: 2"
+            fi
+
+            # Check file naming convention YYYY-MM-DD-*
+            basename=$(basename "$file")
+            if ! echo "$basename" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}-.+\.md$'; then
+              echo "  ❌ Filename does not follow convention: YYYY-MM-DD-菜名.md"
+              FAILED=1
+            else
+              echo "  ✅ Filename convention: OK"
+            fi
+          done
+
+          echo ""
+          if [ $FAILED -eq 1 ]; then
+            echo "💥 Kitchen inspection FAILED. Fix issues before merging."
+            exit 1
+          else
+            echo "✅ All dishes passed inspection. Kitchen is clean."
+          fi
+
+      - name: 📊 Dish count
+        run: |
+          COUNT=$(ls dishes/*.md 2>/dev/null | wc -l)
+          echo "📦 Total dishes in codex: $COUNT"
+          echo "🎯 Keep cooking."

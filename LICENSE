@@ -1,0 +1,58 @@
+THE FORK PUBLIC LICENSE (FPL) v1.0
+A License for Culinary Source Code
+
+Copyright (c) 2026 — Present, The Kitchen
+
+---
+
+PREAMBLE
+
+This repository contains recipes, techniques, and accumulated culinary wisdom
+("the Software"). Like all great dishes, it is meant to be shared — but with
+conditions. Read carefully before consuming.
+
+---
+
+TERMS AND CONDITIONS
+
+1. FORKING
+   You are hereby granted the right to fork this repository, both in the GitHub
+   sense and the literal sense. Use of actual forks while reading this license
+   is encouraged.
+
+2. REDISTRIBUTION
+   You may redistribute recipes contained herein, provided that:
+   a) You do not claim the dish as your own at dinner parties.
+   b) You acknowledge that "I found it online" is acceptable attribution.
+   c) Any modifications (e.g., "I added sriracha") must be documented
+      as a separate commit with appropriate commit message.
+
+3. MODIFICATIONS
+   Pull Requests are welcome. However, the maintainer reserves the right to
+   reject any PR that:
+   a) Replaces butter with margarine without written justification.
+   b) Reduces cooking time "because I was hungry."
+   c) Introduces cilantro into a recipe that was previously cilantro-free,
+      without a clearly marked opt-in flag.
+
+4. FEEDBACK CLAUSE
+   If you cook a dish from this repository and it turns out badly, you are
+   required to open an Issue. This is not optional. Suffering in silence
+   does not improve the codebase.
+
+5. WARRANTY
+   THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF TASTINESS,
+   NUTRITIONAL FITNESS FOR A PARTICULAR PURPOSE, OR NON-SPICINESS.
+   IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY OVER-SALTED, UNDER-COOKED,
+   OR OTHERWISE CURSED MEALS ARISING FROM USE OF THIS REPOSITORY.
+
+6. TERMINATION
+   This license terminates immediately if you use a microwave where the recipe
+   explicitly calls for a cast iron pan.
+
+---
+
+END OF LICENSE
+
+*"In open source we trust. In cast iron we sear."*
