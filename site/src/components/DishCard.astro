@@ -1,0 +1,35 @@
+---
+import type { Dish } from '../lib/dishes';
+import type { Lang } from '../lib/i18n';
+import { getDishName, LANGS } from '../lib/dishes';
+import { i18n } from '../lib/i18n';
+
+// Re-export getDishName from dishes since it's used here
+interface Props {
+  dish: Dish;
+  currentLang: Lang;
+}
+
+const { dish, currentLang } = Astro.props;
+
+const dishName = dish.recipe.dish[currentLang] || dish.recipe.dish.zh;
+const slug = encodeURIComponent(dish.slug);
+---
+
+<div class="dish-entry">
+  <span class="dish-date">{dish.recipe.date}</span>
+  <span class="dish-name">
+    <a href={`/${currentLang}/${slug}/`}>{dishName}</a>
+  </span>
+  <div class="dish-lang-links">
+    {(['zh', 'en', 'ja'] as const).map(l => (
+      <a
+        href={`/${l}/${slug}/`}
+        class={l === currentLang ? 'active' : ''}
+        title={i18n[l].langName}
+      >
+        {l}
+      </a>
+    ))}
+  </div>
+</div>

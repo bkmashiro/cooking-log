@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import { i18n, LANGS, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  /** The current slug if on a dish detail page, otherwise undefined */
+  slug?: string;
+  /** Alternate hrefs for each lang (for lang switcher links) */
+  alternates?: Partial<Record<Lang, string>>;
+}
+
+const { lang, title, slug, alternates } = Astro.props;
+const t = i18n[lang];
+
+function getLangHref(targetLang: Lang): string {
+  if (alternates && alternates[targetLang]) {
+    return alternates[targetLang]!;
+  }
+  if (slug) {
+    return `/${targetLang}/${encodeURIComponent(slug)}/`;
+  }
+  return `/${targetLang}/`;
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — {t.siteTitle}</title>
+    <meta name="description" content={t.tagline} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <a href={`/${lang}/`}>{t.siteTitle}</a>
+      </div>
+      <nav class="lang-switcher" aria-label="Language">
+        {LANGS.map((l, i) => (
+          <>
+            {i > 0 && <span>/</span>}
+            <a
+              href={getLangHref(l)}
+              class={l === lang ? 'active' : ''}
+              aria-current={l === lang ? 'page' : undefined}
+            >
+              {i18n[l].langName}
+            </a>
+          </>
+        ))}
+      </nav>
+    </header>
+    <main class="main-content">
+      <slot />
+    </main>
+  </body>
+</html>

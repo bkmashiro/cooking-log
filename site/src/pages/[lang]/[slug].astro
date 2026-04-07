@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getAllDishes } from '../../lib/dishes';
+import { i18n, LANGS, type Lang } from '../../lib/i18n';
+import { marked } from 'marked';
+
+export function getStaticPaths() {
+  const dishes = getAllDishes();
+  const paths = [];
+
+  for (const dish of dishes) {
+    for (const lang of LANGS) {
+      paths.push({
+        params: { lang, slug: dish.slug },
+        props: { dish },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { lang, slug } = Astro.params as { lang: Lang; slug: string };
+const { dish } = Astro.props;
+
+const t = i18n[lang];
+const dishName = dish.recipe.dish[lang] || dish.recipe.dish.zh;
+const prose = dish.prose[lang] || dish.prose.zh;
+
+// Configure marked for clean output
+marked.setOptions({ gfm: true, breaks: false });
+
+// Remove the first H1 heading (it's already the page title)
+const proseWithoutH1 = prose.replace(/^#\s+.+\n/, '');
+
+// Remove front-matter-style header lines like "**Date:** ... | [links]()"
+const cleaned = proseWithoutH1.replace(/^\*\*[^*]+:\*\*[^\n]*\n\n?---\n\n?/, '');
+
+const htmlContent = marked.parse(cleaned) as string;
+
+// Build alternates for lang switcher
+const alternates: Partial<Record<Lang, string>> = {};
+for (const l of LANGS) {
+  alternates[l] = `/${l}/${encodeURIComponent(slug)}/`;
+}
+---
+
+<Layout lang={lang} title={dishName} slug={slug} alternates={alternates}>
+  <div class="dish-detail">
+    <a href={`/${lang}/`} class="back-link">{t.backToList}</a>
+    <h1>{dishName}</h1>
+    <article class="prose" set:html={htmlContent} />
+  </div>
+</Layout>

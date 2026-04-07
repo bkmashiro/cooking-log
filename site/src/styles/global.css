@@ -1,0 +1,366 @@
+/* JetBrains Mono via fontsource */
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/700.css';
+
+/* ── CSS Custom Properties ─────────────────────────────────────── */
+:root {
+  --bg:          #0d1117;
+  --bg-surface:  #161b22;
+  --bg-elevated: #1c2128;
+  --border:      #30363d;
+  --text:        #c9d1d9;
+  --text-muted:  #8b949e;
+  --accent:      #e6a817;
+  --accent-dim:  #b8841a;
+  --green:       #3fb950;
+  --red:         #f85149;
+  --font-mono:   'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  --radius:      4px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-dim);
+  text-decoration: underline;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.site-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.site-header .brand {
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.site-header .brand a {
+  color: inherit;
+}
+
+.lang-switcher {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.lang-switcher span {
+  opacity: 0.4;
+}
+
+.lang-switcher a {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.lang-switcher a:hover,
+.lang-switcher a.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.main-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Page heading ────────────────────────────────────────────────── */
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.page-tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+/* ── Dish list (git log style) ───────────────────────────────────── */
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.dish-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+.dish-entry:last-child {
+  border-bottom: none;
+}
+
+.dish-entry:hover {
+  background: var(--bg-elevated);
+}
+
+.dish-date {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  min-width: 90px;
+}
+
+.dish-name {
+  flex: 1;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.dish-name a {
+  color: inherit;
+}
+
+.dish-name a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.dish-lang-links {
+  display: flex;
+  gap: 6px;
+  font-size: 0.78rem;
+}
+
+.dish-lang-links a {
+  color: var(--text-muted);
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.dish-lang-links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+/* ── Dish detail prose ───────────────────────────────────────────── */
+.dish-detail .back-link {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  display: inline-block;
+}
+
+.dish-detail h1 {
+  font-size: 1.6rem;
+  color: var(--accent);
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.prose {
+  line-height: 1.8;
+}
+
+.prose h1 {
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin: 24px 0 12px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+.prose h2 {
+  font-size: 1.15rem;
+  color: var(--accent);
+  margin: 28px 0 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.prose h3 {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 20px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+}
+
+.prose p {
+  margin-bottom: 12px;
+}
+
+.prose strong {
+  color: var(--text);
+}
+
+.prose em {
+  color: var(--text-muted);
+}
+
+.prose code {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: var(--radius);
+  font-size: 0.9em;
+  color: var(--accent);
+}
+
+.prose pre {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+.prose ol, .prose ul {
+  padding-left: 24px;
+  margin-bottom: 12px;
+}
+
+.prose li {
+  margin-bottom: 4px;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 16px 0;
+  padding: 8px 16px;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* ── Ingredient / scale tables ───────────────────────────────────── */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.prose thead {
+  background: var(--bg-elevated);
+}
+
+.prose th {
+  padding: 8px 12px;
+  text-align: left;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.prose th:not(:first-child) {
+  text-align: right;
+}
+
+.prose td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.prose td:not(:first-child) {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tr:hover td {
+  background: var(--bg-elevated);
+}
+
+/* highlight the base/original column (1x) */
+.prose td strong,
+.prose th strong {
+  color: var(--accent);
+}
+
+/* ── Utility ─────────────────────────────────────────────────────── */
+.section-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 48px;
+  font-size: 0.9rem;
+}

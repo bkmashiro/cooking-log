@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DishCard from '../../components/DishCard.astro';
+import { getAllDishes } from '../../lib/dishes';
+import { i18n, LANGS, type Lang } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return LANGS.map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = i18n[lang];
+const dishes = getAllDishes();
+---
+
+<Layout lang={lang} title={t.allDishes}>
+  <h1 class="page-title">{t.siteTitle}</h1>
+  <p class="page-tagline">{t.tagline}</p>
+
+  <div class="section-label">{t.allDishes}</div>
+
+  {dishes.length === 0 ? (
+    <div class="empty-state">no dishes found</div>
+  ) : (
+    <div class="dish-list">
+      {dishes.map(dish => (
+        <DishCard dish={dish} currentLang={lang} />
+      ))}
+    </div>
+  )}
+</Layout>
