@@ -31,12 +31,13 @@ const siteUrl = 'https://wok.yuzhes.com';
 // ── Prose rendering ──────────────────────────────────────────────
 marked.setOptions({ gfm: true, breaks: false });
 // Strip H1 (already shown as page title)
-const proseWithoutH1 = prose.replace(/^#\s+.+\n/, '');
-// Strip the metadata line: **日期：** 2026-04-07 | [English](en.md) | ...
-// It contains relative .md links that don't work on the site; the nav has lang switcher anyway
+const proseWithoutH1 = prose.replace(/^#\s+.+$/m, '');
+// Strip the metadata line: **日期：** / **Date:** / **日付：** with lang links
+// Use multiline flag so ^ matches line start, not just string start
 const cleaned = proseWithoutH1
-  .replace(/^\*\*[^*]+:\*\*[^\n]*\n+/, '')   // metadata line
-  .replace(/^---\n+/, '');                    // following hr
+  .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')  // metadata line with .md links
+  .replace(/^\s*---\s*$/m, '')                                       // standalone hr after it
+  .trimStart();
 const htmlContent = marked.parse(cleaned) as string;
 
 // ── Alternates for lang switcher + hreflang ──────────────────────
