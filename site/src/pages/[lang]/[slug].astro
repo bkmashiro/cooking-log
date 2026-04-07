@@ -1,22 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getAllDishes, type Dish } from '../../lib/dishes';
+import { getAllDishes, type Dish, type Ingredient } from '../../lib/dishes';
 import { i18n, LANGS, type Lang } from '../../lib/i18n';
 import { marked } from 'marked';
 
 export function getStaticPaths() {
   const dishes = getAllDishes();
   const paths = [];
-
   for (const dish of dishes) {
     for (const lang of LANGS) {
-      paths.push({
-        params: { lang, slug: dish.urlSlug },
-        props: { dish },
-      });
+      paths.push({ params: { lang, slug: dish.urlSlug }, props: { dish } });
     }
   }
-
   return paths;
 }
 
@@ -28,65 +23,214 @@ const dishName = dish.recipe.dish[lang] || dish.recipe.dish.zh;
 const prose = dish.prose[lang] || dish.prose.zh;
 const siteUrl = 'https://wok.yuzhes.com';
 
-// ── Prose rendering ──────────────────────────────────────────────
+// ── Prose: strip H1, metadata line, and the auto-generated scale table ──
 marked.setOptions({ gfm: true, breaks: false });
-// Strip H1 (already shown as page title)
-const proseWithoutH1 = prose.replace(/^#\s+.+$/m, '');
-// Strip the metadata line: **日期：** / **Date:** / **日付：** with lang links
-// Use multiline flag so ^ matches line start, not just string start
-const cleaned = proseWithoutH1
-  .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')  // metadata line with .md links
-  .replace(/^\s*---\s*$/m, '')                                       // standalone hr after it
+const cleaned = prose
+  .replace(/^#\s+.+$/m, '')
+  .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')
+  .replace(/^\s*---\s*$/m, '')
+  // Strip the entire SCALED_TABLE block — replaced by interactive scaler below
+  .replace(/<!--\s*SCALED_TABLE:START[\s\S]*?SCALED_TABLE:END\s*-->/g, '')
   .trimStart();
 const htmlContent = marked.parse(cleaned) as string;
 
-// ── Alternates for lang switcher + hreflang ──────────────────────
+// ── Ingredient data for client-side scaler ───────────────────────
+const ingredientData = (dish.recipe.ingredients ?? []).map((ing: Ingredient) => ({
+  name: typeof ing.name === 'object' ? (ing.name[lang] ?? ing.name.zh) : ing.name,
+  amount: ing.amount ?? null,
+  unit: !ing.unit ? '' : (typeof ing.unit === 'object' ? (ing.unit[lang] ?? ing.unit.zh) : ing.unit),
+  scale: ing.scale ?? 'linear',
+  note: !ing.note ? '' : (typeof ing.note === 'object' ? (ing.note[lang] ?? ing.note.zh) : ing.note),
+}));
+
+const baseServings = dish.recipe.base_servings ?? 2;
+
+// ── i18n strings for the scaler UI ──────────────────────────────
+const scalerI18n = {
+  zh: { label: '份量', unit: '人份', ingredient: '食材', amount: '用量',
+        easter: [
+          [0,       '在喂空气？虚空不需要食物。'],
+          [-1,      '负数份量？时光倒流烹饪法，尚未开发。'],
+          [0.09,    '给蚂蚁做的？'],
+          [999,     '你在办婚宴？建议直接联系供应商。'],
+          ['nan',   '这不是一个数字。厨房不接受哲学输入。'],
+          ['inf',   '∞人份。宇宙热寂之前能做完吗？'],
+        ]},
+  en: { label: 'Servings', unit: '', ingredient: 'Ingredient', amount: 'Amount',
+        easter: [
+          [0,       'Cooking for no one? Feeding the void?'],
+          [-1,      'Negative servings? Time-travel cooking not yet supported.'],
+          [0.09,    'Cooking for ants?'],
+          [999,     'Opening a restaurant? Call a supplier.'],
+          ['nan',   'Not a number. The kitchen does not accept philosophical input.'],
+          ['inf',   '∞ servings. Will you finish before heat death of the universe?'],
+        ]},
+  ja: { label: '人数', unit: '人前', ingredient: '食材', amount: '分量',
+        easter: [
+          [0,       '0人前？空気に料理を？'],
+          [-1,      'マイナスの人数？タイムトラベル料理法、未実装。'],
+          [0.09,    'アリのために料理してるの？'],
+          [999,     'レストランを開業？業者に電話した方がいい。'],
+          ['nan',   '数字じゃない。キッチンは哲学的入力を受け付けません。'],
+          ['inf',   '∞人前。宇宙の熱的死滅前に完成する？'],
+        ]},
+}[lang];
+
+// ── Alternates + JSON-LD ─────────────────────────────────────────
 const alternates: Partial<Record<Lang, string>> = {};
-for (const l of LANGS) {
-  alternates[l] = `/${l}/${dish.urlSlug}/`;
-}
+for (const l of LANGS) alternates[l] = `/${l}/${dish.urlSlug}/`;
 
-// ── Page description ─────────────────────────────────────────────
-const localeName: Record<Lang, string> = { zh: '中文', en: 'English', ja: '日本語' };
-const pageDesc = `${dishName} — ${t.tagline}`;
-
-// ── Recipe JSON-LD ───────────────────────────────────────────────
-const recipeIngredients = (dish.recipe.ingredients ?? []).map(ing => {
-  const name = typeof ing.name === 'object' ? (ing.name[lang] ?? ing.name.zh) : ing.name;
-  if (!ing.amount) return name;
-  const unit = !ing.unit ? '' :
-    (typeof ing.unit === 'object' ? (ing.unit[lang] ?? ing.unit.zh) : ing.unit);
-  return `${ing.amount}${unit} ${name}`.trim();
-});
-
+const recipeIngredients = ingredientData.map(i =>
+  i.amount ? `${i.amount}${i.unit} ${i.name}`.trim() : i.name
+);
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Recipe',
-  name: dishName,
-  datePublished: dish.recipe.date,
+  '@context': 'https://schema.org', '@type': 'Recipe',
+  name: dishName, datePublished: dish.recipe.date,
   inLanguage: lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en-US',
-  recipeYield: `${dish.recipe.base_servings} servings`,
+  recipeYield: `${baseServings} servings`,
   recipeIngredient: recipeIngredients,
   url: `${siteUrl}/${lang}/${dish.urlSlug}/`,
-  isPartOf: {
-    '@type': 'WebSite',
-    name: t.siteTitle,
-    url: siteUrl,
-  },
 };
 ---
 
-<Layout
-  lang={lang}
-  title={dishName}
-  description={pageDesc}
-  slug={dish.urlSlug}
-  alternates={alternates}
-  jsonLd={jsonLd}
->
+<Layout lang={lang} title={dishName} description={`${dishName} — ${t.tagline}`}
+        slug={dish.urlSlug} alternates={alternates} jsonLd={jsonLd}>
   <div class="dish-detail">
     <a href={`/${lang}/`} class="back-link">{t.backToList}</a>
     <h1>{dishName}</h1>
+
+    <!-- Interactive serving scaler -->
+    <div class="scaler-section"
+         data-ingredients={JSON.stringify(ingredientData)}
+         data-base={baseServings}
+         data-i18n={JSON.stringify(scalerI18n)}>
+
+      <div class="scaler-control">
+        <span class="scaler-label">{scalerI18n.label}</span>
+        <button class="scaler-btn" id="scaler-minus">−</button>
+        <input class="scaler-input" id="scaler-input" type="number"
+               min="0.5" step="0.5" value={baseServings} />
+        <span class="scaler-unit">{scalerI18n.unit}</span>
+        <button class="scaler-btn" id="scaler-plus">＋</button>
+      </div>
+
+      <div id="scaler-easter" class="scaler-easter" hidden></div>
+
+      <table class="ingredient-table" id="scaler-table">
+        <thead>
+          <tr>
+            <th>{scalerI18n.ingredient}</th>
+            <th>{scalerI18n.amount}</th>
+          </tr>
+        </thead>
+        <tbody id="scaler-tbody"></tbody>
+      </table>
+    </div>
+
     <article class="prose" set:html={htmlContent} />
   </div>
 </Layout>
+
+<script>
+const FRACTIONS: Record<number, string> = {
+  0.25:'¼', 0.5:'½', 0.75:'¾',
+  1.25:'1¼', 1.5:'1½', 1.75:'1¾',
+  2.25:'2¼', 2.5:'2½', 2.75:'2¾',
+  3.25:'3¼', 3.5:'3½', 3.75:'3¾',
+  4.5:'4½', 5.5:'5½',
+};
+
+function fmt(v: number): string {
+  if (v <= 0) return '—';
+  for (const [fv, fs] of Object.entries(FRACTIONS)) {
+    if (Math.abs(v - +fv) < 0.015) return fs;
+  }
+  if (Math.abs(v - Math.round(v)) < 0.015) return String(Math.round(v));
+  if (v >= 10) return String(Math.round(v));
+  return v.toFixed(1).replace(/\.0$/, '');
+}
+
+function scaleAmt(ing: any, mult: number): string {
+  if (ing.scale === 'to_taste') return ing.unit || '—';
+  if (ing.scale === 'fixed' || ing.amount == null) return ing.amount != null ? `${ing.amount}${ing.unit}` : '适量';
+  const raw = ing.amount * mult;
+  if (ing.scale === 'discrete') {
+    const snapped = Math.max(0.5, Math.round(raw * 2) / 2);
+    if (snapped === Math.floor(snapped)) return `${Math.floor(snapped)}${ing.unit}`;
+    const w = Math.floor(snapped);
+    return w === 0 ? `½${ing.unit}` : `${w}½${ing.unit}`;
+  }
+  return `${fmt(raw)}${ing.unit}`;
+}
+
+type EasterEntry = [number | 'nan' | 'inf', string];
+
+function getEaster(val: number, isNaN_: boolean, isInf: boolean, easter: EasterEntry[]): string | null {
+  for (const [trigger, msg] of easter) {
+    if (trigger === 'nan' && isNaN_) return msg;
+    if (trigger === 'inf' && isInf) return msg;
+    if (typeof trigger === 'number') {
+      if (trigger < 0 && val < 0) return msg;
+      if (trigger === 0 && val === 0) return msg;
+      if (trigger > 0 && trigger < 0.1 && val > 0 && val < 0.1) return msg;
+      if (trigger >= 999 && val >= 999) return msg;
+    }
+  }
+  return null;
+}
+
+function render(section: HTMLElement, servings: number) {
+  const ingredients = JSON.parse(section.dataset.ingredients!);
+  const base = parseFloat(section.dataset.base!);
+  const i18n = JSON.parse(section.dataset.i18n!);
+  const tbody = section.querySelector('#scaler-tbody')!;
+  const easter = section.querySelector('#scaler-easter') as HTMLElement;
+  const table = section.querySelector('#scaler-table') as HTMLElement;
+
+  const isNaN_ = isNaN(servings);
+  const isInf = !isNaN_ && !isFinite(servings);
+  const isInvalid = isNaN_ || isInf || servings < 0;
+
+  const msg = getEaster(servings, isNaN_, isInf, i18n.easter);
+  if (msg || isInvalid) {
+    easter.textContent = msg ?? '🤔';
+    easter.hidden = false;
+    table.hidden = true;
+    return;
+  }
+
+  easter.hidden = true;
+  table.hidden = false;
+
+  const mult = base > 0 ? servings / base : 1;
+  tbody.innerHTML = ingredients.map((ing: any) => {
+    const amt = scaleAmt(ing, mult);
+    const note = ing.note ? ` <em class="ing-note">(${ing.note})</em>` : '';
+    return `<tr><td><strong>${ing.name}</strong>${note}</td><td>${amt}</td></tr>`;
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const section = document.querySelector('.scaler-section') as HTMLElement;
+  if (!section) return;
+
+  const input = section.querySelector('#scaler-input') as HTMLInputElement;
+  const base = parseFloat(section.dataset.base!);
+
+  const update = () => render(section, parseFloat(input.value));
+
+  section.querySelector('#scaler-minus')!.addEventListener('click', () => {
+    const v = Math.round((parseFloat(input.value) - 0.5) * 10) / 10;
+    input.value = String(Math.max(0, v));
+    update();
+  });
+  section.querySelector('#scaler-plus')!.addEventListener('click', () => {
+    const v = Math.round((parseFloat(input.value) + 0.5) * 10) / 10;
+    input.value = String(v);
+    update();
+  });
+  input.addEventListener('input', update);
+
+  render(section, base);
+});
+</script>
