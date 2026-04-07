@@ -323,7 +323,7 @@
     );
     return out;
   }
-  $: renderedSteps = steps.map(step => renderStep(step, scalerServings));
+  // renderedSteps computed inline in template for reliable reactivity
 
   // ── Timer badge click / panel click ──────────────────────────────
   function addTimerFromBadge(secs: number) {
@@ -451,7 +451,7 @@
               style={stepStyles[idx]}
             >
               <span class="cm-step-num">{idx + 1}</span>
-              <div class="cm-step-text">{@html renderedSteps[idx] ?? boldify(step)}</div>
+              <div class="cm-step-text">{@html renderStep(step, scalerServings)}</div>
             </div>
           {/each}
         </div>
