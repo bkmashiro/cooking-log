@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import CookingMode from '../../components/CookingMode.astro';
 import { getAllDishes, type Dish, type Ingredient } from '../../lib/dishes';
 import { i18n, LANGS, type Lang } from '../../lib/i18n';
 import { marked } from 'marked';
@@ -44,6 +45,14 @@ const ingredientData = (dish.recipe.ingredients ?? []).map((ing: Ingredient) => 
 }));
 
 const baseServings = dish.recipe.base_servings ?? 2;
+
+// ── Extract numbered steps from prose ────────────────────────
+const cookingSteps: string[] = [];
+const stepRegex = /^\d+\.\s+(.+)$/gm;
+let match;
+while ((match = stepRegex.exec(prose)) !== null) {
+  cookingSteps.push(match[1].trim());
+}
 
 // ── i18n strings for the scaler UI ──────────────────────────────
 const scalerI18n = {
@@ -126,6 +135,17 @@ const jsonLd = {
         <tbody id="scaler-tbody"></tbody>
       </table>
     </div>
+
+    <!-- Cooking Mode -->
+    {cookingSteps.length > 0 && (
+      <CookingMode
+        ingredients={ingredientData}
+        steps={cookingSteps}
+        dishName={dishName}
+        lang={lang}
+        baseServings={baseServings}
+      />
+    )}
 
     <article class="prose" set:html={htmlContent} />
   </div>

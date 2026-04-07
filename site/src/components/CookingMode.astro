@@ -1,0 +1,1314 @@
+---
+interface Ingredient {
+  name: string;
+  amount: number | null;
+  unit: string;
+  scale: string;
+  note: string;
+}
+
+interface Props {
+  ingredients: Ingredient[];
+  steps: string[];
+  dishName: string;
+  lang: 'zh' | 'en' | 'ja';
+  baseServings: number;
+}
+
+const { ingredients, steps, dishName, lang, baseServings } = Astro.props;
+
+const i18nStrings = {
+  zh: {
+    enterCooking: '🍳 进入烹饪模式',
+    prepMode: '备菜模式',
+    cookMode: '烹饪模式',
+    prepReady: '已备好',
+    startCooking: '开始烹饪 →',
+    prev: '← 上一步',
+    next: '下一步 →',
+    done: '完成！',
+    exit: '✕',
+    step: '步骤',
+    of: '/',
+    timer: '计时器',
+    start: '开始',
+    pause: '暂停',
+    reset: '重置',
+    min: '分钟',
+    custom: '自定义',
+    timerDone: '时间到！',
+    allPrepped: '所有食材已备好',
+    tapToExpand: '⏱ 计时器',
+  },
+  en: {
+    enterCooking: '🍳 Enter Cooking Mode',
+    prepMode: 'Prep Mode',
+    cookMode: 'Cook Mode',
+    prepReady: 'prepped',
+    startCooking: 'Start Cooking →',
+    prev: '← Prev',
+    next: 'Next →',
+    done: 'Done!',
+    exit: '✕',
+    step: 'Step',
+    of: '/',
+    timer: 'Timer',
+    start: 'Start',
+    pause: 'Pause',
+    reset: 'Reset',
+    min: 'min',
+    custom: 'Custom',
+    timerDone: "Time's up!",
+    allPrepped: 'All ingredients prepped!',
+    tapToExpand: '⏱ Timer',
+  },
+  ja: {
+    enterCooking: '🍳 調理モードへ',
+    prepMode: '下準備モード',
+    cookMode: '調理モード',
+    prepReady: '準備完了',
+    startCooking: '調理開始 →',
+    prev: '← 前へ',
+    next: '次へ →',
+    done: '完成！',
+    exit: '✕',
+    step: 'ステップ',
+    of: '/',
+    timer: 'タイマー',
+    start: '開始',
+    pause: '一時停止',
+    reset: 'リセット',
+    min: '分',
+    custom: 'カスタム',
+    timerDone: '時間切れ！',
+    allPrepped: '食材の準備完了！',
+    tapToExpand: '⏱ タイマー',
+  },
+}[lang];
+
+const ingredientsJson = JSON.stringify(ingredients);
+const stepsJson = JSON.stringify(steps);
+const i18nJson = JSON.stringify(i18nStrings);
+---
+
+<!-- Entry button -->
+<div class="cooking-mode-entry">
+  <button id="cooking-mode-open" class="cooking-mode-btn">
+    {i18nStrings.enterCooking}
+  </button>
+</div>
+
+<!-- Full-screen overlay -->
+<div id="cooking-mode-overlay" class="cm-overlay" hidden aria-modal="true" role="dialog">
+
+  <!-- PREP MODE -->
+  <div id="cm-prep" class="cm-screen">
+    <header class="cm-header">
+      <span class="cm-dish-name" id="cm-prep-dish-name"></span>
+      <span class="cm-mode-badge cm-badge-prep" id="cm-prep-badge"></span>
+      <button class="cm-exit-btn" id="cm-exit-prep" aria-label="Exit"></button>
+    </header>
+
+    <div class="cm-prep-body">
+      <div class="cm-prep-progress" id="cm-prep-progress">0 / 0 <span id="cm-prep-ready-label"></span></div>
+      <ul class="cm-ingredient-list" id="cm-ingredient-list"></ul>
+    </div>
+
+    <footer class="cm-footer">
+      <button class="cm-action-btn" id="cm-start-cook"></button>
+    </footer>
+  </div>
+
+  <!-- COOK MODE -->
+  <div id="cm-cook" class="cm-screen" hidden>
+    <header class="cm-header">
+      <span class="cm-dish-name" id="cm-cook-dish-name"></span>
+      <div class="cm-cook-meta">
+        <span class="cm-mode-badge cm-badge-cook" id="cm-cook-badge"></span>
+        <span class="cm-step-counter" id="cm-step-counter"></span>
+      </div>
+      <button class="cm-exit-btn" id="cm-exit-cook" aria-label="Exit"></button>
+    </header>
+
+    <!-- Progress bar -->
+    <div class="cm-progress-bar-wrap">
+      <div class="cm-progress-bar" id="cm-progress-bar"></div>
+    </div>
+
+    <div class="cm-cook-layout">
+      <!-- Steps panel -->
+      <div class="cm-steps-panel" id="cm-steps-panel">
+        <div class="cm-steps-container" id="cm-steps-container">
+          <!-- Steps rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Timer panel -->
+      <aside class="cm-timer-panel" id="cm-timer-panel">
+        <div class="cm-timer-header" id="cm-timer-toggle-btn">
+          <span id="cm-timer-label"></span>
+        </div>
+        <div class="cm-timer-body" id="cm-timer-body">
+          <div class="cm-timer-display" id="cm-timer-display">00:00</div>
+          <div class="cm-timer-presets">
+            <button class="cm-preset-btn" data-mins="1">1m</button>
+            <button class="cm-preset-btn" data-mins="3">3m</button>
+            <button class="cm-preset-btn" data-mins="5">5m</button>
+            <button class="cm-preset-btn" data-mins="10">10m</button>
+          </div>
+          <div class="cm-timer-custom">
+            <input type="number" id="cm-timer-custom-input" min="1" max="99" placeholder="—" />
+            <span id="cm-timer-min-label"></span>
+          </div>
+          <div class="cm-timer-controls">
+            <button class="cm-timer-btn cm-btn-start" id="cm-timer-start"></button>
+            <button class="cm-timer-btn cm-btn-reset" id="cm-timer-reset"></button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="cm-footer cm-cook-footer">
+      <button class="cm-nav-btn" id="cm-prev-btn"></button>
+      <span class="cm-step-display" id="cm-step-display"></span>
+      <button class="cm-nav-btn cm-nav-next" id="cm-next-btn"></button>
+    </footer>
+  </div>
+
+</div>
+
+<script define:vars={{ ingredientsJson, stepsJson, i18nJson, dishName, baseServings }}>
+(function() {
+  const ingredients = JSON.parse(ingredientsJson);
+  const steps = JSON.parse(stepsJson);
+  const T = JSON.parse(i18nJson);
+
+  // ── DOM refs ──────────────────────────────────────────────────
+  const overlay      = document.getElementById('cooking-mode-overlay');
+  const openBtn      = document.getElementById('cooking-mode-open');
+  const prepScreen   = document.getElementById('cm-prep');
+  const cookScreen   = document.getElementById('cm-cook');
+
+  // Prep
+  const prepDishName  = document.getElementById('cm-prep-dish-name');
+  const prepBadge     = document.getElementById('cm-prep-badge');
+  const prepProgress  = document.getElementById('cm-prep-progress');
+  const prepReadyLbl  = document.getElementById('cm-prep-ready-label');
+  const ingredientList= document.getElementById('cm-ingredient-list');
+  const startCookBtn  = document.getElementById('cm-start-cook');
+  const exitPrepBtn   = document.getElementById('cm-exit-prep');
+
+  // Cook
+  const cookDishName  = document.getElementById('cm-cook-dish-name');
+  const cookBadge     = document.getElementById('cm-cook-badge');
+  const stepCounter   = document.getElementById('cm-step-counter');
+  const stepsContainer= document.getElementById('cm-steps-container');
+  const progressBar   = document.getElementById('cm-progress-bar');
+  const prevBtn       = document.getElementById('cm-prev-btn');
+  const nextBtn       = document.getElementById('cm-next-btn');
+  const stepDisplay   = document.getElementById('cm-step-display');
+  const exitCookBtn   = document.getElementById('cm-exit-cook');
+
+  // Timer
+  const timerToggleBtn    = document.getElementById('cm-timer-toggle-btn');
+  const timerBody         = document.getElementById('cm-timer-body');
+  const timerDisplay      = document.getElementById('cm-timer-display');
+  const timerCustomInput  = document.getElementById('cm-timer-custom-input');
+  const timerStartBtn     = document.getElementById('cm-timer-start');
+  const timerResetBtn     = document.getElementById('cm-timer-reset');
+  const timerMinLabel     = document.getElementById('cm-timer-min-label');
+  const timerLabel        = document.getElementById('cm-timer-label');
+
+  // ── State ─────────────────────────────────────────────────────
+  let currentStep = 0;
+  let checkedCount = 0;
+  let timerSeconds = 0;
+  let timerTarget = 0;
+  let timerRunning = false;
+  let timerInterval = null;
+  let timerExpired = false;
+  let timerExpanded = true; // desktop always visible
+  let swipeStartX = 0;
+  let audioCtx = null;
+
+  // ── Helpers ───────────────────────────────────────────────────
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function boldify(text) {
+    return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
+
+  function fmtTime(secs) {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = (secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function getScaledAmount(ing) {
+    // Read current scaler value if available
+    const scalerInput = document.getElementById('scaler-input');
+    const servings = scalerInput ? parseFloat(scalerInput.value) || baseServings : baseServings;
+    const mult = baseServings > 0 ? servings / baseServings : 1;
+
+    if (ing.scale === 'to_taste') return ing.unit || '—';
+    if (ing.scale === 'fixed' || ing.amount == null) {
+      return ing.amount != null ? `${ing.amount}${ing.unit}` : '适量';
+    }
+
+    const raw = ing.amount * mult;
+
+    if (ing.scale === 'discrete') {
+      const snapped = Math.max(0.5, Math.round(raw * 2) / 2);
+      if (snapped === Math.floor(snapped)) return `${Math.floor(snapped)}${ing.unit}`;
+      const w = Math.floor(snapped);
+      return w === 0 ? `½${ing.unit}` : `${w}½${ing.unit}`;
+    }
+
+    // linear
+    const FRACS = {0.25:'¼',0.5:'½',0.75:'¾',1.25:'1¼',1.5:'1½',1.75:'1¾',
+                   2.25:'2¼',2.5:'2½',2.75:'2¾',3.25:'3¼',3.5:'3½',3.75:'3¾',
+                   4.5:'4½',5.5:'5½'};
+    for (const [fv, fs] of Object.entries(FRACS)) {
+      if (Math.abs(raw - +fv) < 0.015) return `${fs}${ing.unit}`;
+    }
+    if (Math.abs(raw - Math.round(raw)) < 0.015) return `${Math.round(raw)}${ing.unit}`;
+    if (raw >= 10) return `${Math.round(raw)}${ing.unit}`;
+    return `${raw.toFixed(1).replace(/\.0$/, '')}${ing.unit}`;
+  }
+
+  // ── Audio beep ────────────────────────────────────────────────
+  function playBeeps() {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const beepAt = (t) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = 880;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.3, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+        osc.start(t);
+        osc.stop(t + 0.25);
+      };
+      const now = audioCtx.currentTime;
+      beepAt(now);
+      beepAt(now + 0.35);
+      beepAt(now + 0.70);
+    } catch(e) {}
+  }
+
+  // ── Timer ─────────────────────────────────────────────────────
+  function updateTimerDisplay() {
+    timerDisplay.textContent = fmtTime(timerSeconds);
+    if (timerExpired) {
+      timerDisplay.classList.add('cm-timer-expired');
+    } else {
+      timerDisplay.classList.remove('cm-timer-expired');
+    }
+  }
+
+  function timerTick() {
+    if (!timerRunning) return;
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      updateTimerDisplay();
+    }
+    if (timerSeconds === 0 && timerRunning) {
+      timerRunning = false;
+      timerExpired = true;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerDisplay.classList.add('cm-timer-expired');
+      timerStartBtn.textContent = T.start;
+      playBeeps();
+      // Flash animation
+      let flashes = 0;
+      const flashInterval = setInterval(() => {
+        timerDisplay.classList.toggle('cm-timer-flash');
+        flashes++;
+        if (flashes >= 6) clearInterval(flashInterval);
+      }, 300);
+    }
+  }
+
+  function setTimer(mins) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning = false;
+    timerExpired = false;
+    timerTarget = mins * 60;
+    timerSeconds = timerTarget;
+    timerStartBtn.textContent = T.start;
+    updateTimerDisplay();
+  }
+
+  function initTimerUI() {
+    timerLabel.textContent = T.timer;
+    timerMinLabel.textContent = T.min;
+    timerStartBtn.textContent = T.start;
+    timerResetBtn.textContent = T.reset;
+
+    document.querySelectorAll('.cm-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mins = parseInt(btn.dataset.mins);
+        setTimer(mins);
+        timerCustomInput.value = '';
+      });
+    });
+
+    timerCustomInput.addEventListener('change', () => {
+      const val = parseInt(timerCustomInput.value);
+      if (val > 0) setTimer(val);
+    });
+
+    timerStartBtn.addEventListener('click', () => {
+      if (timerSeconds === 0 && !timerRunning) return;
+      timerExpired = false;
+      timerDisplay.classList.remove('cm-timer-expired', 'cm-timer-flash');
+      if (timerRunning) {
+        timerRunning = false;
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerStartBtn.textContent = T.start;
+      } else {
+        timerRunning = true;
+        timerStartBtn.textContent = T.pause;
+        timerInterval = setInterval(timerTick, 1000);
+      }
+    });
+
+    timerResetBtn.addEventListener('click', () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRunning = false;
+      timerExpired = false;
+      timerDisplay.classList.remove('cm-timer-expired', 'cm-timer-flash');
+      timerSeconds = timerTarget;
+      timerStartBtn.textContent = T.start;
+      updateTimerDisplay();
+    });
+
+    // Mobile toggle
+    timerToggleBtn.addEventListener('click', () => {
+      if (!isMobile()) return;
+      timerExpanded = !timerExpanded;
+      timerBody.classList.toggle('cm-timer-body-visible', timerExpanded);
+    });
+  }
+
+  // ── Prep mode ─────────────────────────────────────────────────
+  function initPrepScreen() {
+    prepDishName.textContent = dishName;
+    prepBadge.textContent = T.prepMode;
+    prepReadyLbl.textContent = T.prepReady;
+    startCookBtn.textContent = T.startCooking;
+    exitPrepBtn.textContent = T.exit;
+
+    ingredientList.innerHTML = '';
+    checkedCount = 0;
+
+    ingredients.forEach((ing, idx) => {
+      const li = document.createElement('li');
+      li.className = 'cm-ingredient-item';
+
+      const label = document.createElement('label');
+      label.className = 'cm-ing-label';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.className = 'cm-ing-checkbox';
+      checkbox.id = `cm-ing-${idx}`;
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'cm-ing-name';
+      nameSpan.textContent = ing.name;
+
+      const amtSpan = document.createElement('span');
+      amtSpan.className = 'cm-ing-amount';
+      amtSpan.textContent = getScaledAmount(ing);
+
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+          checkedCount++;
+          li.classList.add('cm-ing-checked');
+        } else {
+          checkedCount--;
+          li.classList.remove('cm-ing-checked');
+        }
+        updatePrepProgress();
+      });
+
+      label.appendChild(checkbox);
+      label.appendChild(nameSpan);
+      label.appendChild(amtSpan);
+      li.appendChild(label);
+      ingredientList.appendChild(li);
+    });
+
+    updatePrepProgress();
+  }
+
+  function updatePrepProgress() {
+    const total = ingredients.length;
+    prepProgress.innerHTML = `${checkedCount} / ${total} <span id="cm-prep-ready-label">${T.prepReady}</span>`;
+    const allDone = checkedCount === total && total > 0;
+    startCookBtn.classList.toggle('cm-btn-glow', allDone);
+  }
+
+  // ── Cook mode ─────────────────────────────────────────────────
+  function renderSteps() {
+    stepsContainer.innerHTML = '';
+    steps.forEach((step, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cm-step-item';
+      div.dataset.idx = String(idx);
+
+      const numSpan = document.createElement('span');
+      numSpan.className = 'cm-step-num';
+      numSpan.textContent = `${idx + 1}`;
+
+      const textDiv = document.createElement('div');
+      textDiv.className = 'cm-step-text';
+      textDiv.innerHTML = boldify(step);
+
+      div.appendChild(numSpan);
+      div.appendChild(textDiv);
+      stepsContainer.appendChild(div);
+    });
+  }
+
+  function updateCookDisplay() {
+    const total = steps.length;
+    if (total === 0) return;
+
+    cookDishName.textContent = dishName;
+    cookBadge.textContent = T.cookMode;
+    stepCounter.textContent = `${T.step} ${currentStep + 1}${T.of}${total}`;
+    stepDisplay.textContent = `${currentStep + 1} ${T.of} ${total}`;
+
+    // Progress bar
+    const pct = total > 1 ? (currentStep / (total - 1)) * 100 : 100;
+    progressBar.style.width = `${pct}%`;
+
+    // Update step visibility states
+    const stepEls = stepsContainer.querySelectorAll('.cm-step-item');
+    stepEls.forEach((el, idx) => {
+      el.classList.remove('cm-step-current', 'cm-step-prev', 'cm-step-prev2',
+                          'cm-step-next', 'cm-step-next2', 'cm-step-hidden');
+
+      if (idx === currentStep) {
+        el.classList.add('cm-step-current');
+        el.setAttribute('aria-current', 'step');
+      } else if (idx === currentStep - 1) {
+        el.classList.add('cm-step-prev');
+        el.removeAttribute('aria-current');
+      } else if (idx < currentStep - 1) {
+        el.classList.add('cm-step-prev2');
+        el.removeAttribute('aria-current');
+      } else if (idx === currentStep + 1) {
+        el.classList.add('cm-step-next');
+        el.removeAttribute('aria-current');
+      } else if (idx === currentStep + 2) {
+        el.classList.add('cm-step-next2');
+        el.removeAttribute('aria-current');
+      } else {
+        el.classList.add('cm-step-hidden');
+        el.removeAttribute('aria-current');
+      }
+    });
+
+    // Scroll current step into view
+    const currentEl = stepsContainer.querySelector('.cm-step-current');
+    if (currentEl) {
+      currentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Nav buttons
+    prevBtn.textContent = T.prev;
+    prevBtn.disabled = currentStep === 0;
+
+    if (currentStep >= total - 1) {
+      nextBtn.textContent = T.done;
+      nextBtn.classList.add('cm-btn-done');
+    } else {
+      nextBtn.textContent = T.next;
+      nextBtn.classList.remove('cm-btn-done');
+    }
+    exitCookBtn.textContent = T.exit;
+  }
+
+  function goNext() {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      updateCookDisplay();
+    } else {
+      closeOverlay();
+    }
+  }
+
+  function goPrev() {
+    if (currentStep > 0) {
+      currentStep--;
+      updateCookDisplay();
+    }
+  }
+
+  // ── Overlay open/close ────────────────────────────────────────
+  function openOverlay() {
+    overlay.hidden = false;
+    // Force reflow for transition
+    overlay.offsetHeight; // eslint-disable-line
+    overlay.classList.add('cm-overlay-visible');
+    document.body.classList.add('cm-body-lock');
+    showPrepScreen();
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('cm-overlay-visible');
+    document.body.classList.remove('cm-body-lock');
+    // Stop timer
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+    timerRunning = false;
+    setTimeout(() => { overlay.hidden = true; }, 300);
+  }
+
+  function showPrepScreen() {
+    prepScreen.hidden = false;
+    cookScreen.hidden = true;
+    initPrepScreen();
+  }
+
+  function showCookScreen() {
+    prepScreen.hidden = true;
+    cookScreen.hidden = false;
+    currentStep = 0;
+    renderSteps();
+    updateCookDisplay();
+
+    // Mobile timer starts collapsed
+    if (isMobile()) {
+      timerExpanded = false;
+      timerBody.classList.remove('cm-timer-body-visible');
+    } else {
+      timerExpanded = true;
+      timerBody.classList.add('cm-timer-body-visible');
+    }
+  }
+
+  // ── Swipe support ─────────────────────────────────────────────
+  function initSwipe() {
+    const panel = document.getElementById('cm-steps-panel');
+    panel.addEventListener('touchstart', (e) => {
+      swipeStartX = e.touches[0].clientX;
+    }, { passive: true });
+    panel.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - swipeStartX;
+      if (Math.abs(dx) > 60) {
+        if (dx < 0) goNext();
+        else goPrev();
+      }
+    }, { passive: true });
+  }
+
+  // ── Keyboard ──────────────────────────────────────────────────
+  function onKeydown(e) {
+    if (overlay.hidden) return;
+    if (!cookScreen.hidden) {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+      else if (e.key === 'Escape') closeOverlay();
+    } else if (!prepScreen.hidden) {
+      if (e.key === 'Escape') closeOverlay();
+    }
+  }
+
+  // ── Click on current step to advance ─────────────────────────
+  function initStepClick() {
+    stepsContainer.addEventListener('click', (e) => {
+      const stepEl = e.target.closest('.cm-step-current');
+      if (stepEl) goNext();
+    });
+  }
+
+  // ── Init ──────────────────────────────────────────────────────
+  function init() {
+    initTimerUI();
+    initSwipe();
+    initStepClick();
+
+    openBtn.addEventListener('click', openOverlay);
+    exitPrepBtn.addEventListener('click', closeOverlay);
+    exitCookBtn.addEventListener('click', closeOverlay);
+    startCookBtn.addEventListener('click', showCookScreen);
+    prevBtn.addEventListener('click', goPrev);
+    nextBtn.addEventListener('click', goNext);
+
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<style>
+/* ── Entry button ──────────────────────────────────────────────── */
+.cooking-mode-entry {
+  margin: 16px 0 32px;
+}
+
+.cooking-mode-btn {
+  background: var(--bg-elevated);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.04em;
+}
+
+.cooking-mode-btn:hover {
+  background: var(--accent);
+  color: #0d1117;
+  box-shadow: 0 0 16px rgba(230, 168, 23, 0.4);
+}
+
+/* ── Body lock ───────────────────────────────────────────────────── */
+:global(body.cm-body-lock) {
+  overflow: hidden;
+}
+
+/* ── Overlay ─────────────────────────────────────────────────────── */
+/* Must override browser [hidden]=display:none default — explicit display wins otherwise */
+.cm-overlay[hidden] { display: none !important; }
+
+.cm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-family: var(--font-mono);
+}
+
+.cm-overlay-visible {
+  opacity: 1;
+}
+
+/* ── Screens ─────────────────────────────────────────────────────── */
+.cm-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.cm-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  min-height: 52px;
+}
+
+.cm-dish-name {
+  flex: 1;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cm-cook-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cm-mode-badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.cm-badge-prep {
+  background: rgba(63, 185, 80, 0.15);
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+
+.cm-badge-cook {
+  background: rgba(230, 168, 23, 0.15);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.cm-step-counter {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.cm-exit-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.cm-exit-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ── Progress bar ────────────────────────────────────────────────── */
+.cm-progress-bar-wrap {
+  height: 3px;
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+}
+
+.cm-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* ── Prep body ───────────────────────────────────────────────────── */
+.cm-prep-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cm-prep-progress {
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  letter-spacing: 0.04em;
+}
+
+.cm-ingredient-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.cm-ingredient-item {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.cm-ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.cm-ingredient-item.cm-ing-checked {
+  background: rgba(63, 185, 80, 0.06);
+}
+
+.cm-ing-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.cm-ing-label:hover {
+  background: var(--bg-elevated);
+}
+
+.cm-ing-checkbox {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.cm-ing-name {
+  flex: 1;
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+.cm-ing-checked .cm-ing-name {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.cm-ing-amount {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cm-ing-checked .cm-ing-amount {
+  color: var(--text-muted);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.cm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.cm-cook-footer {
+  justify-content: space-between;
+}
+
+.cm-action-btn {
+  background: var(--bg-elevated);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 10px 28px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.2s;
+  letter-spacing: 0.04em;
+  min-height: 48px;
+}
+
+.cm-action-btn:hover {
+  background: var(--accent);
+  color: #0d1117;
+}
+
+.cm-action-btn.cm-btn-glow {
+  box-shadow: 0 0 20px rgba(230, 168, 23, 0.5);
+  animation: cm-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cm-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(230, 168, 23, 0.4); }
+  50% { box-shadow: 0 0 24px rgba(230, 168, 23, 0.7); }
+}
+
+.cm-nav-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 8px 18px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  min-height: 44px;
+  min-width: 100px;
+}
+
+.cm-nav-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cm-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.cm-nav-btn.cm-btn-done {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.cm-step-display {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* ── Cook layout ─────────────────────────────────────────────────── */
+.cm-cook-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.cm-steps-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px;
+  position: relative;
+}
+
+.cm-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  /* leave room for prev/next visibility */
+  padding: 40px 0;
+}
+
+/* ── Step items ──────────────────────────────────────────────────── */
+.cm-step-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid transparent;
+  transition: all 0.35s ease;
+  cursor: default;
+}
+
+.cm-step-current {
+  background: var(--bg-elevated);
+  border-left-color: var(--accent);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.cm-step-current .cm-step-num {
+  color: var(--accent);
+  font-size: 1rem;
+  min-width: 28px;
+  padding-top: 4px;
+}
+
+.cm-step-current .cm-step-text {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.cm-step-prev {
+  opacity: 0.45;
+  font-size: 0.9rem;
+}
+
+.cm-step-prev2 {
+  opacity: 0.2;
+  font-size: 0.85rem;
+}
+
+.cm-step-next {
+  opacity: 0.65;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.02);
+}
+
+.cm-step-next2 {
+  opacity: 0.4;
+  font-size: 0.9rem;
+}
+
+.cm-step-hidden {
+  opacity: 0.15;
+  font-size: 0.85rem;
+}
+
+.cm-step-num {
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 24px;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+}
+
+.cm-step-text {
+  flex: 1;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.cm-step-text strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ── Timer panel ─────────────────────────────────────────────────── */
+.cm-timer-panel {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.cm-timer-header {
+  padding: 14px 16px 10px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.cm-timer-body {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.cm-timer-display {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  padding: 8px 0;
+  border-radius: var(--radius);
+  transition: color 0.3s;
+}
+
+.cm-timer-expired {
+  color: var(--red) !important;
+}
+
+.cm-timer-flash {
+  background: rgba(248, 81, 73, 0.15);
+}
+
+.cm-timer-presets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.cm-preset-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 6px 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  min-height: 36px;
+}
+
+.cm-preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cm-timer-custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cm-timer-custom input {
+  flex: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  -moz-appearance: textfield;
+  min-height: 36px;
+}
+
+.cm-timer-custom input::-webkit-inner-spin-button,
+.cm-timer-custom input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.cm-timer-custom input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.cm-timer-custom span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.cm-timer-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.cm-timer-btn {
+  flex: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 7px 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  min-height: 36px;
+}
+
+.cm-btn-start {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cm-btn-start:hover {
+  background: rgba(230, 168, 23, 0.15);
+}
+
+.cm-btn-reset:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+/* ── Mobile / responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cm-header {
+    padding: 10px 14px;
+    min-height: 48px;
+  }
+
+  .cm-dish-name {
+    font-size: 0.9rem;
+  }
+
+  .cm-cook-layout {
+    flex-direction: column;
+  }
+
+  .cm-steps-panel {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+  }
+
+  .cm-steps-container {
+    padding: 16px 0;
+    max-width: 100%;
+  }
+
+  .cm-step-current {
+    font-size: 1.15rem;
+  }
+
+  /* Timer becomes bottom bar */
+  .cm-timer-panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .cm-timer-header {
+    cursor: pointer;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+  }
+
+  .cm-timer-header::after {
+    content: '▲';
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+    color: var(--text-muted);
+  }
+
+  .cm-timer-body {
+    display: none;
+    max-height: 280px;
+  }
+
+  .cm-timer-body.cm-timer-body-visible {
+    display: flex;
+  }
+
+  .cm-timer-display {
+    font-size: 2rem;
+  }
+
+  .cm-footer {
+    padding: 10px 14px;
+  }
+
+  .cm-nav-btn {
+    min-width: 80px;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .cm-prep-body {
+    padding: 16px 14px;
+  }
+
+  .cm-ing-label {
+    padding: 12px 14px;
+    min-height: 52px;
+  }
+}
+</style>

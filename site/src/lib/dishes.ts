@@ -39,11 +39,9 @@ function readProse(dishDir: string, lang: Lang): string {
   const filePath = path.join(dishDir, `${lang}.md`);
   try {
     let content = fs.readFileSync(filePath, 'utf-8');
-    // Strip sentinel HTML comments (keep the content between them)
-    // The block looks like <!-- SCALED_TABLE:START ... --> ... <!-- SCALED_TABLE:END -->
-    // We want to keep the inner content but remove the comment markers
-    content = content.replace(/<!--\s*SCALED_TABLE:START[^>]*-->/g, '');
-    content = content.replace(/<!--\s*SCALED_TABLE:END\s*-->/g, '');
+    // Strip the entire SCALED_TABLE block (sentinel comments + all content between them)
+    // The interactive scaler in the page replaces this static table
+    content = content.replace(/<!--\s*SCALED_TABLE:START[\s\S]*?SCALED_TABLE:END\s*-->/g, '');
     return content;
   } catch {
     return '';
