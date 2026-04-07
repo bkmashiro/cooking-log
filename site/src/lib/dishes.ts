@@ -3,7 +3,8 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 import type { Lang } from './i18n';
 
-const DISHES_DIR = path.resolve('/workspace/group/dishes');
+// Relative to the site/ directory: site/../dishes = repo root /dishes/
+const DISHES_DIR = path.resolve(new URL('../../..', import.meta.url).pathname, 'dishes');
 
 export interface MultiLang {
   zh: string;
