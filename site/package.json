@@ -10,7 +10,6 @@
   "dependencies": {
     "astro": "^4.16.0",
     "js-yaml": "^4.1.0",
-    "marked": "^12.0.0",
-    "@fontsource/jetbrains-mono": "^5.0.0"
+    "marked": "^12.0.0"
   }
 }

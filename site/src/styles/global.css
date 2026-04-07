@@ -1,7 +1,3 @@
-/* JetBrains Mono via fontsource */
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/700.css';
-
 /* ── CSS Custom Properties ─────────────────────────────────────── */
 :root {
   --bg:          #0d1117;
@@ -14,7 +10,11 @@
   --accent-dim:  #b8841a;
   --green:       #3fb950;
   --red:         #f85149;
-  --font-mono:   'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  /* IBM Plex Mono (Google Fonts) → SF Mono → system mono fallback */
+  --font-mono:   'IBM Plex Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  /* CJK system font fallback chain */
+  --font-cjk:    'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC',
+                 'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
   --radius:      4px;
 }
 
@@ -27,11 +27,16 @@
 
 html {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 15px;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
+}
+
+/* CJK characters fall back to system sans-serif — much more readable */
+:lang(zh), :lang(ja) {
+  font-family: var(--font-mono), var(--font-cjk);
 }
 
 body {
