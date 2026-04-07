@@ -289,6 +289,58 @@
     return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   }
 
+  // ── Step rendering: ingredient refs + time badges ────────────────
+  function timeUnitToSecs(n: number, unit: string): number {
+    const u = unit.toLowerCase();
+    if (/小时|hours?|hrs?|時間/.test(u)) return n * 3600;
+    if (/分钟|分|minutes?|mins?/.test(u)) return n * 60;
+    return n; // seconds
+  }
+  function fmtBadgeLabel(secs: number): string {
+    if (secs >= 3600) return `${secs % 3600 === 0 ? secs/3600 : (secs/3600).toFixed(1)}h`;
+    if (secs >= 60)   return `${Math.round(secs/60)}min`;
+    return `${secs}s`;
+  }
+  // scalerServings param ensures reactive re-render when servings change
+  function renderStep(text: string, _sv: number): string {
+    // 1. {{食材名}} → scaled amount (backward-compat: no-op if none present)
+    let out = text.replace(/\{\{([^}]+)\}\}/g, (_, name) => {
+      const ing = ingredients.find(i => i.name === name.trim());
+      if (!ing) return `<span class="cm-step-ing-missing">{{${name}}}</span>`;
+      const p = scaleAmtParts(ing);
+      return `<span class="cm-step-ing">${p.num}${p.unit ? `<small>${p.unit}</small>` : ''}</span>`;
+    });
+    // 2. Boldify **...**
+    out = boldify(out);
+    // 3. Time patterns → clickable timer badge (keep original text inside)
+    out = out.replace(
+      /(\d+(?:\.\d+)?)(?:\s*[-~到至]\s*\d+(?:\.\d+)?)?\s*(分钟|小时|秒钟?|minutes?|hours?|mins?|hrs?|seconds?|secs?|分|時間)/gi,
+      (match, num, unit) => {
+        const secs = timeUnitToSecs(parseFloat(num), unit);
+        return `<button class="cm-time-badge" data-secs="${secs}">⏰ ${match.trim()}</button>`;
+      }
+    );
+    return out;
+  }
+  $: renderedSteps = steps.map(step => renderStep(step, scalerServings));
+
+  // ── Timer badge click / panel click ──────────────────────────────
+  function addTimerFromBadge(secs: number) {
+    const tm = mkTimer();
+    tm.seconds = secs;
+    timers = [...timers, tm];
+    startInst(tm);
+  }
+  function onPanelClick(e: MouseEvent) {
+    const badge = (e.target as Element).closest('.cm-time-badge');
+    if (badge) {
+      const secs = parseInt((badge as HTMLElement).dataset.secs ?? '0');
+      if (secs > 0) addTimerFromBadge(secs);
+      return; // don't advance step
+    }
+    goNext();
+  }
+
   $: progressPct = steps.length > 1 ? (currentStep / (steps.length - 1)) * 100 : 100;
 </script>
 
@@ -380,12 +432,12 @@
     </div>
 
     <div class="cm-cook-layout">
-      <!-- Steps drum — clicking anywhere advances -->
+      <!-- Steps drum — clicking anywhere advances (except timer badges) -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="cm-steps-panel"
-        on:click={goNext}
+        on:click={onPanelClick}
         on:touchstart={swipeStart}
         on:touchend={swipeEnd}
       >
@@ -398,7 +450,7 @@
               style={stepStyles[idx]}
             >
               <span class="cm-step-num">{idx + 1}</span>
-              <div class="cm-step-text">{@html boldify(step)}</div>
+              <div class="cm-step-text">{@html renderedSteps[idx] ?? boldify(step)}</div>
             </div>
           {/each}
         </div>
@@ -903,6 +955,53 @@
   line-height: 1.65;
 }
 .cm-step-text :global(strong) { color: inherit; font-weight: 700; }
+
+/* Time badge inside step text */
+.cm-step-text :global(.cm-time-badge) {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(88,166,255,0.12);
+  border: 1px solid rgba(88,166,255,0.35);
+  color: #58a6ff;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 10px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1.6;
+}
+.cm-step-text :global(.cm-time-badge:hover) {
+  background: rgba(88,166,255,0.22);
+  border-color: rgba(88,166,255,0.6);
+}
+
+/* Inline scaled ingredient amount */
+.cm-step-text :global(.cm-step-ing) {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  background: rgba(230,168,23,0.12);
+  border: 1px solid rgba(230,168,23,0.3);
+  color: var(--accent);
+  font-weight: 700;
+  padding: 0 6px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  vertical-align: middle;
+}
+.cm-step-text :global(.cm-step-ing small) {
+  font-size: 0.78em;
+  opacity: 0.8;
+  font-weight: 500;
+}
+.cm-step-text :global(.cm-step-ing-missing) {
+  color: var(--red);
+  font-size: 0.8em;
+}
 
 /* ── Timer ───────────────────────────────────────────────────────── */
 .cm-timer-panel {
