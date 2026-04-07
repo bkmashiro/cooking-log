@@ -137,8 +137,9 @@ a:hover {
 
 .dish-entry {
   display: flex;
-  align-items: baseline;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   padding: 10px 16px;
   border-bottom: 1px solid var(--border);
   transition: background 0.1s;
@@ -152,17 +153,11 @@ a:hover {
   background: var(--bg-elevated);
 }
 
-.dish-date {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  white-space: nowrap;
-  min-width: 90px;
-}
-
 .dish-name {
   flex: 1;
   color: var(--text);
   font-weight: 700;
+  min-width: 0;
 }
 
 .dish-name a {
@@ -172,6 +167,20 @@ a:hover {
 .dish-name a:hover {
   color: var(--accent);
   text-decoration: none;
+}
+
+.dish-entry-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.dish-date {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  opacity: 0.6;
 }
 
 .dish-lang-links {
@@ -187,7 +196,8 @@ a:hover {
   border-radius: var(--radius);
 }
 
-.dish-lang-links a:hover {
+.dish-lang-links a:hover,
+.dish-lang-links a.active {
   color: var(--accent);
   border-color: var(--accent);
   text-decoration: none;

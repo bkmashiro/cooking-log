@@ -17,19 +17,21 @@ const slug = encodeURIComponent(dish.slug);
 ---
 
 <div class="dish-entry">
-  <span class="dish-date">{dish.recipe.date}</span>
   <span class="dish-name">
     <a href={`/${currentLang}/${slug}/`}>{dishName}</a>
   </span>
-  <div class="dish-lang-links">
-    {(['zh', 'en', 'ja'] as const).map(l => (
-      <a
-        href={`/${l}/${slug}/`}
-        class={l === currentLang ? 'active' : ''}
-        title={i18n[l].langName}
-      >
-        {l}
-      </a>
-    ))}
+  <div class="dish-entry-right">
+    <div class="dish-lang-links">
+      {(['zh', 'en', 'ja'] as const).map(l => (
+        <a
+          href={`/${l}/${slug}/`}
+          class={l === currentLang ? 'active' : ''}
+          title={i18n[l].langName}
+        >
+          {l}
+        </a>
+      ))}
+    </div>
+    <span class="dish-date">{dish.recipe.date}</span>
   </div>
 </div>

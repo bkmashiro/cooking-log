@@ -66,6 +66,11 @@ export function getAllDishes(): Dish[] {
       const raw = fs.readFileSync(recipeFile, 'utf-8');
       const recipe = yaml.load(raw) as RecipeYaml;
 
+      // js-yaml parses bare YAML dates as JS Date objects — normalise to YYYY-MM-DD string
+      if (recipe.date instanceof Date) {
+        recipe.date = recipe.date.toISOString().slice(0, 10);
+      }
+
       const prose: Record<Lang, string> = {
         zh: readProse(dishDir, 'zh'),
         en: readProse(dishDir, 'en'),
