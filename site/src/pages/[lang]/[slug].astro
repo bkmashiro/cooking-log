@@ -25,16 +25,6 @@ const dishName = dish.recipe.dish[lang] || dish.recipe.dish.zh;
 const prose = dish.prose[lang] || dish.prose.zh;
 const siteUrl = 'https://wok.yuzhes.com';
 
-// ── Prose: strip H1, metadata line, and the auto-generated scale table ──
-marked.setOptions({ gfm: true, breaks: false });
-const cleaned = prose
-  .replace(/^#\s+.+$/m, '')
-  .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')
-  .replace(/^\s*---\s*$/m, '')
-  .replace(/<!--\s*SCALED_TABLE:START[\s\S]*?SCALED_TABLE:END\s*-->/g, '')
-  .trimStart();
-const htmlContent = marked.parse(cleaned) as string;
-
 // ── Ingredient data ──────────────────────────────────────────────
 const ingredientData = (dish.recipe.ingredients ?? []).map((ing: Ingredient) => ({
   name: typeof ing.name === 'object' ? (ing.name[lang] ?? ing.name.zh) : ing.name,
@@ -46,7 +36,23 @@ const ingredientData = (dish.recipe.ingredients ?? []).map((ing: Ingredient) => 
 
 const baseServings = dish.recipe.base_servings ?? 2;
 
-// ── Extract numbered steps from prose ────────────────────────────
+// ── Prose: strip H1, metadata, scale table; resolve {{N}} to base amounts ──
+marked.setOptions({ gfm: true, breaks: false });
+const cleaned = prose
+  .replace(/^#\s+.+$/m, '')
+  .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')
+  .replace(/^\s*---\s*$/m, '')
+  .replace(/<!--\s*SCALED_TABLE:START[\s\S]*?SCALED_TABLE:END\s*-->/g, '')
+  // Replace {{N}} ingredient refs with base amounts for the static prose view
+  .replace(/\{\{(\d+)\}\}/g, (_, i) => {
+    const ing = ingredientData[parseInt(i)];
+    if (!ing) return '';
+    return ing.amount != null ? `${ing.amount}${ing.unit}` : '';
+  })
+  .trimStart();
+const htmlContent = marked.parse(cleaned) as string;
+
+// ── Extract numbered steps from prose (before {{N}} substitution) ──────────
 const cookingSteps: string[] = [];
 const stepRegex = /^\d+\.\s+(.+)$/gm;
 let match;
