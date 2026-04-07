@@ -30,8 +30,13 @@ const siteUrl = 'https://wok.yuzhes.com';
 
 // ── Prose rendering ──────────────────────────────────────────────
 marked.setOptions({ gfm: true, breaks: false });
+// Strip H1 (already shown as page title)
 const proseWithoutH1 = prose.replace(/^#\s+.+\n/, '');
-const cleaned = proseWithoutH1.replace(/^\*\*[^*]+:\*\*[^\n]*\n\n?---\n\n?/, '');
+// Strip the metadata line: **日期：** 2026-04-07 | [English](en.md) | ...
+// It contains relative .md links that don't work on the site; the nav has lang switcher anyway
+const cleaned = proseWithoutH1
+  .replace(/^\*\*[^*]+:\*\*[^\n]*\n+/, '')   // metadata line
+  .replace(/^---\n+/, '');                    // following hr
 const htmlContent = marked.parse(cleaned) as string;
 
 // ── Alternates for lang switcher + hreflang ──────────────────────
