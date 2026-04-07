@@ -1,24 +1,6 @@
----
-dish: 黑椒牛小排
-date: 2026-04-07
-base_servings: 2
-ingredients:
-  - { name: 牛小排,       amount: 500,  unit: g,   scale: linear }
-  - { name: 黑胡椒碎,     amount: 1.5,  unit: 茶匙, scale: linear,   note: 粗磨更香 }
-  - { name: 盐,           amount: 1,    unit: 茶匙, scale: linear }
-  - { name: 蒜,           amount: 3,    unit: 瓣,   scale: discrete, note: 切末 }
-  - { name: 洋葱,         amount: 0.5,  unit: 个,   scale: discrete, note: 切丝 }
-  - { name: 黄油,         amount: 20,   unit: g,   scale: linear }
-  - { name: 生抽,         amount: 1,    unit: 汤匙, scale: linear }
-  - { name: 牛肉高汤,     amount: 100,  unit: ml,  scale: linear,   note: 或清水 }
-  - { name: 食用油,       scale: to_taste }
-  - { name: 淀粉,         amount: 1,    unit: 茶匙, scale: linear,   note: 可选，勾芡用 }
----
-
 # 黑椒牛小排
 
-**日期：** 2026-04-07
-**食材：** 牛小排（Short Ribs）
+**日期：** 2026-04-07 | [English](en.md) | [日本語](ja.md)
 
 ---
 
@@ -27,10 +9,10 @@ ingredients:
 
 ## 📐 份量换算
 
-> 自动生成 · 基础份量：2人份 · ✦ = 原始食谱
-> `discrete` 食材（整颗蔬菜等）已取整至整数；`适量` 食材不参与换算。
+> 🤖 自动生成 · 基础份量：2人份 · ✦ = 原始食谱
+> `discrete` 食材已取整至½步进；`适量` 食材不参与换算。
 
-| 食材 | ¼x<br/>(½人份) | ½x<br/>(1人份) | 1x<br/>(2人份 ✦) | 1½x<br/>(3人份) | 2x<br/>(4人份) | 2½x<br/>(5人份) |
+| 食材 | ¼x<br/>(½人份) | ½x<br/>(1人份) | 1x<br/>(2人份✦) | 1½x<br/>(3人份) | 2x<br/>(4人份) | 2½x<br/>(5人份) |
 |:---|---:|---:|---:|---:|---:|---:|
 | **牛小排** | 125g | 250g | **500g** | 750g | 1000g | 1250g |
 | **黑胡椒碎** *(粗磨更香)* | 0.4茶匙 | ¾茶匙 | **1½茶匙** | 2¼茶匙 | 3茶匙 | 3¾茶匙 |

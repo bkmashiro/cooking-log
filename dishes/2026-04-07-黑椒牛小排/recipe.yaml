@@ -1,0 +1,61 @@
+dish:
+  zh: 黑椒牛小排
+  en: Black Pepper Short Ribs
+  ja: 黒胡椒牛バラ肉
+
+date: 2026-04-07
+base_servings: 2
+
+ingredients:
+  - name: { zh: 牛小排,     en: Short Ribs,             ja: 牛バラ肉 }
+    amount: 500
+    unit: g
+    scale: linear
+
+  - name: { zh: 黑胡椒碎,   en: Crushed Black Pepper,   ja: 粗挽き黒胡椒 }
+    amount: 1.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 粗磨更香, en: coarser grind preferred, ja: 粗く挽くと香り豊か }
+
+  - name: { zh: 盐,         en: Salt,                   ja: 塩 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 蒜,         en: Garlic,                 ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 切末, en: minced, ja: みじん切り }
+
+  - name: { zh: 洋葱,       en: Onion,                  ja: 玉ねぎ }
+    amount: 0.5
+    unit: { zh: 个, en: " medium", ja: 個 }
+    scale: discrete
+    note: { zh: 切丝, en: julienned, ja: 細切り }
+
+  - name: { zh: 黄油,       en: Butter,                 ja: バター }
+    amount: 20
+    unit: g
+    scale: linear
+
+  - name: { zh: 生抽,       en: Light Soy Sauce,        ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 牛肉高汤,   en: Beef Stock,             ja: 牛肉だし }
+    amount: 100
+    unit: ml
+    scale: linear
+    note: { zh: 或清水, en: or water, ja: または水 }
+
+  - name: { zh: 食用油,     en: Cooking Oil,            ja: サラダ油 }
+    scale: to_taste
+
+  - name: { zh: 淀粉,       en: Starch,                 ja: 片栗粉 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: "可选，勾芡用", en: "optional, for thickening", ja: "とろみ付け用（任意）" }
