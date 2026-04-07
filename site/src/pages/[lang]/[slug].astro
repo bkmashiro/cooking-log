@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import CookingMode from '../../components/CookingMode.astro';
+import Scaler from '../../components/Scaler.svelte';
+import CookingMode from '../../components/CookingMode.svelte';
 import { getAllDishes, type Dish, type Ingredient } from '../../lib/dishes';
 import { i18n, LANGS, type Lang } from '../../lib/i18n';
 import { marked } from 'marked';
@@ -30,12 +31,11 @@ const cleaned = prose
   .replace(/^#\s+.+$/m, '')
   .replace(/^\*\*[^*\n]+\*\*[^\n]*\[.*\]\(.*\.md\)[^\n]*$/m, '')
   .replace(/^\s*---\s*$/m, '')
-  // Strip the entire SCALED_TABLE block — replaced by interactive scaler below
   .replace(/<!--\s*SCALED_TABLE:START[\s\S]*?SCALED_TABLE:END\s*-->/g, '')
   .trimStart();
 const htmlContent = marked.parse(cleaned) as string;
 
-// ── Ingredient data for client-side scaler ───────────────────────
+// ── Ingredient data ──────────────────────────────────────────────
 const ingredientData = (dish.recipe.ingredients ?? []).map((ing: Ingredient) => ({
   name: typeof ing.name === 'object' ? (ing.name[lang] ?? ing.name.zh) : ing.name,
   amount: ing.amount ?? null,
@@ -46,7 +46,7 @@ const ingredientData = (dish.recipe.ingredients ?? []).map((ing: Ingredient) => 
 
 const baseServings = dish.recipe.base_servings ?? 2;
 
-// ── Extract numbered steps from prose ────────────────────────
+// ── Extract numbered steps from prose ────────────────────────────
 const cookingSteps: string[] = [];
 const stepRegex = /^\d+\.\s+(.+)$/gm;
 let match;
@@ -54,7 +54,7 @@ while ((match = stepRegex.exec(prose)) !== null) {
   cookingSteps.push(match[1].trim());
 }
 
-// ── i18n strings for the scaler UI ──────────────────────────────
+// ── i18n for Svelte components ───────────────────────────────────
 const scalerI18n = {
   zh: { label: '份量', unit: '人份', ingredient: '食材', amount: '用量', toTaste: '适量',
         easter: [
@@ -85,6 +85,33 @@ const scalerI18n = {
         ]},
 }[lang];
 
+const cookingI18n = {
+  zh: {
+    enterCooking: '🍳 进入烹饪模式', prepMode: '备菜模式', cookMode: '烹饪模式',
+    prepReady: '已备好', startCooking: '开始烹饪 →',
+    prev: '← 上一步', next: '下一步 →', done: '完成！', exit: '✕',
+    step: '步骤', of: '/', timer: '计时器', start: '开始', pause: '暂停',
+    reset: '重置', min: '分钟', timerDone: '时间到！',
+    allPrepped: '所有食材已备好', tapToExpand: '⏱ 计时器', toTaste: '适量',
+  },
+  en: {
+    enterCooking: '🍳 Enter Cooking Mode', prepMode: 'Prep Mode', cookMode: 'Cook Mode',
+    prepReady: 'prepped', startCooking: 'Start Cooking →',
+    prev: '← Prev', next: 'Next →', done: 'Done!', exit: '✕',
+    step: 'Step', of: '/', timer: 'Timer', start: 'Start', pause: 'Pause',
+    reset: 'Reset', min: 'min', timerDone: "Time's up!",
+    allPrepped: 'All ingredients prepped!', tapToExpand: '⏱ Timer', toTaste: 'to taste',
+  },
+  ja: {
+    enterCooking: '🍳 調理モードへ', prepMode: '下準備モード', cookMode: '調理モード',
+    prepReady: '準備完了', startCooking: '調理開始 →',
+    prev: '← 前へ', next: '次へ →', done: '完成！', exit: '✕',
+    step: 'ステップ', of: '/', timer: 'タイマー', start: '開始', pause: '一時停止',
+    reset: 'リセット', min: '分', timerDone: '時間切れ！',
+    allPrepped: '食材の準備完了！', tapToExpand: '⏱ タイマー', toTaste: '適量',
+  },
+}[lang];
+
 // ── Alternates + JSON-LD ─────────────────────────────────────────
 const alternates: Partial<Record<Lang, string>> = {};
 for (const l of LANGS) alternates[l] = `/${l}/${dish.urlSlug}/`;
@@ -108,162 +135,24 @@ const jsonLd = {
     <a href={`/${lang}/`} class="back-link">{t.backToList}</a>
     <h1>{dishName}</h1>
 
-    <!-- Interactive serving scaler -->
-    <div class="scaler-section"
-         data-ingredients={JSON.stringify(ingredientData)}
-         data-base={baseServings}
-         data-i18n={JSON.stringify(scalerI18n)}>
+    <Scaler
+      client:load
+      ingredients={ingredientData}
+      baseServings={baseServings}
+      i18n={scalerI18n}
+    />
 
-      <div class="scaler-control">
-        <span class="scaler-label">{scalerI18n.label}</span>
-        <button class="scaler-btn" id="scaler-minus">−</button>
-        <input class="scaler-input" id="scaler-input" type="number"
-               min="0.5" step="0.5" value={baseServings} />
-        <span class="scaler-unit">{scalerI18n.unit}</span>
-        <button class="scaler-btn" id="scaler-plus">＋</button>
-      </div>
-
-      <div id="scaler-easter" class="scaler-easter" hidden></div>
-
-      <table class="ingredient-table" id="scaler-table">
-        <thead>
-          <tr>
-            <th>{scalerI18n.ingredient}</th>
-            <th>{scalerI18n.amount}</th>
-          </tr>
-        </thead>
-        <tbody id="scaler-tbody"></tbody>
-      </table>
-    </div>
-
-    <!-- Cooking Mode -->
     {cookingSteps.length > 0 && (
       <CookingMode
+        client:load
         ingredients={ingredientData}
         steps={cookingSteps}
         dishName={dishName}
-        lang={lang}
         baseServings={baseServings}
+        t={cookingI18n}
       />
     )}
 
     <article class="prose" set:html={htmlContent} />
   </div>
 </Layout>
-
-<script>
-const FRACTIONS: Record<number, string> = {
-  0.25:'¼', 0.5:'½', 0.75:'¾',
-  1.25:'1¼', 1.5:'1½', 1.75:'1¾',
-  2.25:'2¼', 2.5:'2½', 2.75:'2¾',
-  3.25:'3¼', 3.5:'3½', 3.75:'3¾',
-  4.5:'4½', 5.5:'5½',
-};
-
-function fmt(v: number): string {
-  if (v <= 0) return '—';
-  for (const [fv, fs] of Object.entries(FRACTIONS)) {
-    if (Math.abs(v - +fv) < 0.015) return fs;
-  }
-  if (Math.abs(v - Math.round(v)) < 0.015) return String(Math.round(v));
-  if (v >= 10) return String(Math.round(v));
-  return v.toFixed(1).replace(/\.0$/, '');
-}
-
-function scaleAmt(ing: any, mult: number, toTaste: string): string {
-  if (ing.scale === 'to_taste') return toTaste;
-  if (ing.scale === 'fixed' || ing.amount == null) return ing.amount != null ? `${ing.amount}${ing.unit}` : toTaste;
-  const raw = ing.amount * mult;
-  if (ing.scale === 'discrete') {
-    const snapped = Math.max(0.5, Math.round(raw * 2) / 2);
-    if (snapped === Math.floor(snapped)) return `${Math.floor(snapped)}${ing.unit}`;
-    const w = Math.floor(snapped);
-    return w === 0 ? `½${ing.unit}` : `${w}½${ing.unit}`;
-  }
-  return `${fmt(raw)}${ing.unit}`;
-}
-
-type EasterEntry = [number | 'nan' | 'inf', string];
-
-function getEaster(val: number, isNaN_: boolean, isInf: boolean, easter: EasterEntry[]): string | null {
-  for (const [trigger, msg] of easter) {
-    if (trigger === 'nan' && isNaN_) return msg;
-    if (trigger === 'inf' && isInf) return msg;
-    if (typeof trigger === 'number') {
-      if (trigger < 0 && val < 0) return msg;
-      if (trigger === 0 && val === 0) return msg;
-      if (trigger > 0 && trigger < 0.1 && val > 0 && val < 0.1) return msg;
-      if (trigger >= 999 && val >= 999) return msg;
-    }
-  }
-  return null;
-}
-
-function render(section: HTMLElement, servings: number) {
-  const ingredients = JSON.parse(section.dataset.ingredients!);
-  const base = parseFloat(section.dataset.base!);
-  const i18n = JSON.parse(section.dataset.i18n!);
-  const tbody = section.querySelector('#scaler-tbody')!;
-  const easter = section.querySelector('#scaler-easter') as HTMLElement;
-  const table = section.querySelector('#scaler-table') as HTMLElement;
-
-  const isNaN_ = isNaN(servings);
-  const isInf = !isNaN_ && !isFinite(servings);
-
-  const msg = getEaster(servings, isNaN_, isInf, i18n.easter);
-
-  // NaN / Infinity: can't calculate — show only the quip
-  if (isNaN_ || isInf) {
-    easter.textContent = msg ?? '🤔';
-    easter.hidden = false;
-    table.hidden = true;
-    return;
-  }
-
-  // Valid number (even 0, negative, 999): show quip if any, but always render table
-  if (msg) {
-    easter.textContent = msg;
-    easter.hidden = false;
-  } else {
-    easter.hidden = true;
-  }
-  table.hidden = false;
-
-  const mult = base > 0 ? servings / base : 0;
-  tbody.innerHTML = ingredients.map((ing: any) => {
-    const amt = scaleAmt(ing, mult, i18n.toTaste);
-    const note = ing.note ? ` <em class="ing-note">(${ing.note})</em>` : '';
-    return `<tr><td><strong>${ing.name}</strong>${note}</td><td>${amt}</td></tr>`;
-  }).join('');
-}
-
-function initScaler() {
-  const section = document.querySelector('.scaler-section') as HTMLElement;
-  if (!section) return;
-
-  const input = section.querySelector('#scaler-input') as HTMLInputElement;
-  const base = parseFloat(section.dataset.base!);
-
-  const update = () => render(section, parseFloat(input.value));
-
-  section.querySelector('#scaler-minus')!.addEventListener('click', () => {
-    const v = Math.round((parseFloat(input.value) - 0.5) * 10) / 10;
-    input.value = String(Math.max(0, v));
-    update();
-  });
-  section.querySelector('#scaler-plus')!.addEventListener('click', () => {
-    const v = Math.round((parseFloat(input.value) + 0.5) * 10) / 10;
-    input.value = String(v);
-    update();
-  });
-  input.addEventListener('input', update);
-
-  render(section, base);
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initScaler);
-} else {
-  initScaler();
-}
-</script>
