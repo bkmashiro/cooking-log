@@ -63,8 +63,8 @@
     return v.toFixed(1).replace(/\.0$/, '');
   }
   // Returns {num, unit} so they can be styled separately
-  function scaleAmtParts(ing: typeof ingredients[0]): {num: string; unit: string} {
-    const mult = baseServings > 0 ? scalerServings / baseServings : 0;
+  function scaleAmtParts(ing: typeof ingredients[0], sv = scalerServings): {num: string; unit: string} {
+    const mult = baseServings > 0 ? sv / baseServings : 0;
     if (ing.scale === 'to_taste') return {num: t.toTaste, unit: ''};
     if (ing.scale === 'fixed' || ing.amount == null)
       return ing.amount != null ? {num: String(ing.amount), unit: ing.unit} : {num: t.toTaste, unit: ''};
@@ -308,7 +308,7 @@
     let out = text.replace(/\{\{(\d+)\}\}/g, (_, idx) => {
       const ing = ingredients[parseInt(idx)];
       if (!ing) return `<span class="cm-step-ing-missing">{{${idx}}}</span>`;
-      const p = scaleAmtParts(ing);
+      const p = scaleAmtParts(ing, _sv);
       return `<span class="cm-step-ing">${p.num}${p.unit ? `<small>${p.unit}</small>` : ''}</span>`;
     });
     // 2. Boldify **...**
