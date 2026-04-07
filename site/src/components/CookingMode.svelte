@@ -76,35 +76,81 @@
   }
 
   // ── Confetti ─────────────────────────────────────────────────────
-  function fireConfetti(ox?: number, oy?: number) {
+  // Panicked emoji burst — for timer expiry
+  function fireEmojiConfetti() {
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:99999;';
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d')!;
-    type P = {x:number;y:number;vx:number;vy:number;color:string;w:number;h:number;angle:number;spin:number};
-    const colors = ['#e6a817','#3fb950','#58a6ff','#ff6b6b','#c9d1d9','#bc8cff'];
-    const cx = ox ?? canvas.width / 2, cy = oy ?? canvas.height * 0.38;
-    const pts: P[] = Array.from({length: 160}, () => ({
-      x: cx + (Math.random()-0.5)*80, y: cy + (Math.random()-0.5)*40,
-      vx: (Math.random()-0.5)*16, vy: Math.random()*-14 - 2,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      w: Math.random()*10+4, h: Math.random()*5+3,
-      angle: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.45,
+    const emojis = ['⏰','🔥','😱','⚡','💥','🚨','😰','⏱'];
+    type P = {x:number;y:number;vx:number;vy:number;emoji:string;size:number;angle:number;spin:number};
+    const cx = canvas.width/2, cy = canvas.height*0.35;
+    const pts: P[] = Array.from({length: 45}, () => ({
+      x: cx + (Math.random()-0.5)*120, y: cy + (Math.random()-0.5)*60,
+      vx: (Math.random()-0.5)*14, vy: Math.random()*-11 - 2,
+      emoji: emojis[Math.floor(Math.random()*emojis.length)],
+      size: Math.random()*18+16, angle: (Math.random()-0.5)*0.5,
+      spin: (Math.random()-0.5)*0.12,
     }));
     let f = 0;
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const p of pts) {
-        p.x += p.vx; p.y += p.vy; p.vy += 0.38; p.angle += p.spin;
-        ctx.save(); ctx.globalAlpha = Math.max(0, 1 - f/100);
+        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.angle += p.spin;
+        ctx.save(); ctx.globalAlpha = Math.max(0, 1 - f/80);
+        ctx.font = `${p.size}px serif`;
         ctx.translate(p.x, p.y); ctx.rotate(p.angle);
-        ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.fillText(p.emoji, -p.size/2, p.size/2);
         ctx.restore();
       }
-      if (++f < 100) requestAnimationFrame(draw); else canvas.remove();
+      if (++f < 80) requestAnimationFrame(draw); else canvas.remove();
     }
     draw();
+  }
+
+  // Side-cannon burst — for cook complete (left + right, 3 salvos)
+  function fireSideConfetti() {
+    const W = window.innerWidth, H = window.innerHeight;
+    const colors = ['#e6a817','#3fb950','#58a6ff','#ff6b6b','#c9d1d9','#bc8cff','#ffd700'];
+    type P = {x:number;y:number;vx:number;vy:number;color:string;w:number;h:number;angle:number;spin:number};
+
+    function oneSide(side: 'left'|'right') {
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:99999;';
+      canvas.width = W; canvas.height = H;
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d')!;
+      const sx = side === 'left' ? -10 : W + 10;
+      const dirMult = side === 'left' ? 1 : -1;
+      const pts: P[] = Array.from({length: 55}, () => ({
+        x: sx, y: H * (0.15 + Math.random()*0.7),
+        vx: dirMult * (Math.random()*14 + 5),
+        vy: (Math.random()-0.5)*10 - 1,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        w: Math.random()*12+4, h: Math.random()*6+3,
+        angle: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.4,
+      }));
+      let f = 0;
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (const p of pts) {
+          p.x += p.vx; p.y += p.vy; p.vy += 0.28; p.angle += p.spin;
+          ctx.save(); ctx.globalAlpha = Math.max(0, 1 - f/95);
+          ctx.translate(p.x, p.y); ctx.rotate(p.angle);
+          ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          ctx.restore();
+        }
+        if (++f < 95) requestAnimationFrame(draw); else canvas.remove();
+      }
+      draw();
+    }
+
+    function salvo(n: number) {
+      oneSide('left'); oneSide('right');
+      if (n > 1) setTimeout(() => salvo(n - 1), 380);
+    }
+    salvo(3);
   }
 
   // ── Overlay ──────────────────────────────────────────────────────
@@ -126,8 +172,8 @@
     if (currentStep < steps.length - 1) {
       currentStep++;
     } else {
-      fireConfetti();
-      setTimeout(() => closeOverlay(), 1800);
+      fireSideConfetti();
+      setTimeout(() => closeOverlay(), 2500);
     }
   }
   function goPrev() {
@@ -154,7 +200,7 @@
         timerExpired = true;
         timerFlash = true;
         playBeeps();
-        fireConfetti();
+        fireEmojiConfetti();
         setTimeout(() => { timerFlash = false; }, 3500);
       }
     }, 1000);
@@ -330,10 +376,12 @@
     </div>
 
     <div class="cm-cook-layout">
-      <!-- Steps drum -->
+      <!-- Steps drum — clicking anywhere advances -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="cm-steps-panel"
+        on:click={goNext}
         on:touchstart={swipeStart}
         on:touchend={swipeEnd}
       >
@@ -344,7 +392,6 @@
               class="cm-step"
               class:cm-step-current={idx === currentStep}
               style={stepStyles[idx]}
-              on:click={() => { if (idx === currentStep) goNext(); }}
             >
               <span class="cm-step-num">{idx + 1}</span>
               <div class="cm-step-text">{@html boldify(step)}</div>
