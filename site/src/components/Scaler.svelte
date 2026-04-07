@@ -113,15 +113,41 @@
       </thead>
       <tbody>
         {#each ingredients as ing}
+          {@const raw = scaleAmt(ing, mult)}
           <tr>
             <td>
               <strong>{ing.name}</strong>
               {#if ing.note}<em class="ing-note">({ing.note})</em>{/if}
             </td>
-            <td>{scaleAmt(ing, mult)}</td>
+            <td class="ing-amt-cell">
+              {#if ing.scale === 'to_taste' || ing.amount == null || ing.scale === 'fixed'}
+                <span class="ing-amt-str">{raw}</span>
+              {:else}
+                {@const unitStart = raw.search(/[^\d½¼¾.,\s]/)}
+                {#if unitStart > 0}
+                  <span class="ing-num">{raw.slice(0, unitStart)}</span><span class="ing-unit">{raw.slice(unitStart)}</span>
+                {:else}
+                  <span class="ing-amt-str">{raw}</span>
+                {/if}
+              {/if}
+            </td>
           </tr>
         {/each}
       </tbody>
     </table>
   {/if}
 </div>
+
+<style>
+.ing-amt-cell { white-space: nowrap; }
+.ing-num {
+  font-weight: 700;
+  font-size: 1.05em;
+}
+.ing-unit {
+  font-size: 0.82em;
+  opacity: 0.75;
+  margin-left: 1px;
+}
+.ing-amt-str { font-weight: 600; }
+</style>

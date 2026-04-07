@@ -59,19 +59,52 @@
     if (v >= 10) return String(Math.round(v));
     return v.toFixed(1).replace(/\.0$/, '');
   }
-  function scaleAmt(ing: typeof ingredients[0]): string {
+  // Returns {num, unit} so they can be styled separately
+  function scaleAmtParts(ing: typeof ingredients[0]): {num: string; unit: string} {
     const mult = baseServings > 0 ? scalerServings / baseServings : 0;
-    if (ing.scale === 'to_taste') return t.toTaste;
+    if (ing.scale === 'to_taste') return {num: t.toTaste, unit: ''};
     if (ing.scale === 'fixed' || ing.amount == null)
-      return ing.amount != null ? `${ing.amount}${ing.unit}` : t.toTaste;
+      return ing.amount != null ? {num: String(ing.amount), unit: ing.unit} : {num: t.toTaste, unit: ''};
     const raw = ing.amount * mult;
     if (ing.scale === 'discrete') {
       const snapped = Math.max(0.5, Math.round(raw * 2) / 2);
-      if (snapped === Math.floor(snapped)) return `${Math.floor(snapped)}${ing.unit}`;
       const w = Math.floor(snapped);
-      return w === 0 ? `½${ing.unit}` : `${w}½${ing.unit}`;
+      const numStr = snapped === w ? String(w) : (w === 0 ? '½' : `${w}½`);
+      return {num: numStr, unit: ing.unit};
     }
-    return `${fmt(raw)}${ing.unit}`;
+    return {num: fmt(raw), unit: ing.unit};
+  }
+
+  // ── Confetti ─────────────────────────────────────────────────────
+  function fireConfetti(ox?: number, oy?: number) {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:99999;';
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d')!;
+    type P = {x:number;y:number;vx:number;vy:number;color:string;w:number;h:number;angle:number;spin:number};
+    const colors = ['#e6a817','#3fb950','#58a6ff','#ff6b6b','#c9d1d9','#bc8cff'];
+    const cx = ox ?? canvas.width / 2, cy = oy ?? canvas.height * 0.38;
+    const pts: P[] = Array.from({length: 160}, () => ({
+      x: cx + (Math.random()-0.5)*80, y: cy + (Math.random()-0.5)*40,
+      vx: (Math.random()-0.5)*16, vy: Math.random()*-14 - 2,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      w: Math.random()*10+4, h: Math.random()*5+3,
+      angle: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.45,
+    }));
+    let f = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of pts) {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.38; p.angle += p.spin;
+        ctx.save(); ctx.globalAlpha = Math.max(0, 1 - f/100);
+        ctx.translate(p.x, p.y); ctx.rotate(p.angle);
+        ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      }
+      if (++f < 100) requestAnimationFrame(draw); else canvas.remove();
+    }
+    draw();
   }
 
   // ── Overlay ──────────────────────────────────────────────────────
@@ -90,20 +123,24 @@
 
   // ── Cook navigation ──────────────────────────────────────────────
   function goNext() {
-    if (currentStep < steps.length - 1) currentStep++;
-    else closeOverlay();
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+    } else {
+      fireConfetti();
+      setTimeout(() => closeOverlay(), 1800);
+    }
   }
   function goPrev() {
     if (currentStep > 0) currentStep--;
   }
 
   // ── Timer ────────────────────────────────────────────────────────
-  function setTimer(mins: number) {
-    stopTimer();
-    timerTarget = mins * 60;
-    timerSeconds = timerTarget;
+  let timerFlash = false;
+  // Additive: clicking a preset ADDS that many seconds to the countdown
+  function addTimer(secs: number) {
+    timerSeconds = Math.max(0, timerSeconds) + secs;
     timerExpired = false;
-    startTimer();
+    if (!timerRunning) startTimer();
   }
   function startTimer() {
     if (timerSeconds === 0) return;
@@ -115,7 +152,10 @@
       } else {
         stopTimer();
         timerExpired = true;
+        timerFlash = true;
         playBeeps();
+        fireConfetti();
+        setTimeout(() => { timerFlash = false; }, 3500);
       }
     }, 1000);
   }
@@ -156,7 +196,7 @@
   let customMins = '';
   function onCustomTimer() {
     const v = parseInt(customMins);
-    if (v > 0) { setTimer(v); customMins = ''; }
+    if (v > 0) { addTimer(v * 60); customMins = ''; }
   }
 
   // ── Keyboard ─────────────────────────────────────────────────────
@@ -181,7 +221,7 @@
 
   // ── Slot machine step positions ──────────────────────────────────
   const SLOT_H = 90;
-  function stepTransform(idx: number): string {
+  $: stepStyles = steps.map((_, idx) => {
     const rel = idx - currentStep;
     let scale: number, opacity: number;
     if      (rel === 0)  { scale = 1;    opacity = 1; }
@@ -191,8 +231,13 @@
     else if (rel === 2)  { scale = 0.70; opacity = 0.38; }
     else if (rel === 3)  { scale = 0.62; opacity = 0.18; }
     else                 { scale = 0.58; opacity = 0; }
-    const rel_str = rel === 0 ? '' : ` + ${rel * SLOT_H}px`;
-    return `transform: translateY(calc(-50%${rel_str})) scale(${scale}); opacity: ${opacity};`;
+    const offset = rel === 0 ? '' : ` + ${rel * SLOT_H}px`;
+    return `transform: translateY(calc(-50%${offset})) scale(${scale}); opacity: ${opacity};`;
+  });
+
+  function toggleChecked(idx: number, e: Event) {
+    checked[idx] = (e.target as HTMLInputElement).checked;
+    checked = checked;
   }
 
   function boldify(text: string): string {
@@ -239,19 +284,24 @@
       <!-- Ingredient checklist -->
       <ul class="cm-ing-list">
         {#each ingredients as ing, idx}
+          {@const parts = scaleAmtParts(ing)}
           <li class="cm-ing-item" class:cm-checked={checked[idx]}>
             <label class="cm-ing-label">
               <input
                 type="checkbox"
                 class="cm-ing-checkbox"
-                bind:checked={checked[idx]}
+                checked={checked[idx]}
+                on:change={(e) => toggleChecked(idx, e)}
               />
               <span class="cm-ing-check-vis"></span>
               <div class="cm-ing-name-wrap">
                 <span class="cm-ing-name">{ing.name}</span>
                 {#if ing.note}<span class="cm-ing-note">{ing.note}</span>{/if}
               </div>
-              <span class="cm-ing-amt">{scaleAmt(ing)}</span>
+              <span class="cm-ing-amt">
+                <span class="cm-ing-amt-num">{parts.num}</span>
+                {#if parts.unit}<span class="cm-ing-amt-unit">{parts.unit}</span>{/if}
+              </span>
             </label>
           </li>
         {/each}
@@ -298,7 +348,7 @@
             <div
               class="cm-step"
               class:cm-step-current={idx === currentStep}
-              style={stepTransform(idx)}
+              style={stepStyles[idx]}
               on:click={() => { if (idx === currentStep) goNext(); }}
             >
               <span class="cm-step-num">{idx + 1}</span>
@@ -323,11 +373,13 @@
           <div
             class="cm-timer-display"
             class:cm-timer-expired={timerExpired}
+            class:cm-timer-flashing={timerFlash}
           >{fmtTime(timerSeconds)}</div>
 
           <div class="cm-timer-presets">
+            <button class="cm-preset-btn" on:click={() => addTimer(30)}>+30s</button>
             {#each [1,3,5,10] as mins}
-              <button class="cm-preset-btn" on:click={() => setTimer(mins)}>{mins}m</button>
+              <button class="cm-preset-btn" on:click={() => addTimer(mins * 60)}>+{mins}m</button>
             {/each}
           </div>
 
@@ -362,7 +414,7 @@
         class="cm-nav-btn"
         class:cm-btn-done={currentStep >= steps.length - 1}
         on:click={goNext}
-      >{currentStep >= steps.length - 1 ? t.done : t.next}</button>
+      >{currentStep >= steps.length - 1 ? '🎉 ' + t.done : t.next}</button>
     </footer>
   </div>
   {/if}
@@ -643,16 +695,27 @@
 
 /* Amount pill */
 .cm-ing-amt {
-  font-weight: 700;
-  font-size: 0.85rem;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
   white-space: nowrap;
   flex-shrink: 0;
   color: var(--accent);
   background: rgba(230,168,23,0.1);
   border: 1px solid rgba(230,168,23,0.25);
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: 12px;
   transition: color 0.25s, background 0.25s, border-color 0.25s;
+}
+.cm-ing-amt-num {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.cm-ing-amt-unit {
+  font-weight: 500;
+  font-size: 0.75rem;
+  opacity: 0.85;
 }
 .cm-checked .cm-ing-amt {
   color: var(--text-muted);
@@ -835,9 +898,14 @@
   transition: color 0.3s;
 }
 .cm-timer-expired { color: var(--red) !important; }
+@keyframes cm-flash-timer {
+  0%,100% { color: var(--red); }
+  50%      { color: #fff; opacity: 0.7; }
+}
+.cm-timer-flashing { animation: cm-flash-timer 0.45s ease infinite; }
 .cm-timer-presets {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 6px;
 }
 .cm-preset-btn {
