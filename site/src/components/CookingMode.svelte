@@ -85,27 +85,30 @@
     const emojis = ['⏰','🔥','😱','⚡','💥','🚨','😰','⏱'];
     type P = {x:number;y:number;vx:number;vy:number;emoji:string;size:number;angle:number;spin:number};
     const cx = canvas.width/2, cy = canvas.height*0.35;
-    const pts: P[] = Array.from({length: 45}, () => ({
+    // Fewer particles + fixed font size to keep rendering cheap
+    const pts: P[] = Array.from({length: 20}, () => ({
       x: cx + (Math.random()-0.5)*120, y: cy + (Math.random()-0.5)*60,
       vx: (Math.random()-0.5)*14, vy: Math.random()*-11 - 2,
       emoji: emojis[Math.floor(Math.random()*emojis.length)],
-      size: Math.random()*18+16, angle: (Math.random()-0.5)*0.5,
+      size: 28, angle: (Math.random()-0.5)*0.5,
       spin: (Math.random()-0.5)*0.12,
     }));
+    ctx.font = '28px serif'; // set once — don't change per particle
     let f = 0;
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = Math.max(0, 1 - f/80);
       for (const p of pts) {
         p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.angle += p.spin;
-        ctx.save(); ctx.globalAlpha = Math.max(0, 1 - f/80);
-        ctx.font = `${p.size}px serif`;
+        ctx.save();
         ctx.translate(p.x, p.y); ctx.rotate(p.angle);
-        ctx.fillText(p.emoji, -p.size/2, p.size/2);
+        ctx.fillText(p.emoji, -14, 14);
         ctx.restore();
       }
       if (++f < 80) requestAnimationFrame(draw); else canvas.remove();
     }
-    draw();
+    // Defer first draw out of the setInterval callback
+    requestAnimationFrame(draw);
   }
 
   // Side-cannon burst — for cook complete (left + right, 3 salvos)
@@ -142,7 +145,7 @@
         }
         if (++f < 95) requestAnimationFrame(draw); else canvas.remove();
       }
-      draw();
+      requestAnimationFrame(draw);
     }
 
     function salvo(n: number) {
@@ -198,8 +201,8 @@
         stopTimer();
         timerExpired = true;
         timerFlash = true;
-        playBeeps();
-        fireEmojiConfetti();
+        // Defer heavy work out of the setInterval tick
+        setTimeout(() => { playBeeps(); fireEmojiConfetti(); }, 0);
         setTimeout(() => { timerFlash = false; }, 3500);
       }
     }, 1000);
