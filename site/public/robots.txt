@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wok.yuzhes.com/sitemap.xml

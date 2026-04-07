@@ -5,33 +5,74 @@ import { i18n, LANGS, type Lang } from '../lib/i18n';
 interface Props {
   lang: Lang;
   title: string;
-  /** The current slug if on a dish detail page, otherwise undefined */
+  description?: string;
   slug?: string;
-  /** Alternate hrefs for each lang (for lang switcher links) */
+  /** Alternate hrefs for each lang (for lang switcher + hreflang) */
   alternates?: Partial<Record<Lang, string>>;
+  /** JSON-LD structured data object (serialised to script tag) */
+  jsonLd?: object;
 }
 
-const { lang, title, slug, alternates } = Astro.props;
+const { lang, title, description, slug, alternates, jsonLd } = Astro.props;
 const t = i18n[lang];
 
+const siteUrl = 'https://wok.yuzhes.com';
+const pageDesc = description || t.tagline;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = `${siteUrl}/og-default.png`;
+
 function getLangHref(targetLang: Lang): string {
-  if (alternates && alternates[targetLang]) {
-    return alternates[targetLang]!;
-  }
-  if (slug) {
-    return `/${targetLang}/${encodeURIComponent(slug)}/`;
-  }
+  if (alternates?.[targetLang]) return alternates[targetLang]!;
+  if (slug) return `/${targetLang}/${encodeURIComponent(slug)}/`;
   return `/${targetLang}/`;
 }
+
+const hreflangMap: Record<Lang, string> = { zh: 'zh-CN', en: 'en-US', ja: 'ja-JP' };
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={hreflangMap[lang]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Primary -->
     <title>{title} — {t.siteTitle}</title>
-    <meta name="description" content={t.tagline} />
+    <meta name="description" content={pageDesc} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Multilingual alternates -->
+    {LANGS.map(l => (
+      <link
+        rel="alternate"
+        hreflang={hreflangMap[l]}
+        href={new URL(getLangHref(l), siteUrl).href}
+      />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/zh/`} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t.siteTitle} />
+    <meta property="og:title" content={`${title} — ${t.siteTitle}`} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={hreflangMap[lang]} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} — ${t.siteTitle}`} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD structured data -->
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />

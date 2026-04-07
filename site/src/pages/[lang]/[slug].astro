@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getAllDishes } from '../../lib/dishes';
+import { getAllDishes, type Dish } from '../../lib/dishes';
 import { i18n, LANGS, type Lang } from '../../lib/i18n';
 import { marked } from 'marked';
 
@@ -20,32 +20,64 @@ export function getStaticPaths() {
   return paths;
 }
 
-const { lang, slug } = Astro.params as { lang: Lang; slug: string };
-const { dish } = Astro.props;
+const { lang } = Astro.params as { lang: Lang; slug: string };
+const { dish } = Astro.props as { dish: Dish };
 
 const t = i18n[lang];
 const dishName = dish.recipe.dish[lang] || dish.recipe.dish.zh;
 const prose = dish.prose[lang] || dish.prose.zh;
+const siteUrl = 'https://wok.yuzhes.com';
 
-// Configure marked for clean output
+// ── Prose rendering ──────────────────────────────────────────────
 marked.setOptions({ gfm: true, breaks: false });
-
-// Remove the first H1 heading (it's already the page title)
 const proseWithoutH1 = prose.replace(/^#\s+.+\n/, '');
-
-// Remove front-matter-style header lines like "**Date:** ... | [links]()"
 const cleaned = proseWithoutH1.replace(/^\*\*[^*]+:\*\*[^\n]*\n\n?---\n\n?/, '');
-
 const htmlContent = marked.parse(cleaned) as string;
 
-// Build alternates for lang switcher — all point to the same urlSlug
+// ── Alternates for lang switcher + hreflang ──────────────────────
 const alternates: Partial<Record<Lang, string>> = {};
 for (const l of LANGS) {
   alternates[l] = `/${l}/${dish.urlSlug}/`;
 }
+
+// ── Page description ─────────────────────────────────────────────
+const localeName: Record<Lang, string> = { zh: '中文', en: 'English', ja: '日本語' };
+const pageDesc = `${dishName} — ${t.tagline}`;
+
+// ── Recipe JSON-LD ───────────────────────────────────────────────
+const recipeIngredients = (dish.recipe.ingredients ?? []).map(ing => {
+  const name = typeof ing.name === 'object' ? (ing.name[lang] ?? ing.name.zh) : ing.name;
+  if (!ing.amount) return name;
+  const unit = !ing.unit ? '' :
+    (typeof ing.unit === 'object' ? (ing.unit[lang] ?? ing.unit.zh) : ing.unit);
+  return `${ing.amount}${unit} ${name}`.trim();
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Recipe',
+  name: dishName,
+  datePublished: dish.recipe.date,
+  inLanguage: lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en-US',
+  recipeYield: `${dish.recipe.base_servings} servings`,
+  recipeIngredient: recipeIngredients,
+  url: `${siteUrl}/${lang}/${dish.urlSlug}/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: t.siteTitle,
+    url: siteUrl,
+  },
+};
 ---
 
-<Layout lang={lang} title={dishName} slug={slug} alternates={alternates}>
+<Layout
+  lang={lang}
+  title={dishName}
+  description={pageDesc}
+  slug={dish.urlSlug}
+  alternates={alternates}
+  jsonLd={jsonLd}
+>
   <div class="dish-detail">
     <a href={`/${lang}/`} class="back-link">{t.backToList}</a>
     <h1>{dishName}</h1>
