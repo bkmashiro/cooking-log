@@ -29,13 +29,17 @@
   $: checkedCount = checked.filter(Boolean).length;
   $: prepPct = ingredients.length ? (checkedCount / ingredients.length) * 100 : 0;
 
-  // Timer
-  let timerTarget = 0;
-  let timerSeconds = 0;
-  let timerRunning = false;
-  let timerExpired = false;
+  // ── Multi-timer ──────────────────────────────────────────────────
+  type TimerInst = {
+    id: number; seconds: number; running: boolean;
+    expired: boolean; flash: boolean; customMins: string;
+    _iv: ReturnType<typeof setInterval> | null;
+  };
+  let _tidSeq = 0;
+  const mkTimer = (): TimerInst =>
+    ({ id: _tidSeq++, seconds: 0, running: false, expired: false, flash: false, customMins: '', _iv: null });
+  let timers: TimerInst[] = [mkTimer()];
   let timerExpanded = true;
-  let _interval: ReturnType<typeof setInterval> | null = null;
   let audioCtx: AudioContext | null = null;
   let isMobile = false;
 
@@ -166,7 +170,7 @@
   function closeOverlay() {
     open = false;
     document.body.style.overflow = '';
-    stopTimer();
+    timers.forEach(tm => stopInst(tm));
   }
 
   // ── Cook navigation ──────────────────────────────────────────────
@@ -182,43 +186,48 @@
     if (currentStep > 0) currentStep--;
   }
 
-  // ── Timer ────────────────────────────────────────────────────────
-  let timerFlash = false;
-  // Additive: clicking a preset ADDS that many seconds to the countdown
-  function addTimer(secs: number) {
-    timerSeconds = Math.max(0, timerSeconds) + secs;
-    timerExpired = false;
-    if (!timerRunning) startTimer();
+  // ── Timer instance operations ────────────────────────────────────
+  function addTime(tm: TimerInst, secs: number) {
+    tm.seconds = Math.max(0, tm.seconds) + secs;
+    tm.expired = false;
+    timers = timers;
+    if (!tm.running) startInst(tm);
   }
-  function startTimer() {
-    if (timerSeconds === 0) return;
-    timerExpired = false;
-    timerRunning = true;
-    _interval = setInterval(() => {
-      if (timerSeconds > 0) {
-        timerSeconds--;
+  function startInst(tm: TimerInst) {
+    if (tm.seconds === 0) return;
+    tm.expired = false; tm.running = true; timers = timers;
+    tm._iv = setInterval(() => {
+      if (tm.seconds > 0) {
+        tm.seconds--; timers = timers;
       } else {
-        stopTimer();
-        timerExpired = true;
-        timerFlash = true;
-        // Defer heavy work out of the setInterval tick
+        stopInst(tm);
+        tm.expired = true; tm.flash = true; timers = timers;
         setTimeout(() => { playBeeps(); fireEmojiConfetti(); }, 0);
-        setTimeout(() => { timerFlash = false; }, 3500);
+        setTimeout(() => { tm.flash = false; timers = timers; }, 3500);
       }
     }, 1000);
   }
-  function toggleTimer() {
-    if (timerRunning) { stopTimer(); }
-    else { startTimer(); }
+  function stopInst(tm: TimerInst) {
+    if (tm._iv) { clearInterval(tm._iv); tm._iv = null; }
+    tm.running = false; timers = timers;
   }
-  function stopTimer() {
-    if (_interval) { clearInterval(_interval); _interval = null; }
-    timerRunning = false;
+  function toggleInst(tm: TimerInst) {
+    if (tm.running) stopInst(tm); else startInst(tm);
   }
-  function resetTimer() {
-    stopTimer();
-    timerSeconds = timerTarget;
-    timerExpired = false;
+  function resetInst(tm: TimerInst) {
+    stopInst(tm); tm.seconds = 0; tm.expired = false; timers = timers;
+  }
+  function addTimerInst() {
+    timers = [...timers, mkTimer()];
+  }
+  function removeTimerInst(id: number) {
+    const tm = timers.find(x => x.id === id);
+    if (tm) stopInst(tm);
+    timers = timers.filter(x => x.id !== id);
+  }
+  function onCustom(tm: TimerInst) {
+    const v = parseInt(tm.customMins);
+    if (v > 0) { addTime(tm, v * 60); tm.customMins = ''; timers = timers; }
   }
   function fmtTime(s: number): string {
     return `${String(Math.floor(s / 60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
@@ -238,13 +247,6 @@
       const now = audioCtx!.currentTime;
       beep(now); beep(now + 0.35); beep(now + 0.70);
     } catch {}
-  }
-
-  // ── Custom timer input ───────────────────────────────────────────
-  let customMins = '';
-  function onCustomTimer() {
-    const v = parseInt(customMins);
-    if (v > 0) { addTimer(v * 60); customMins = ''; }
   }
 
   // ── Keyboard ─────────────────────────────────────────────────────
@@ -402,51 +404,57 @@
         </div>
       </div>
 
-      <!-- Timer -->
+      <!-- Timer panel (multi-instance) -->
       <aside class="cm-timer-panel">
-        <div
-          class="cm-timer-header"
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="cm-timer-header"
           on:click={() => { if (isMobile) timerExpanded = !timerExpanded; }}
-          role="button"
-          tabindex="0"
+          role="button" tabindex="0"
           on:keydown={(e) => e.key==='Enter' && isMobile && (timerExpanded=!timerExpanded)}
-        >
-          <span>{t.timer}</span>
-        </div>
+        ><span>{t.timer}</span></div>
+
         <div class="cm-timer-body" class:cm-timer-open={timerExpanded || !isMobile}>
-          <div
-            class="cm-timer-display"
-            class:cm-timer-expired={timerExpired}
-            class:cm-timer-flashing={timerFlash}
-          >{fmtTime(timerSeconds)}</div>
+          {#each timers as tm (tm.id)}
+            <div class="cm-timer-inst" class:cm-timer-inst-expired={tm.expired}>
 
-          <div class="cm-timer-presets">
-            <button class="cm-preset-btn" on:click={() => addTimer(30)}>+30s</button>
-            {#each [1,3,5,10] as mins}
-              <button class="cm-preset-btn" on:click={() => addTimer(mins * 60)}>+{mins}m</button>
-            {/each}
-          </div>
+              <div class="cm-timer-inst-top">
+                <div
+                  class="cm-timer-display"
+                  class:cm-timer-expired={tm.expired}
+                  class:cm-timer-flashing={tm.flash}
+                >{fmtTime(tm.seconds)}</div>
+                {#if timers.length > 1}
+                  <button class="cm-timer-remove" on:click={() => removeTimerInst(tm.id)}>✕</button>
+                {/if}
+              </div>
 
-          <div class="cm-timer-custom">
-            <input
-              type="number"
-              min="1" max="99"
-              placeholder="—"
-              bind:value={customMins}
-              on:change={onCustomTimer}
-              class="cm-custom-input"
-            />
-            <span>{t.min}</span>
-          </div>
+              <div class="cm-timer-presets">
+                <button class="cm-preset-btn" on:click={() => addTime(tm, 30)}>+30s</button>
+                {#each [1,3,5,10] as m}
+                  <button class="cm-preset-btn" on:click={() => addTime(tm, m * 60)}>+{m}m</button>
+                {/each}
+              </div>
 
-          <div class="cm-timer-controls">
-            <button
-              class="cm-timer-btn cm-btn-start"
-              on:click={toggleTimer}
-              disabled={timerSeconds === 0 && !timerRunning}
-            >{timerRunning ? t.pause : t.start}</button>
-            <button class="cm-timer-btn cm-btn-reset" on:click={resetTimer}>{t.reset}</button>
-          </div>
+              <div class="cm-timer-custom">
+                <input type="number" min="1" max="99" placeholder="—"
+                  bind:value={tm.customMins}
+                  on:change={() => onCustom(tm)}
+                  class="cm-custom-input" />
+                <span>{t.min}</span>
+              </div>
+
+              <div class="cm-timer-controls">
+                <button class="cm-timer-btn cm-btn-start"
+                  on:click={() => toggleInst(tm)}
+                  disabled={tm.seconds === 0 && !tm.running}
+                >{tm.running ? t.pause : t.start}</button>
+                <button class="cm-timer-btn cm-btn-reset" on:click={() => resetInst(tm)}>{t.reset}</button>
+              </div>
+            </div>
+          {/each}
+
+          <button class="cm-add-timer-btn" on:click={addTimerInst}>＋ {t.timer}</button>
         </div>
       </aside>
     </div>
@@ -924,13 +932,59 @@
   display: none;
 }
 .cm-timer-open { display: flex !important; }
+/* Timer instance card */
+.cm-timer-inst {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.cm-timer-inst:last-of-type { border-bottom: none; }
+.cm-timer-inst-expired { background: rgba(248,81,73,0.04); border-radius: var(--radius); }
+
+.cm-timer-inst-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cm-timer-remove {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 24px; height: 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.cm-timer-remove:hover { border-color: var(--red); color: var(--red); }
+
+.cm-add-timer-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 7px 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  margin-top: 4px;
+}
+.cm-add-timer-btn:hover { border-color: var(--accent); color: var(--accent); }
+
 .cm-timer-display {
-  font-size: 2.4rem;
+  flex: 1;
+  font-size: 2.2rem;
   font-weight: 700;
   text-align: center;
   color: var(--text);
   font-variant-numeric: tabular-nums;
-  padding: 8px 0;
+  padding: 6px 0;
   transition: color 0.3s;
 }
 .cm-timer-expired { color: var(--red) !important; }
