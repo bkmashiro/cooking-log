@@ -13,11 +13,17 @@ ingredients:
     unit: g
     scale: linear
 
-  - name: { zh: 黑胡椒碎,   en: Crushed Black Pepper,   ja: 粗挽き黒胡椒 }
-    amount: 1.5
+  - name: { zh: 黑胡椒碎,   en: Black Pepper,           ja: 粗挽き黒胡椒 }
+    amount: 1
     unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
     scale: linear
-    note: { zh: 粗磨更香, en: coarser grind preferred, ja: 粗く挽くと香り豊か }
+    note: { zh: 腌肉用，粗磨更香, en: "for marinade, coarser grind preferred", ja: マリネ用・粗く挽くと香り豊か }
+
+  - name: { zh: 黑胡椒碎,   en: Black Pepper,           ja: 粗挽き黒胡椒 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 炒香用, en: for sauce, ja: ソース用 }
 
   - name: { zh: 盐,         en: Salt,                   ja: 塩 }
     amount: 1

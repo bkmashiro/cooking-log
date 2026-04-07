@@ -32,14 +32,14 @@
 ### Steps
 
 1. Pat short ribs completely dry with paper towels
-2. Season both sides with 1 tsp salt + 1 tsp black pepper; rest at room temperature for 30 min–1 hour
+2. Season both sides with salt{{3}} + black pepper{{1}}; rest at room temperature for 30 min–1 hour
 3. Heat a cast iron pan over high heat until smoking, add a small amount of oil
 4. Place ribs bone-side up — **do not move** — sear for **3–4 minutes** until a deep brown crust forms
 5. Flip and sear for another **2–3 minutes**; stand ribs on their sides to seal the edges for 1 minute
 6. Remove and rest for **5 minutes** (do not skip this)
-7. Reduce heat to medium-low; add butter, sauté garlic and onion for ~2 minutes
-8. Add remaining black pepper, stir until fragrant; pour in soy sauce + stock and bring to a boil
-9. Thicken with starch slurry if desired; spoon sauce over ribs to serve
+7. Reduce heat to medium-low; add butter{{6}}, sauté garlic and onion for ~2 minutes
+8. Add black pepper{{2}}, stir until fragrant; pour in soy sauce{{7}} + stock{{8}} and bring to a boil
+9. Thicken with starch slurry{{10}} if desired; spoon sauce over ribs to serve
 
 > 🌡️ Internal temperature guide: medium-rare ~60°C / medium ~68°C
 

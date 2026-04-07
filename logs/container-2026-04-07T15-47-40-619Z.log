@@ -1,0 +1,21 @@
+=== Container Run Log ===
+Timestamp: 2026-04-07T15:47:40.619Z
+Group: 🌶️-厨房
+IsMain: true
+Duration: 5508846ms
+Exit Code: 0
+Stdout Truncated: false
+Stderr Truncated: false
+
+=== Input Summary ===
+Prompt length: 135 chars
+Session ID: new
+
+=== Mounts ===
+/workspace/project (ro)
+/workspace/project/.env (ro)
+/workspace/project/store
+/workspace/group
+/home/node/.claude
+/workspace/ipc
+/app/src
