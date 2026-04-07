@@ -33,25 +33,10 @@ jobs:
       - name: 📦 Install PyYAML
         run: pip install pyyaml --quiet
 
-      - name: 🔍 Determine which files to process
-        id: files
-        run: |
-          if [[ "${{ inputs.all }}" == "true" ]]; then
-            echo "args=--all" >> $GITHUB_OUTPUT
-          else
-            # Get dish .md files changed in this push
-            CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'dishes/*.md' 2>/dev/null | tr '\n' ' ')
-            if [ -z "$CHANGED" ]; then
-              echo "No dish files changed, trying --all as fallback"
-              echo "args=--all" >> $GITHUB_OUTPUT
-            else
-              echo "args=$CHANGED" >> $GITHUB_OUTPUT
-            fi
-          fi
-
       - name: 🧮 Generate scaled tables
-        run: |
-          python .github/scripts/scale_ingredients.py ${{ steps.files.outputs.args }}
+        # Always run on all dishes — script is idempotent, only commits if something changed.
+        # Avoids git diff --name-only octal-escaping issues with Chinese filenames.
+        run: python3 .github/scripts/scale_ingredients.py --all
 
       - name: 🔎 Check for changes
         id: diff
@@ -67,7 +52,7 @@ jobs:
           git commit -m "📐 auto-scale: regenerate ingredient tables
 
           Triggered by: ${{ github.event_name }}
-          Processed: ${{ steps.files.outputs.args }}"
+          Processed: all dishes"
           git push
 
       - name: 📊 Summary
