@@ -1,0 +1,50 @@
+dish:
+  zh: 蚝油生菜
+  en: Oyster Sauce Lettuce
+  ja: オイスターソースレタス
+
+date: 2026-04-10
+url_slug: 2026-04-10-oyster-sauce-lettuce
+base_servings: 2
+
+ingredients:
+  - name: { zh: 生菜,     en: Romaine Lettuce,    ja: レタス }
+    amount: 300
+    unit: g
+    scale: linear
+
+  - name: { zh: 蚝油,     en: Oyster Sauce,       ja: オイスターソース }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 糖,       en: Sugar,              ja: 砂糖 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 蒜,       en: Garlic,             ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 切末, en: minced, ja: みじん切り }
+
+  - name: { zh: 食用油,   en: Cooking Oil,        ja: サラダ油 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 泼蒜用，要热, en: "for pouring over garlic, must be hot", ja: ニンニクにかける用・熱々で }
+
+  - name: { zh: 香油,     en: Sesame Oil,         ja: ごま油 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 盐,       en: Salt,               ja: 塩 }
+    scale: to_taste
+    note: { zh: 焯水用, en: for blanching, ja: 茹でる用 }
