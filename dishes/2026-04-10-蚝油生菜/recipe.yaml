@@ -6,6 +6,8 @@ dish:
 date: 2026-04-10
 url_slug: 2026-04-10-oyster-sauce-lettuce
 base_servings: 2
+category: vegetables
+tags: [quick, vegetarian, cantonese, weeknight]
 
 ingredients:
   - name: { zh: 生菜,     en: Romaine Lettuce,    ja: レタス }

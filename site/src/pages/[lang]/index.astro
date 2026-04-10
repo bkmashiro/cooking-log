@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import DishCard from '../../components/DishCard.astro';
+import SearchFilter from '../../components/SearchFilter.svelte';
 import { getAllDishes } from '../../lib/dishes';
-import { i18n, LANGS, type Lang } from '../../lib/i18n';
+import { i18n, LANGS, CATEGORIES, TAGS, getCategoryLabel, getTagLabel, type Lang } from '../../lib/i18n';
 
 export function getStaticPaths() {
   return LANGS.map(lang => ({ params: { lang } }));
@@ -11,6 +11,28 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 const t = i18n[lang];
 const dishes = getAllDishes();
+
+// Serialize dish metadata for the client component
+const dishMeta = dishes.map(d => ({
+  name: d.recipe.dish[lang] || d.recipe.dish.zh,
+  slug: d.slug,
+  urlSlug: d.urlSlug,
+  date: d.recipe.date,
+  category: d.recipe.category ?? '',
+  tags: d.recipe.tags ?? [],
+}));
+
+const categoryList = Object.keys(CATEGORIES).map(key => ({
+  key,
+  label: getCategoryLabel(key, lang),
+}));
+
+const tagList = Object.keys(TAGS).map(key => ({
+  key,
+  label: getTagLabel(key, lang),
+}));
+
+const langLinks = LANGS.map(l => ({ l, label: i18n[l].langName }));
 ---
 
 <Layout lang={lang} title={t.allDishes}>
@@ -19,13 +41,18 @@ const dishes = getAllDishes();
 
   <div class="section-label">{t.allDishes}</div>
 
-  {dishes.length === 0 ? (
-    <div class="empty-state">no dishes found</div>
-  ) : (
-    <div class="dish-list">
-      {dishes.map(dish => (
-        <DishCard dish={dish} currentLang={lang} />
-      ))}
-    </div>
-  )}
+  <SearchFilter
+    client:load
+    dishes={dishMeta}
+    lang={lang}
+    t={{
+      searchPlaceholder: t.searchPlaceholder,
+      allCategories: t.allCategories,
+      noResults: t.noResults,
+      clearFilters: t.clearFilters,
+    }}
+    categories={categoryList}
+    tags={tagList}
+    langLinks={langLinks}
+  />
 </Layout>

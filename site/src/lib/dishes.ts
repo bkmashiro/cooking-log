@@ -26,6 +26,8 @@ export interface RecipeYaml {
   url_slug?: string;
   base_servings: number;
   ingredients: Ingredient[];
+  category?: string;   // canonical key, e.g. "vegetables"
+  tags?: string[];     // canonical keys, e.g. ["quick", "vegetarian"]
 }
 
 export interface Dish {

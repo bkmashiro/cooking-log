@@ -6,6 +6,8 @@ dish:
 date: 2026-04-07
 url_slug: 2026-04-07-black-pepper-short-ribs
 base_servings: 2
+category: meat
+tags: [western, entertaining, marinate]
 
 ingredients:
   - name: { zh: 牛小排,     en: Short Ribs,             ja: 牛バラ肉 }
