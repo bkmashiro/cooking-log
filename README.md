@@ -4,6 +4,8 @@
 
 # 🔥 神圣烹饪典籍
 
+[![Recipe Linter](https://github.com/bkmashiro/cooking-log/actions/workflows/recipe-lint.yml/badge.svg)](https://github.com/bkmashiro/cooking-log/actions/workflows/recipe-lint.yml) [![Scale Ingredients](https://github.com/bkmashiro/cooking-log/actions/workflows/scale-recipes.yml/badge.svg)](https://github.com/bkmashiro/cooking-log/actions/workflows/scale-recipes.yml)
+
 > *"每一次 commit 都是一道菜。每一次 merge 都是一场盛宴。每一次 revert 都是一道失败的料理。"*
 
 ---
