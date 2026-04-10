@@ -20,7 +20,7 @@
 
 ---
 
-## Tips
+## Key Tips
 
 - ✅ Don't blanch longer than **30 seconds** — lettuce will go limp and yellow
 - ✅ Rinse with cold water right after blanching to lock in the crunch
@@ -30,6 +30,6 @@
 
 ---
 
-## Notes
+## Feedback
 
 <!-- Fill in after cooking -->
