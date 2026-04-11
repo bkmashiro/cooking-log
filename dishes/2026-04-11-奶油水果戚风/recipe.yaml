@@ -1,0 +1,68 @@
+dish:
+  zh: 奶油水果戚风
+  en: Cream Fruit Chiffon Cake
+  ja: 生クリームフルーツシフォンケーキ
+
+date: 2026-04-11
+url_slug: 2026-04-11-cream-fruit-chiffon
+base_servings: 6
+category: dessert
+tags: [entertaining]
+
+ingredients:
+  # ── 戚风蛋糕体 ─────────────────────────────
+  - name: { zh: 低筋面粉,   en: Cake Flour,         ja: 薄力粉 }
+    amount: 60
+    unit: g
+    scale: linear
+
+  - name: { zh: 鸡蛋,       en: Eggs,               ja: 卵 }
+    amount: 3
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: discrete
+    note: { zh: 蛋黄蛋白分开, en: separated, ja: 卵黄と卵白に分ける }
+
+  - name: { zh: 细砂糖,     en: Caster Sugar,       ja: グラニュー糖 }
+    amount: 20
+    unit: g
+    scale: linear
+    note: { zh: 蛋黄糊用, en: for yolk batter, ja: 卵黄用 }
+
+  - name: { zh: 细砂糖,     en: Caster Sugar,       ja: グラニュー糖 }
+    amount: 40
+    unit: g
+    scale: linear
+    note: { zh: 打发蛋白用，分三次加, en: "for meringue, add in 3 batches", ja: メレンゲ用・3回に分けて加える }
+
+  - name: { zh: 牛奶,       en: Whole Milk,         ja: 牛乳 }
+    amount: 40
+    unit: ml
+    scale: linear
+
+  - name: { zh: 玉米油,     en: Neutral Oil,        ja: 植物油 }
+    amount: 30
+    unit: ml
+    scale: linear
+    note: { zh: 无味植物油，不要用橄榄油, en: "neutral-tasting, no olive oil", ja: 香りのない植物油で }
+
+  - name: { zh: 盐,         en: Salt,               ja: 塩 }
+    amount: 1
+    unit: { zh: 小撮, en: " pinch", ja: ひとつまみ }
+    scale: fixed
+
+  # ── 奶油装饰 ────────────────────────────────
+  - name: { zh: 淡奶油,     en: Heavy Cream,        ja: 生クリーム }
+    amount: 200
+    unit: ml
+    scale: linear
+    note: { zh: "打发用，含脂量≥35%", en: "for whipping, ≥35% fat", ja: 乳脂肪分35%以上 }
+
+  - name: { zh: 糖粉,       en: Icing Sugar,        ja: 粉砂糖 }
+    amount: 20
+    unit: g
+    scale: linear
+    note: { zh: 奶油打发用, en: for whipped cream, ja: 生クリーム用 }
+
+  - name: { zh: 新鲜水果,   en: Fresh Fruit,        ja: 新鮮なフルーツ }
+    scale: to_taste
+    note: { zh: "草莓/芒果/蓝莓/猕猴桃，随意搭配", en: "strawberries, mango, blueberries, kiwi — any combo", ja: イチゴ・マンゴー・ブルーベリー・キウイなどお好みで }
