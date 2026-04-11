@@ -1,0 +1,86 @@
+dish:
+  zh: 豆豉三文鱼虾粉丝煲
+  en: Black Bean Salmon & Prawn Glass Noodle Pot
+  ja: 豆豉サーモンとエビの春雨鍋
+
+date: 2026-04-11
+url_slug: 2026-04-11-black-bean-salmon-prawn-noodle-pot
+base_servings: 2
+category: seafood
+tags: [weeknight, claypot, cantonese]
+
+ingredients:
+  - name: { zh: 三文鱼,   en: Salmon,             ja: サーモン }
+    amount: 250
+    unit: g
+    scale: linear
+    note: { zh: 切3cm厚块, en: "cut into 3cm chunks", ja: 3cm角に切る }
+
+  - name: { zh: 虾,       en: Prawns,             ja: エビ }
+    amount: 200
+    unit: g
+    scale: linear
+    note: { zh: 背部划开, en: back scored, ja: 背に切り込みを入れる }
+
+  - name: { zh: 粉丝,     en: Glass Noodles,      ja: 春雨 }
+    amount: 80
+    unit: g
+    scale: linear
+    note: { zh: 冷水泡至八分软, en: soaked in cold water until 80% soft, ja: 水に戻し8割柔らかくする }
+
+  - name: { zh: 豆豉,     en: Fermented Black Beans, ja: 豆豉 }
+    amount: 1.5
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 切碎, en: roughly chopped, ja: 粗みじん切り }
+
+  - name: { zh: 蒜,       en: Garlic,             ja: ニンニク }
+    amount: 5
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 切末, en: minced, ja: みじん切り }
+
+  - name: { zh: 姜,       en: Ginger,             ja: 生姜 }
+    amount: 5
+    unit: g
+    scale: linear
+    note: { zh: 切末, en: minced, ja: みじん切り }
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蚝油,     en: Oyster Sauce,       ja: オイスターソース }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 老抽,     en: Dark Soy Sauce,     ja: 濃口醤油 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 料酒,     en: Shaoxing Wine,      ja: 紹興酒 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 糖,       en: Sugar,              ja: 砂糖 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 热水,     en: Hot Water,          ja: 熱湯 }
+    amount: 100
+    unit: ml
+    scale: linear
+
+  - name: { zh: 香油,     en: Sesame Oil,         ja: ごま油 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: XO酱,    en: XO Sauce,           ja: XO醤 }
+    scale: to_taste
+    note: { zh: 可选，锦上添花, en: optional but excellent, ja: お好みで }
