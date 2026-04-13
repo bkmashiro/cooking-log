@@ -1,0 +1,87 @@
+dish:
+  zh: 葱爆羊肉
+  en: Scallion-Blasted Lamb
+  ja: 長ねぎと羊肉の強火炒め
+
+date: 2026-04-13
+url_slug: 2026-04-13-scallion-blasted-lamb
+base_servings: 2
+category: meat
+tags: [quick, beijing, weeknight]
+
+ingredients:
+  - name: { zh: 羊肉,     en: Lamb,               ja: 羊肉 }
+    amount: 250
+    unit: g
+    scale: linear
+    note: { zh: 薄切，涮锅厚度, en: thinly sliced, hot-pot thickness, ja: 薄切り }
+
+  - name: { zh: 大葱,     en: Spring Onion,       ja: 長ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
+    note: { zh: 斜切段, en: cut diagonally into sections, ja: 斜め切り }
+
+  - name: { zh: 蒜,       en: Garlic,             ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 拍碎, en: smashed, ja: 潰す }
+
+  - name: { zh: 姜,       en: Ginger,             ja: 生姜 }
+    amount: 4
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 2.5
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 腌1+炒1.5, en: 1 for marinade + 1.5 for stir-fry, ja: 漬け込み1+炒め1.5 }
+
+  - name: { zh: 料酒,     en: Shaoxing Wine,      ja: 紹興酒 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 淀粉,     en: Cornstarch,         ja: 片栗粉 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 老抽,     en: Dark Soy Sauce,     ja: 濃口醤油 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 醋,       en: Vinegar,            ja: 酢 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 提香用，不会酸, en: for aroma, not sourness, ja: 香り付け用 }
+
+  - name: { zh: 糖,       en: Sugar,              ja: 砂糖 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 白胡椒粉, en: White Pepper,       ja: 白こしょう }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 孜然粉,   en: Ground Cumin,       ja: クミンパウダー }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 香油,     en: Sesame Oil,         ja: ごま油 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 食用油,   en: Cooking Oil,        ja: サラダ油 }
+    amount: 3
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 爆炒需要多油, en: generous oil needed for high-heat blast, ja: 強火炒めには多めの油が必要 }
