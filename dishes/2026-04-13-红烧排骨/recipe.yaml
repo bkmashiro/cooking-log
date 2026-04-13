@@ -1,0 +1,68 @@
+dish:
+  zh: 红烧排骨
+  en: Red-Braised Pork Ribs
+  ja: 豚スペアリブの醤油煮
+
+date: 2026-04-13
+url_slug: 2026-04-13-red-braised-pork-ribs
+base_servings: 2
+category: meat
+tags: [weeknight, braised, cantonese]
+
+ingredients:
+  - name: { zh: 猪排骨,   en: Pork Ribs,          ja: 豚スペアリブ }
+    amount: 500
+    unit: g
+    scale: linear
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 3
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 老抽,     en: Dark Soy Sauce,     ja: 濃口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 料酒,     en: Shaoxing Wine,      ja: 紹興酒 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 冰糖,     en: Rock Sugar,         ja: 氷砂糖 }
+    amount: 20
+    unit: g
+    scale: linear
+    note: { zh: 或白糖1汤匙, en: or 1 tbsp white sugar, ja: または砂糖大さじ1 }
+
+  - name: { zh: 姜,       en: Ginger,             ja: 生姜 }
+    amount: 4
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 蒜,       en: Garlic,             ja: ニンニク }
+    amount: 4
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 拍碎, en: smashed, ja: 潰す }
+
+  - name: { zh: 八角,     en: Star Anise,         ja: 八角 }
+    amount: 2
+    unit: { zh: 颗, en: " pieces", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 桂皮,     en: Cinnamon Stick,     ja: シナモンスティック }
+    amount: 1
+    unit: { zh: 小段, en: " small piece", ja: 本 }
+    scale: fixed
+
+  - name: { zh: 热水,     en: Hot Water,          ja: 熱湯 }
+    amount: 300
+    unit: ml
+    scale: linear
+
+  - name: { zh: 食用油,   en: Cooking Oil,        ja: サラダ油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: fixed

@@ -1,0 +1,43 @@
+dish:
+  zh: 水果奶昔
+  en: Fruit Smoothie
+  ja: フルーツスムージー
+
+date: 2026-04-13
+url_slug: 2026-04-13-fruit-smoothie
+base_servings: 1
+category: drinks
+tags: [quick, vegetarian, no-cook]
+
+ingredients:
+  - name: { zh: 冷冻水果,   en: Frozen Fruit,       ja: 冷凍フルーツ }
+    amount: 150
+    unit: g
+    scale: linear
+    note: { zh: 草莓/芒果/蓝莓等，提前冻好, en: strawberry/mango/blueberries etc, ja: イチゴ・マンゴー・ブルーベリーなど }
+
+  - name: { zh: 香蕉,       en: Banana,             ja: バナナ }
+    amount: 0.5
+    unit: { zh: 根, en: "", ja: 本 }
+    scale: discrete
+    note: { zh: 可冷冻，增加厚度, en: frozen gives better texture, ja: 冷凍するとよりとろっとする }
+
+  - name: { zh: 牛奶/燕麦奶, en: Milk or Oat Milk,  ja: 牛乳またはオーツミルク }
+    amount: 150
+    unit: ml
+    scale: linear
+
+  - name: { zh: 酸奶,       en: Yoghurt,            ja: ヨーグルト }
+    amount: 50
+    unit: g
+    scale: linear
+    note: { zh: 可选，增加浓稠度, en: optional, adds creaminess, ja: お好みで、まろやかになる }
+
+  - name: { zh: 柠檬汁,     en: Lemon Juice,        ja: レモン汁 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 提鲜防氧化, en: brightens flavour and prevents browning, ja: 風味を引き立て変色防止に }
+
+  - name: { zh: 蜂蜜,       en: Honey,              ja: はちみつ }
+    scale: to_taste
