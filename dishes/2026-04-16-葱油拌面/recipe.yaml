@@ -1,0 +1,54 @@
+dish:
+  zh: 葱油拌面
+  en: Scallion Oil Noodles
+  ja: 葱油まぜそば
+
+date: 2026-04-16
+url_slug: 2026-04-16-scallion-oil-noodles
+base_servings: 1
+category: noodles
+tags: [quick, weeknight, shanghai, vegetarian]
+
+ingredients:
+  - name: { zh: 细面/鲜面,   en: Thin Noodles,       ja: 細麺 }
+    amount: 100
+    unit: g
+    scale: linear
+    note: { zh: 细面最佳，比挂面更吸汁有味道, en: thin fresh noodles preferred over dried, ja: 細麺推奨、よく絡む }
+
+  - name: { zh: 小葱,        en: Spring Onion,       ja: 細ねぎ }
+    amount: 4
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
+
+  - name: { zh: 洋葱,        en: Onion,              ja: 玉ねぎ }
+    amount: 0.5
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+    note: { zh: 可选，增加甜香，比小葱更容易焦，需提前捞出, en: optional, adds sweetness; burns faster than spring onion — pull out early, ja: お好みで。焦げやすいので早めに取り出す }
+
+  - name: { zh: 食用油,      en: Cooking Oil,        ja: サラダ油 }
+    amount: 100
+    unit: ml
+    scale: linear
+    note: { zh: 可做多份存放, en: make a larger batch and store, ja: まとめて作って保存可 }
+
+  - name: { zh: 姜,          en: Ginger,             ja: 生姜 }
+    amount: 3
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 生抽,        en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 1.5
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 老抽,        en: Dark Soy Sauce,     ja: 濃口醤油 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 糖,          en: Sugar,              ja: 砂糖 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
