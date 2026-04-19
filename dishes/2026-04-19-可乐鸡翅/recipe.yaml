@@ -1,0 +1,47 @@
+dish:
+  zh: 可乐鸡翅
+  en: Cola Chicken Wings
+  ja: コーラチキンウィング
+
+date: 2026-04-19
+url_slug: 2026-04-19-cola-chicken-wings
+base_servings: 2
+category: meat
+tags: [weeknight, braised, easy]
+
+ingredients:
+  - name: { zh: 鸡翅,     en: Chicken Wings,      ja: 鶏手羽 }
+    amount: 6
+    unit: { zh: 个, en: "", ja: 本 }
+    scale: discrete
+    note: { zh: 两面划刀, en: score both sides, ja: 両面に切り込みを入れる }
+
+  - name: { zh: 可乐,     en: Cola,               ja: コーラ }
+    amount: 200
+    unit: ml
+    scale: linear
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 老抽,     en: Dark Soy Sauce,     ja: 濃口醤油 }
+    amount: 0.5
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 料酒,     en: Shaoxing Wine,      ja: 紹興酒 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 姜,       en: Ginger,             ja: 生姜 }
+    amount: 3
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 食用油,   en: Cooking Oil,        ja: サラダ油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: fixed

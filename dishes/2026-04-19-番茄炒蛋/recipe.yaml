@@ -1,0 +1,46 @@
+dish:
+  zh: 番茄炒蛋
+  en: Tomato and Egg Stir-Fry
+  ja: トマトと卵の炒め物
+
+date: 2026-04-19
+url_slug: 2026-04-19-tomato-egg-stir-fry
+base_servings: 2
+category: vegetables
+tags: [quick, weeknight, vegetarian, cantonese]
+
+ingredients:
+  - name: { zh: 番茄,     en: Tomato,             ja: トマト }
+    amount: 2
+    unit: { zh: 个, en: " medium", ja: 個 }
+    scale: discrete
+    note: { zh: 切大块, en: cut into wedges, ja: 大きめに切る }
+
+  - name: { zh: 鸡蛋,     en: Eggs,               ja: 卵 }
+    amount: 3
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 糖,       en: Sugar,              ja: 砂糖 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 盐,       en: Salt,               ja: 塩 }
+    scale: to_taste
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 0.5
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 葱,       en: Spring Onion,       ja: 長ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
+    note: { zh: 葱白葱绿分开, en: separate white and green parts, ja: 白い部分と緑の部分を分ける }
+
+  - name: { zh: 食用油,   en: Cooking Oil,        ja: サラダ油 }
+    amount: 3
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear

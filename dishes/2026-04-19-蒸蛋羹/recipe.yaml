@@ -1,0 +1,43 @@
+dish:
+  zh: 蒸蛋羹
+  en: Steamed Egg Custard
+  ja: 茶碗蒸し風蒸し卵
+
+date: 2026-04-19
+url_slug: 2026-04-19-steamed-egg-custard
+base_servings: 1
+category: eggs
+tags: [quick, weeknight, easy, vegetarian]
+
+ingredients:
+  - name: { zh: 鸡蛋,     en: Eggs,               ja: 卵 }
+    amount: 2
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 温水,     en: Warm Water,         ja: ぬるま湯 }
+    amount: 240
+    unit: ml
+    scale: linear
+    note: { zh: 蛋液的1.5倍，约40°C, en: 1.5x egg volume, ~40°C, ja: 卵液の1.5倍・約40°C }
+
+  - name: { zh: 盐,       en: Salt,               ja: 塩 }
+    amount: 0.25
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 生抽,     en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 出锅后淋, en: drizzle after steaming, ja: 蒸し上がりにかける }
+
+  - name: { zh: 香油,     en: Sesame Oil,         ja: ごま油 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 出锅后淋, en: drizzle after steaming, ja: 蒸し上がりにかける }
+
+  - name: { zh: 虾皮,     en: Dried Shrimp,       ja: 干しエビ }
+    scale: to_taste
+    note: { zh: 可选, en: optional, ja: お好みで }
