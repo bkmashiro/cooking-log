@@ -1,0 +1,26 @@
+dish:
+  zh: 蜂蜜葡萄柚茶
+  en: Honey Grapefruit Tea
+  ja: はちみつグレープフルーツティー
+
+date: 2026-04-19
+url_slug: 2026-04-19-honey-grapefruit-tea
+base_servings: 1
+category: drinks
+tags: [no-cook, vegetarian, make-ahead]
+
+ingredients:
+  - name: { zh: 葡萄柚,   en: Grapefruit,         ja: グレープフルーツ }
+    amount: 1
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 蜂蜜,     en: Honey,              ja: はちみつ }
+    amount: 150
+    unit: g
+    scale: linear
+    note: { zh: 约与果肉等重, en: roughly equal weight to the fruit flesh, ja: 果肉とほぼ同量 }
+
+  - name: { zh: 盐,       en: Salt,               ja: 塩 }
+    scale: to_taste
+    note: { zh: 搓洗果皮用, en: for scrubbing the peel, ja: 皮を洗う用 }
