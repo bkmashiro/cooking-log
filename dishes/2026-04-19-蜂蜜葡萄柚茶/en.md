@@ -32,3 +32,5 @@ Spoon 1–2 tablespoons into a cup. Add hot water (no hotter than 60°C / 140°F
 
 ## Feedback
 
+- Tasted great ✅ (spoon-licking verdict before even steeping)
+- For the final blanch, use sugar syrup instead of plain water — draws out bitterness while pre-sweetening the peel, which helps the honey absorb more easily. Recommended upgrade.
