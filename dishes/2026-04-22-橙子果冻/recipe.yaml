@@ -1,0 +1,29 @@
+dish:
+  zh: 橙子果冻
+  en: Orange Jelly Cups
+  ja: オレンジゼリー
+
+date: 2026-04-22
+url_slug: 2026-04-22-orange-jelly-cups
+base_servings: 4
+category: dessert
+tags: [no-cook, vegetarian, make-ahead, entertaining]
+
+ingredients:
+  - name: { zh: 橙子,       en: Oranges,            ja: オレンジ }
+    amount: 4
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+    note: { zh: 留皮壳做容器, en: keep peel shells as cups, ja: 皮を器として使う }
+
+  - name: { zh: 吉利丁片,   en: Gelatine Leaves,    ja: ゼラチンシート }
+    amount: 5
+    unit: g
+    scale: linear
+    note: { zh: 约每500ml橙汁用5g，入口即化；想稍硬可用8g, en: ~5g per 500ml for melt-in-mouth; up to 8g for firmer set, ja: 500mlに対し5g目安・とろける食感；しっかりめなら8g }
+
+  - name: { zh: 糖,         en: Sugar,              ja: 砂糖 }
+    amount: 30
+    unit: g
+    scale: linear
+    note: { zh: 按橙子甜度调整, en: adjust to taste, ja: 甘さに応じて調整 }
