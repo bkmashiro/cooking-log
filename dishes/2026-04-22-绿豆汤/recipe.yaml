@@ -1,0 +1,27 @@
+dish:
+  zh: 绿豆汤
+  en: Mung Bean Soup
+  ja: 緑豆スープ
+
+date: 2026-04-22
+url_slug: 2026-04-22-mung-bean-soup
+base_servings: 3
+category: drinks
+tags: [vegetarian, make-ahead, summer, cantonese]
+
+ingredients:
+  - name: { zh: 绿豆,     en: Mung Beans,         ja: 緑豆 }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 冰糖,     en: Rock Sugar,         ja: 氷砂糖 }
+    amount: 50
+    unit: g
+    scale: linear
+    note: { zh: 豆子开花后再加，提前加会硬化豆皮, en: add only after beans bloom — adding early hardens the skins, ja: 豆が開いてから加える。早めに入れると皮が硬くなる }
+
+  - name: { zh: 水,       en: Water,              ja: 水 }
+    amount: 1.2
+    unit: L
+    scale: linear
