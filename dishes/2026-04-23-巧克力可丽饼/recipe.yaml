@@ -1,0 +1,49 @@
+dish:
+  zh: 巧克力可丽饼
+  en: Chocolate Crêpes
+  ja: チョコレートクレープ
+
+date: 2026-04-23
+url_slug: 2026-04-23-chocolate-crepes
+base_servings: 2
+category: dessert
+tags: [quick, vegetarian, entertaining, no-cook]
+
+ingredients:
+  - name: { zh: 低筋面粉,   en: Plain Flour,        ja: 薄力粉 }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 黑巧克力,   en: Dark Chocolate,     ja: ダークチョコレート }
+    amount: 45
+    unit: g
+    scale: linear
+    note: { zh: 切碎隔水融化, en: chopped and melted, ja: 刻んで湯煎で溶かす }
+
+  - name: { zh: 鸡蛋,       en: Eggs,               ja: 卵 }
+    amount: 2
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 牛奶,       en: Milk,               ja: 牛乳 }
+    amount: 270
+    unit: ml
+    scale: linear
+    note: { zh: 比原味多20ml，补偿巧克力使面糊变稠, en: extra 20ml to offset thickening from chocolate, ja: チョコで生地が重くなる分20ml多め }
+
+  - name: { zh: 黄油,       en: Butter,             ja: バター }
+    amount: 20
+    unit: g
+    scale: linear
+    note: { zh: 融化，和巧克力一起加入, en: melted, added with the chocolate, ja: 溶かしてチョコと一緒に加える }
+
+  - name: { zh: 糖,         en: Sugar,              ja: 砂糖 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 巧克力本身有甜度，比原味少放, en: chocolate adds sweetness so less than plain version, ja: チョコの甘さがあるので少なめ }
+
+  - name: { zh: 盐,         en: Salt,               ja: 塩 }
+    scale: to_taste
+    note: { zh: 一小撮, en: a pinch, ja: ひとつまみ }
