@@ -1,0 +1,55 @@
+dish:
+  zh: 红豆酥
+  en: Red Bean Pastry
+  ja: 小豆パイ
+
+date: 2026-04-23
+url_slug: 2026-04-23-red-bean-pastry
+base_servings: 12
+category: dessert
+tags: [entertaining, cantonese, baked]
+
+ingredients:
+  - name: { zh: 普通面粉,   en: Plain Flour,          ja: 中力粉 }
+    amount: 110
+    unit: g
+    scale: linear
+    note: { zh: 油皮用, en: for oil pastry, ja: 油皮用 }
+
+  - name: { zh: 低筋面粉,   en: Cake Flour,           ja: 薄力粉 }
+    amount: 80
+    unit: g
+    scale: linear
+    note: { zh: 油酥用, en: for shortcrust, ja: 油酥用 }
+
+  - name: { zh: 猪油,       en: Lard,                 ja: ラード }
+    amount: 75
+    unit: g
+    scale: linear
+    note: { zh: 冷藏结块，油皮35g+油酥40g, en: chilled solid — 35g for pastry + 40g for shortcrust, ja: 冷蔵で固めたもの・油皮35g+油酥40g }
+
+  - name: { zh: 白砂糖,     en: Caster Sugar,         ja: グラニュー糖 }
+    amount: 25
+    unit: g
+    scale: linear
+    note: { zh: 油皮用, en: for oil pastry, ja: 油皮用 }
+
+  - name: { zh: 开水,       en: Boiling Water,        ja: 熱湯 }
+    amount: 45
+    unit: g
+    scale: linear
+    note: { zh: 油皮用，烫面使皮更酥软, en: for oil pastry — hot water makes the pastry more tender, ja: 油皮用・熱湯でより柔らかく }
+
+  - name: { zh: 红豆沙,     en: Red Bean Paste,       ja: あんこ }
+    amount: 300
+    unit: g
+    scale: linear
+    note: { zh: 分成12个小球，每个约25g, en: divided into 12 balls, ~25g each, ja: 12等分・1個約25g }
+
+  - name: { zh: 蛋液,       en: Egg Wash,             ja: 溶き卵 }
+    scale: to_taste
+    note: { zh: 刷表面上色，可用牛奶代替, en: for glazing; milk works too, ja: 表面に塗る・牛乳でも可 }
+
+  - name: { zh: 芝麻,       en: Sesame Seeds,         ja: ごま }
+    scale: to_taste
+    note: { zh: 点缀表面, en: for topping, ja: トッピング用 }
