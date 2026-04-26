@@ -1,0 +1,44 @@
+dish:
+  zh: 烤小鸡腿
+  en: Baked Chicken Drumettes
+  ja: 鶏手羽元のオーブン焼き
+
+date: 2026-04-26
+url_slug: 2026-04-26-baked-chicken-drumettes
+base_servings: 2
+category: meat
+tags: [weeknight, easy, baked]
+
+ingredients:
+  - name: { zh: 小鸡腿,     en: Chicken Drumettes,  ja: 鶏手羽元 }
+    amount: 6
+    unit: { zh: 个, en: "", ja: 本 }
+    scale: discrete
+    note: { zh: 鸡翅根那段，肉厚多汁, en: the meatier upper wing section, ja: 手羽の根元部分 }
+
+  - name: { zh: 生抽,       en: Light Soy Sauce,    ja: 薄口醤油 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蜂蜜,       en: Honey,              ja: はちみつ }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蒜,         en: Garlic,             ja: ニンニク }
+    amount: 4
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 切末, en: minced, ja: みじん切り }
+
+  - name: { zh: 柠檬汁,     en: Lemon Juice,        ja: レモン汁 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 黑胡椒,     en: Black Pepper,       ja: 黒こしょう }
+    scale: to_taste
+
+  - name: { zh: 盐,         en: Salt,               ja: 塩 }
+    scale: to_taste

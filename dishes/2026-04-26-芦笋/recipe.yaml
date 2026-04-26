@@ -1,0 +1,40 @@
+dish:
+  zh: 黄油煎芦笋
+  en: Pan-Fried Asparagus with Butter
+  ja: バターソテーアスパラガス
+
+date: 2026-04-26
+url_slug: 2026-04-26-pan-fried-asparagus-butter
+base_servings: 2
+category: vegetables
+tags: [quick, vegetarian, seasonal, weeknight]
+
+ingredients:
+  - name: { zh: 芦笋,       en: Asparagus,          ja: アスパラガス }
+    amount: 200
+    unit: g
+    scale: linear
+    note: { zh: 4月当季，手掰去老根, en: in season April; snap off woody ends by hand, ja: 4月が旬・根元は手で折る }
+
+  - name: { zh: 黄油,       en: Butter,             ja: バター }
+    amount: 15
+    unit: g
+    scale: linear
+
+  - name: { zh: 盐,         en: Salt,               ja: 塩 }
+    scale: to_taste
+
+  - name: { zh: 黑胡椒,     en: Black Pepper,       ja: 黒こしょう }
+    scale: to_taste
+
+  - name: { zh: 柠檬汁,     en: Lemon Juice,        ja: レモン汁 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 出锅后淋, en: squeeze over at the end, ja: 仕上げに }
+
+  - name: { zh: 蒜,         en: Garlic,             ja: ニンニク }
+    amount: 2
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 可选，拍碎, en: optional, smashed, ja: お好みで・潰す }
