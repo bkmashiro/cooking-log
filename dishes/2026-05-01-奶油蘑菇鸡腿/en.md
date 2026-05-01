@@ -43,3 +43,5 @@ Return the chicken **skin-side up** — spoon sauce around it, not over the skin
 
 ## Feedback
 
+- Sauce was a bit rich/heavy — adding the juice of half an orange cut through it well; citrus and cream are a great match, recommended
+- Induction/microwave hobs can make it hard to control heat for the skin — easier to roast the chicken separately (skin-up, 200°C, 25 min) then make the sauce on the hob; the skin comes out reliably crispy without watching it
