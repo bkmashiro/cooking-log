@@ -1,0 +1,105 @@
+dish:
+  zh: 工匠炸鸡
+  en: Artisan Fried Chicken
+  ja: 本格フライドチキン
+
+date: 2026-05-01
+url_slug: 2026-05-01-artisan-fried-chicken
+base_servings: 2
+category: meat
+tags: [weeknight, weekend, western, entertaining, fried]
+
+ingredients:
+  - name: { zh: 鸡腿或鸡翅,       en: Chicken Thighs or Wings,   ja: 鶏もも肉または手羽 }
+    amount: 4
+    unit: { zh: 块, en: " pieces", ja: 本 }
+    scale: discrete
+
+  # Brine
+  - name: { zh: 水（腌水用）,      en: Water (for brine),         ja: 水（ブライン用） }
+    amount: 1
+    unit: { zh: 升, en: " L", ja: L }
+    scale: linear
+    note: { zh: 腌水用, en: for brine, ja: ブライン用 }
+
+  - name: { zh: 盐（腌水用）,      en: Salt (for brine),          ja: 塩（ブライン用） }
+    amount: 40
+    unit: g
+    scale: linear
+
+  - name: { zh: 糖（腌水用）,      en: Sugar (for brine),         ja: 砂糖（ブライン用） }
+    amount: 20
+    unit: g
+    scale: linear
+
+  - name: { zh: 蒜,               en: Garlic,                    ja: ニンニク }
+    amount: 4
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 腌水+腌料各一半, en: split between brine and marinade, ja: ブラインとマリネで半分ずつ }
+
+  - name: { zh: 姜,               en: Ginger,                    ja: 生姜 }
+    amount: 4
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+    note: { zh: 腌水用, en: for brine, ja: ブライン用 }
+
+  - name: { zh: 黑胡椒粒,         en: Black Peppercorns,         ja: 黒粒こしょう }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 腌水用, en: for brine, ja: ブライン用 }
+
+  - name: { zh: 月桂叶,           en: Bay Leaves,                ja: ローリエ }
+    amount: 2
+    unit: { zh: 片, en: " leaves", ja: 枚 }
+    scale: discrete
+    note: { zh: 腌水用, en: for brine, ja: ブライン用 }
+
+  # Marinade
+  - name: { zh: 生抽,             en: Light Soy Sauce,           ja: 薄口醤油 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 白胡椒粉,         en: White Pepper,              ja: 白こしょう }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 五香粉,           en: Five Spice Powder,         ja: 五香粉 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 辣椒粉,           en: Chilli Powder,             ja: チリパウダー }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 可选, en: optional, ja: お好みで }
+
+  - name: { zh: 芝麻油,           en: Sesame Oil,                ja: ごま油 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 蜂蜜,             en: Honey,                     ja: はちみつ }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 少量，上色用, en: small amount for colour, ja: 少量・色づけ用 }
+
+  # Coating
+  - name: { zh: 土豆淀粉,         en: Potato Starch,             ja: 片栗粉 }
+    amount: 80
+    unit: g
+    scale: linear
+
+  - name: { zh: 玉米淀粉,         en: Cornstarch,                ja: コーンスターチ }
+    amount: 20
+    unit: g
+    scale: linear
+
+  - name: { zh: 炸油,             en: Frying Oil,                ja: 揚げ油 }
+    scale: to_taste
+    note: { zh: 足量，能淹没鸡腿, en: enough to submerge the chicken, ja: 鶏肉が浸かる量 }
