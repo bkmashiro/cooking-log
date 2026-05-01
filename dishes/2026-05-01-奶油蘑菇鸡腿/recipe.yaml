@@ -1,0 +1,59 @@
+dish:
+  zh: 奶油蘑菇鸡腿
+  en: Creamy Mushroom Chicken Thighs
+  ja: クリームマッシュルームチキン
+
+date: 2026-05-01
+url_slug: 2026-05-01-creamy-mushroom-chicken-thighs
+base_servings: 2
+category: meat
+tags: [weeknight, western, entertaining]
+
+ingredients:
+  - name: { zh: 去骨鸡腿,     en: Boneless Chicken Thighs,  ja: 骨なし鶏もも肉 }
+    amount: 2
+    unit: { zh: 块, en: " pieces", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 蘑菇,         en: Chestnut Mushrooms,       ja: クリニマッシュルーム }
+    amount: 200
+    unit: g
+    scale: linear
+    note: { zh: 对半切，不要水洗用纸巾擦, en: halved; wipe with paper towel, don't wash, ja: 半分に切る・ペーパーで拭く }
+
+  - name: { zh: 洋葱,         en: Onion,                    ja: 玉ねぎ }
+    amount: 0.5
+    unit: { zh: 个, en: "", ja: 個 }
+    scale: discrete
+    note: { zh: 切碎, en: finely chopped, ja: みじん切り }
+
+  - name: { zh: 蒜,           en: Garlic,                   ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+    note: { zh: 切末, en: minced, ja: みじん切り }
+
+  - name: { zh: 淡奶油,       en: Double Cream,             ja: 生クリーム }
+    amount: 100
+    unit: ml
+    scale: linear
+
+  - name: { zh: 黄油,         en: Butter,                   ja: バター }
+    amount: 20
+    unit: g
+    scale: linear
+
+  - name: { zh: 料酒/白葡萄酒, en: Shaoxing Wine or White Wine, ja: 紹興酒または白ワイン }
+    amount: 50
+    unit: ml
+    scale: linear
+
+  - name: { zh: 百里香,       en: Fresh Thyme,              ja: タイム }
+    scale: to_taste
+    note: { zh: 可选, en: optional, ja: お好みで }
+
+  - name: { zh: 盐,           en: Salt,                     ja: 塩 }
+    scale: to_taste
+
+  - name: { zh: 黑胡椒,       en: Black Pepper,             ja: 黒こしょう }
+    scale: to_taste
