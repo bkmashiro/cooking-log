@@ -1,0 +1,69 @@
+dish:
+  zh: 海鲜砂锅
+  en: Seafood Claypot
+  ja: 海鮮土鍋
+
+date: 2026-05-03
+url_slug: 2026-05-03-seafood-claypot
+base_servings: 2
+category: seafood
+tags: [weeknight, one-pot, seafood, claypot]
+
+ingredients:
+  - name: { zh: 冷冻蚝肉,       en: Frozen Oyster Meat,      ja: 冷凍牡蠣 }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 冷冻虾,         en: Frozen Prawns,           ja: 冷凍エビ }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 小鱿鱼,         en: Baby Squid,              ja: イカ }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 嫩豆腐,         en: Silken Tofu,             ja: 絹ごし豆腐 }
+    amount: 1
+    unit: { zh: 块, en: " block", ja: 丁 }
+    scale: discrete
+
+  - name: { zh: 粉丝,           en: Glass Noodles,           ja: 春雨 }
+    amount: 50
+    unit: g
+    scale: linear
+
+  - name: { zh: 姜,             en: Ginger,                  ja: 生姜 }
+    amount: 5
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 蒜,             en: Garlic,                  ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+
+  - name: { zh: 小葱,           en: Spring Onion,            ja: 小ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蚝油,           en: Oyster Sauce,            ja: オイスターソース }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 白胡椒粉,       en: White Pepper,            ja: 白こしょう }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 芝麻油,         en: Sesame Oil,              ja: ごま油 }
+    scale: to_taste
