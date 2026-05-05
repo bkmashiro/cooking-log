@@ -1,0 +1,60 @@
+dish:
+  zh: 豆豉香辣鱿鱼圈
+  en: Spicy Black Bean Squid Rings
+  ja: 豆豉香辣イカリング
+
+date: 2026-05-05
+url_slug: 2026-05-05-spicy-black-bean-squid-rings
+base_servings: 2
+category: seafood
+tags: [weeknight, spicy, seafood, stir-fry]
+
+ingredients:
+  - name: { zh: 鱿鱼圈,         en: Squid Rings,             ja: イカリング }
+    amount: 300
+    unit: g
+    scale: linear
+
+  - name: { zh: 豆豉,           en: Fermented Black Beans,   ja: 豆豉 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蒜,             en: Garlic,                  ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+
+  - name: { zh: 姜,             en: Ginger,                  ja: 生姜 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp (minced)", ja: 小さじ（みじん切り） }
+    scale: linear
+
+  - name: { zh: 小米辣,         en: Fresh Chilli,            ja: 小米辣 }
+    amount: 2
+    unit: { zh: 根, en: " pieces", ja: 本 }
+    scale: discrete
+    note: { zh: 可换干辣椒, en: or dried chilli, ja: 乾燥唐辛子でも可 }
+
+  - name: { zh: 料酒,           en: Shaoxing Wine,           ja: 紹興酒 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蚝油,           en: Oyster Sauce,            ja: オイスターソース }
+    amount: 0.5
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 白胡椒粉,       en: White Pepper,            ja: 白こしょう }
+    scale: to_taste
+
+  - name: { zh: 小葱,           en: Spring Onion,            ja: 小ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
