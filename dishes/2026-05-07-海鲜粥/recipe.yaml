@@ -1,0 +1,58 @@
+dish:
+  zh: 海鲜粥
+  en: Seafood Congee
+  ja: 海鮮粥
+
+date: 2026-05-07
+url_slug: 2026-05-07-seafood-congee
+base_servings: 2
+category: seafood
+tags: [weekend, seafood, congee, comfort]
+
+ingredients:
+  - name: { zh: 大米,           en: Jasmine Rice,            ja: 米 }
+    amount: 150
+    unit: g
+    scale: linear
+    note: { zh: 提前泡30分钟, en: soaked 30 minutes, ja: 30分浸水 }
+
+  - name: { zh: 梭子蟹,         en: Swimming Crab,           ja: ワタリガニ }
+    amount: 1
+    unit: { zh: 只（斩块）, en: " (chopped)", ja: 匹（ぶつ切り） }
+    scale: discrete
+
+  - name: { zh: 明虾,           en: Tiger Prawns,            ja: ブラックタイガー }
+    amount: 6
+    unit: { zh: 只, en: " pieces", ja: 尾 }
+    scale: discrete
+    note: { zh: 虾头虾壳留着熬汤, en: keep heads and shells for stock, ja: 頭と殻はだしに使う }
+
+  - name: { zh: 生蚝肉,         en: Oyster Meat,             ja: 牡蠣 }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 三文鱼,         en: Salmon,                  ja: サーモン }
+    amount: 100
+    unit: g
+    scale: linear
+    note: { zh: 切薄片, en: thinly sliced, ja: 薄切り }
+
+  - name: { zh: 姜,             en: Ginger,                  ja: 生姜 }
+    amount: 6
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 小葱,           en: Spring Onion,            ja: 小ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
+
+  - name: { zh: 白胡椒粉,       en: White Pepper,            ja: 白こしょう }
+    scale: to_taste
+
+  - name: { zh: 芝麻油,         en: Sesame Oil,              ja: ごま油 }
+    scale: to_taste
+
+  - name: { zh: 盐,             en: Salt,                    ja: 塩 }
+    scale: to_taste
