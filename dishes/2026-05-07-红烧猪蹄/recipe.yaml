@@ -1,0 +1,68 @@
+dish:
+  zh: 红烧猪蹄
+  en: Red-Braised Pork Trotters
+  ja: 豚足の醤油煮込み
+
+date: 2026-05-07
+url_slug: 2026-05-07-red-braised-pork-trotters
+base_servings: 2
+category: meat
+tags: [weekend, braised, pork, comfort]
+
+ingredients:
+  - name: { zh: 猪蹄,           en: Pork Trotters,           ja: 豚足 }
+    amount: 2
+    unit: { zh: 只（斩块）, en: " (chopped into pieces)", ja: 本（ぶつ切り） }
+    scale: discrete
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 3
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 老抽,           en: Dark Soy Sauce,          ja: 濃口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 上色用, en: for colour, ja: 色づけ用 }
+
+  - name: { zh: 冰糖,           en: Rock Sugar,              ja: 氷砂糖 }
+    amount: 30
+    unit: g
+    scale: linear
+
+  - name: { zh: 料酒,           en: Shaoxing Wine,           ja: 紹興酒 }
+    amount: 3
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 姜,             en: Ginger,                  ja: 生姜 }
+    amount: 5
+    unit: { zh: 片, en: " slices", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 蒜,             en: Garlic,                  ja: ニンニク }
+    amount: 4
+    unit: { zh: 瓣, en: " cloves", ja: 片 }
+    scale: discrete
+
+  - name: { zh: 八角,           en: Star Anise,              ja: 八角 }
+    amount: 2
+    unit: { zh: 个, en: " pieces", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 桂皮,           en: Cinnamon Stick,          ja: シナモンスティック }
+    amount: 1
+    unit: { zh: 小段, en: " small piece", ja: 小1本 }
+    scale: discrete
+
+  - name: { zh: 香叶,           en: Bay Leaves,              ja: ローリエ }
+    amount: 2
+    unit: { zh: 片, en: " leaves", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 干辣椒,         en: Dried Chilli,            ja: 乾燥唐辛子 }
+    amount: 2
+    unit: { zh: 个, en: " pieces", ja: 本 }
+    scale: discrete
+    note: { zh: 可选, en: optional, ja: お好みで }
