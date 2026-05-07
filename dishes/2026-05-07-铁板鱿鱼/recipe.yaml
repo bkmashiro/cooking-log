@@ -1,0 +1,44 @@
+dish:
+  zh: 铁板鱿鱼
+  en: Sizzling Pan-Seared Squid
+  ja: 鉄板イカ
+
+date: 2026-05-07
+url_slug: 2026-05-07-sizzling-pan-seared-squid
+base_servings: 2
+category: seafood
+tags: [weeknight, seafood, low-oil, stir-fry]
+
+ingredients:
+  - name: { zh: 小鱿鱼（或鱿鱼圈）, en: Baby Squid or Squid Rings, ja: イカ（または輪切り） }
+    amount: 300
+    unit: g
+    scale: linear
+
+  - name: { zh: 料酒,           en: Shaoxing Wine,           ja: 紹興酒 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 白胡椒粉,       en: White Pepper,            ja: 白こしょう }
+    scale: to_taste
+
+  - name: { zh: 蒜,             en: Garlic,                  ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣（切末）, en: " cloves, minced", ja: 片（みじん切り） }
+    scale: discrete
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 糖,             en: Sugar,                   ja: 砂糖 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 小葱,           en: Spring Onion,            ja: 小ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
