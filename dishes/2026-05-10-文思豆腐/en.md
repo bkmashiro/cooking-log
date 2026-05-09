@@ -30,7 +30,7 @@ Season with salt and white pepper. Ladle into bowls, drizzle with sesame oil, an
 
 ---
 
-## Knife Technique Notes
+## Key Tips
 
 - The knife must be sharp — a dull blade crushes silken tofu
 - Push the knife forward; never chop or press down
