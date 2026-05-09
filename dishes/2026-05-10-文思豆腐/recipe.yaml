@@ -1,0 +1,52 @@
+dish:
+  zh: 文思豆腐羹
+  en: Wensi Tofu Soup
+  ja: 文思豆腐スープ
+
+date: 2026-05-10
+url_slug: 2026-05-10-wensi-tofu-soup
+base_servings: 2
+category: vegetarian
+tags: [weekend, tofu, soup, knife-skills, huaiyang]
+
+ingredients:
+  - name: { zh: 内酯豆腐,       en: Silken Tofu (Japanese Style), ja: 絹ごし豆腐 }
+    amount: 1
+    unit: { zh: 盒（约300g）, en: " block (~300g)", ja: 丁（約300g） }
+    scale: discrete
+    note: { zh: 越嫩越好，不能用老豆腐, en: must be silken, not firm, ja: 必ず絹ごしを使う }
+
+  - name: { zh: 高汤（鸡汤或蔬菜汤）, en: Stock (chicken or vegetable), ja: だし（鶏または野菜） }
+    amount: 500
+    unit: ml
+    scale: linear
+
+  - name: { zh: 金针菇,         en: Enoki Mushrooms,         ja: えのきだけ }
+    amount: 50
+    unit: g
+    scale: linear
+    note: { zh: 可选，增加口感, en: optional, ja: お好みで }
+
+  - name: { zh: 胡萝卜,         en: Carrot,                  ja: にんじん }
+    amount: 0.25
+    unit: { zh: 根（切细丝）, en: " (julienned)", ja: 本（千切り） }
+    scale: discrete
+    note: { zh: 可选，配色用, en: optional, for colour, ja: 色づけ用 }
+
+  - name: { zh: 水淀粉,         en: Cornstarch Slurry,       ja: 水溶き片栗粉 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 淀粉1+水2混合, en: 1 part starch + 2 parts water, ja: 片栗粉1+水2 }
+
+  - name: { zh: 盐,             en: Salt,                    ja: 塩 }
+    scale: to_taste
+
+  - name: { zh: 白胡椒粉,       en: White Pepper,            ja: 白こしょう }
+    scale: to_taste
+
+  - name: { zh: 芝麻油,         en: Sesame Oil,              ja: ごま油 }
+    scale: to_taste
+
+  - name: { zh: 葱花,           en: Spring Onion,            ja: 小ねぎ }
+    scale: to_taste
