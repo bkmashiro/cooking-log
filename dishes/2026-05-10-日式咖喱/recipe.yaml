@@ -1,0 +1,56 @@
+dish:
+  zh: 日式咖喱
+  en: Japanese Curry
+  ja: 日本カレー
+
+date: 2026-05-10
+url_slug: 2026-05-10-japanese-curry
+base_servings: 2
+category: meat
+tags: [weeknight, comfort, japanese, one-pot]
+
+ingredients:
+  - name: { zh: 鸡腿肉（或猪/牛肉）, en: Chicken Thigh (or pork/beef), ja: 鶏もも肉（または豚・牛） }
+    amount: 300
+    unit: g
+    scale: linear
+
+  - name: { zh: 土豆,           en: Potato,                  ja: じゃがいも }
+    amount: 2
+    unit: { zh: 个, en: " medium", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 胡萝卜,         en: Carrot,                  ja: にんじん }
+    amount: 1
+    unit: { zh: 根, en: " large", ja: 本 }
+    scale: discrete
+
+  - name: { zh: 洋葱,           en: Onion,                   ja: 玉ねぎ }
+    amount: 1
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: discrete
+
+  - name: { zh: S&B咖喱块,      en: S&B Curry Roux,          ja: S&Bカレールー }
+    amount: 3
+    unit: { zh: 块, en: " cubes", ja: かけ }
+    scale: discrete
+
+  - name: { zh: 水,             en: Water,                   ja: 水 }
+    amount: 500
+    unit: ml
+    scale: linear
+
+  - name: { zh: 番茄酱,         en: Tomato Ketchup,          ja: トマトケチャップ }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 可选，增加圆润感, en: optional, rounds out the flavour, ja: お好みで }
+
+  - name: { zh: 黄油,           en: Butter,                  ja: バター }
+    amount: 10
+    unit: g
+    scale: linear
+    note: { zh: 可选，收尾提香, en: optional, stir in at the end, ja: 仕上げ用 }
+
+  - name: { zh: 食用油,         en: Oil,                     ja: サラダ油 }
+    scale: to_taste

@@ -1,0 +1,36 @@
+dish:
+  zh: 印度薄饼（Roti）
+  en: Roti (Indian Flatbread)
+  ja: ロティ（インド薄焼きパン）
+
+date: 2026-05-10
+url_slug: 2026-05-10-roti-indian-flatbread
+base_servings: 2
+category: staple
+tags: [weeknight, bread, indian, vegetarian]
+
+ingredients:
+  - name: { zh: 全麦面粉（或普通面粉）, en: Wholemeal Flour (or plain flour), ja: 全粒粉（または薄力粉） }
+    amount: 200
+    unit: g
+    scale: linear
+
+  - name: { zh: 温水,           en: Warm Water,              ja: ぬるま湯 }
+    amount: 120
+    unit: ml
+    scale: linear
+    note: { zh: 视面粉吸水量调整, en: adjust as needed, ja: 様子を見ながら調整 }
+
+  - name: { zh: 盐,             en: Salt,                    ja: 塩 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 食用油,         en: Oil,                     ja: サラダ油 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 黄油（出锅抹），en: Butter (to finish),      ja: バター（仕上げ用） }
+    scale: to_taste
+    note: { zh: 可选, en: optional, ja: お好みで }
