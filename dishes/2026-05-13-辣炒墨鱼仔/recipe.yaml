@@ -1,0 +1,54 @@
+dish:
+  zh: 辣炒墨鱼仔
+  en: Spicy Stir-fried Baby Cuttlefish
+  ja: 辛炒めコウイカ
+
+date: 2026-05-13
+url_slug: 2026-05-13-spicy-stir-fried-baby-cuttlefish
+base_servings: 2
+category: seafood
+tags: [weeknight, spicy, seafood, stir-fry]
+
+ingredients:
+  - name: { zh: 冷冻墨鱼仔,     en: Frozen Baby Cuttlefish,  ja: 冷凍コウイカ }
+    amount: 300
+    unit: g
+    scale: linear
+
+  - name: { zh: 郫县豆瓣酱,     en: Doubanjiang (Spicy Bean Paste), ja: 豆板醤 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 蒜,             en: Garlic,                  ja: ニンニク }
+    amount: 3
+    unit: { zh: 瓣（切末）, en: " cloves, minced", ja: 片（みじん切り） }
+    scale: discrete
+
+  - name: { zh: 姜,             en: Ginger,                  ja: 生姜 }
+    amount: 1
+    unit: { zh: 茶匙（切末）, en: " tsp, minced", ja: 小さじ（みじん切り） }
+    scale: linear
+
+  - name: { zh: 小米辣,         en: Fresh Chilli,            ja: 小米辣 }
+    amount: 2
+    unit: { zh: 根, en: " pieces", ja: 本 }
+    scale: discrete
+
+  - name: { zh: 料酒,           en: Shaoxing Wine,           ja: 紹興酒 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 白胡椒粉,       en: White Pepper,            ja: 白こしょう }
+    scale: to_taste
+
+  - name: { zh: 小葱,           en: Spring Onion,            ja: 小ねぎ }
+    amount: 2
+    unit: { zh: 根, en: " stalks", ja: 本 }
+    scale: discrete
