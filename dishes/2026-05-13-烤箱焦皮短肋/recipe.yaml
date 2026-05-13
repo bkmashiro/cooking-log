@@ -1,0 +1,48 @@
+dish:
+  zh: 烤箱焦皮短肋
+  en: Oven-Braised Short Ribs with Caramelised Crust
+  ja: オーブン焼き骨なしショートリブ
+
+date: 2026-05-13
+url_slug: 2026-05-13-oven-short-ribs-caramelised
+base_servings: 2
+category: meat
+tags: [weekend, beef, oven, low-smoke]
+
+ingredients:
+  - name: { zh: 去骨牛短肋,     en: Boneless Beef Short Ribs, ja: 骨なしショートリブ }
+    amount: 400
+    unit: g
+    scale: linear
+
+  - name: { zh: 盐,             en: Salt,                    ja: 塩 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 黑胡椒,         en: Black Pepper,            ja: 黒こしょう }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 蒜粉,           en: Garlic Powder,           ja: ガーリックパウダー }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 最后刷面用, en: for the glaze, ja: 仕上げ塗り用 }
+
+  - name: { zh: 蜂蜜,           en: Honey,                   ja: はちみつ }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 最后刷面用, en: for the glaze, ja: 仕上げ塗り用 }
+
+  - name: { zh: 黑胡椒（刷面用）, en: Black Pepper (for glaze), ja: 黒こしょう（仕上げ用） }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
