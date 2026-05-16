@@ -1,0 +1,58 @@
+dish:
+  zh: 蚵仔煎
+  en: Taiwanese Oyster Omelette
+  ja: 台湾カキ焼き（オアジェン）
+
+date: 2026-05-16
+url_slug: 2026-05-16-taiwanese-oyster-omelette
+base_servings: 1
+category: seafood
+tags: [weeknight, taiwanese, seafood, street-food]
+
+ingredients:
+  - name: { zh: 鲜蚝（或冷冻蚝肉）, en: Fresh or Frozen Oysters, ja: 生牡蠣（または冷凍）}
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 鸡蛋,           en: Eggs,                    ja: 卵 }
+    amount: 2
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: discrete
+
+  - name: { zh: 小白菜（或菠菜/韭菜）, en: Bok Choy (or spinach/chives), ja: チンゲン菜（またはほうれん草・ニラ）}
+    amount: 1
+    unit: { zh: 把, en: " handful", ja: ひとつかみ }
+    scale: discrete
+
+  # 粉浆
+  - name: { zh: 番薯粉（地瓜粉）, en: Sweet Potato Starch,     ja: さつまいも澱粉 }
+    amount: 3
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+    note: { zh: 不可替换为玉米淀粉, en: do not substitute with cornstarch, ja: コーンスターチで代用不可 }
+
+  - name: { zh: 水（粉浆用）,    en: Water (for batter),      ja: 水（衣用） }
+    amount: 100
+    unit: ml
+    scale: linear
+
+  # 酱汁
+  - name: { zh: 甜辣酱,         en: Sweet Chilli Sauce,      ja: スイートチリソース }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 番茄酱,         en: Ketchup,                 ja: ケチャップ }
+    amount: 1
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 味噌,           en: Miso Paste,              ja: 味噌 }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 可选，增加鲜味, en: optional, adds depth, ja: お好みで }
+
+  - name: { zh: 食用油,         en: Oil,                     ja: サラダ油 }
+    scale: to_taste
