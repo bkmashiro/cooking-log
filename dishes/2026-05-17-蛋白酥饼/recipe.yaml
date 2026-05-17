@@ -1,0 +1,37 @@
+dish:
+  zh: 蛋白酥饼
+  en: Meringue Kisses
+  ja: メレンゲクッキー
+
+date: 2026-05-17
+url_slug: 2026-05-17-meringue-kisses
+base_servings: 30
+category: dessert
+tags: [weekend, baking, dessert, egg-white, gluten-free]
+
+ingredients:
+  - name: { zh: 蛋白,           en: Egg Whites,              ja: 卵白 }
+    amount: 2
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: linear
+
+  - name: { zh: 细砂糖,         en: Caster Sugar,            ja: グラニュー糖 }
+    amount: 100
+    unit: g
+    scale: linear
+
+  - name: { zh: 糖粉,           en: Icing Sugar,             ja: 粉砂糖 }
+    amount: 20
+    unit: g
+    scale: linear
+    note: { zh: 可选，加了更细腻, en: optional, gives finer texture, ja: お好みで、より細かい食感に }
+
+  - name: { zh: 香草精,         en: Vanilla Extract,         ja: バニラエッセンス }
+    amount: 0.5
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 可选, en: optional, ja: お好みで }
+
+  - name: { zh: 食用色素,       en: Food Colouring,          ja: 食用色素 }
+    scale: to_taste
+    note: { zh: 可选，装饰用, en: optional, ja: お好みで }

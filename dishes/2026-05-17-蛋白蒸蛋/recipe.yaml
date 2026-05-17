@@ -1,0 +1,40 @@
+dish:
+  zh: 蛋白蒸蛋
+  en: Steamed Egg White Custard
+  ja: 卵白の茶碗蒸し
+
+date: 2026-05-17
+url_slug: 2026-05-17-steamed-egg-white-custard
+base_servings: 2
+category: light
+tags: [weeknight, egg-white, steamed, light]
+
+ingredients:
+  - name: { zh: 蛋白,           en: Egg Whites,              ja: 卵白 }
+    amount: 3
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: linear
+
+  - name: { zh: 温水或温高汤,   en: Warm Water or Warm Stock, ja: ぬるま湯またはだし }
+    amount: 200
+    unit: ml
+    scale: linear
+    note: { zh: 蛋白:水 = 1:1.5, en: egg white to liquid ratio 1:1.5, ja: 卵白:水＝1:1.5 }
+
+  - name: { zh: 盐,             en: Salt,                    ja: 塩 }
+    amount: 0.25
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 生抽,           en: Light Soy Sauce,         ja: 薄口醤油 }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+    note: { zh: 出锅后淋, en: drizzle after steaming, ja: 蒸した後にかける }
+
+  - name: { zh: 芝麻油,         en: Sesame Oil,              ja: ごま油 }
+    scale: to_taste
+    note: { zh: 出锅后淋, en: drizzle after steaming, ja: 蒸した後にかける }
+
+  - name: { zh: 葱花,           en: Spring Onion,            ja: 小ねぎ }
+    scale: to_taste

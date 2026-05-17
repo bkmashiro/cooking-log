@@ -1,0 +1,45 @@
+dish:
+  zh: 帕芙洛娃
+  en: Pavlova
+  ja: パブロバ
+
+date: 2026-05-17
+url_slug: 2026-05-17-pavlova
+base_servings: 6
+category: dessert
+tags: [weekend, baking, dessert, egg-white, gluten-free]
+
+ingredients:
+  - name: { zh: 蛋白,           en: Egg Whites,              ja: 卵白 }
+    amount: 4
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: linear
+
+  - name: { zh: 细砂糖,         en: Caster Sugar,            ja: グラニュー糖 }
+    amount: 200
+    unit: g
+    scale: linear
+
+  - name: { zh: 玉米淀粉,       en: Cornstarch,              ja: コーンスターチ }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 白醋（或柠檬汁）, en: White Vinegar (or lemon juice), ja: 白酢（またはレモン汁） }
+    amount: 1
+    unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
+    scale: linear
+
+  - name: { zh: 淡奶油（whipping cream）, en: Whipping Cream, ja: 生クリーム }
+    amount: 300
+    unit: ml
+    scale: linear
+
+  - name: { zh: 糖粉,           en: Icing Sugar,             ja: 粉砂糖 }
+    amount: 2
+    unit: { zh: 汤匙, en: " tbsp", ja: 大さじ }
+    scale: linear
+
+  - name: { zh: 新鲜水果,       en: Fresh Fruit,             ja: フレッシュフルーツ }
+    scale: to_taste
+    note: { zh: 草莓/蓝莓/百香果/猕猴桃, en: strawberries/blueberries/passionfruit/kiwi, ja: いちご/ブルーベリー/パッションフルーツ/キウイ }
