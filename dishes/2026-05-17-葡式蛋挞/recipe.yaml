@@ -1,0 +1,60 @@
+dish:
+  zh: 葡式蛋挞
+  en: Portuguese Custard Tarts (Pastel de Nata)
+  ja: ポルトガル風エッグタルト（パステル・デ・ナタ）
+
+date: 2026-05-17
+url_slug: 2026-05-17-portuguese-custard-tarts
+base_servings: 12
+category: dessert
+tags: [weekend, baking, dessert, portuguese]
+
+ingredients:
+  # 酥皮
+  - name: { zh: 全黄油千层酥皮（预制）, en: All-Butter Puff Pastry (ready-rolled), ja: 全バターパイシート（市販） }
+    amount: 1
+    unit: { zh: 张（约320g）, en: " sheet (~320g)", ja: 枚（約320g） }
+    scale: discrete
+    note: { zh: 推荐Jus-Rol all-butter版, en: Jus-Rol all-butter recommended, ja: 全バター使用のものを推奨 }
+
+  # 挞水
+  - name: { zh: 蛋黄,           en: Egg Yolks,               ja: 卵黄 }
+    amount: 4
+    unit: { zh: 个, en: " large", ja: 個 }
+    scale: linear
+
+  - name: { zh: 细砂糖,         en: Caster Sugar,            ja: グラニュー糖 }
+    amount: 80
+    unit: g
+    scale: linear
+
+  - name: { zh: 玉米淀粉,       en: Cornstarch,              ja: コーンスターチ }
+    amount: 20
+    unit: g
+    scale: linear
+
+  - name: { zh: 淡奶油（double cream）, en: Double Cream,    ja: ダブルクリーム }
+    amount: 250
+    unit: ml
+    scale: linear
+    note: { zh: 奢侈版全用奶油，普通版150ml奶油+200ml牛奶, en: luxury version is all cream; standard is 150ml cream + 200ml milk, ja: 贅沢版は全量クリーム、普通は150mlクリーム+200ml牛乳 }
+
+  - name: { zh: 全脂牛奶,       en: Whole Milk,              ja: 全脂牛乳 }
+    amount: 100
+    unit: ml
+    scale: linear
+    note: { zh: 奢侈版可省去, en: omit for extra-rich version, ja: 贅沢版は省略可 }
+
+  - name: { zh: 香草荚,         en: Vanilla Pod,             ja: バニラビーンズ }
+    amount: 0.5
+    unit: { zh: 根, en: " pod", ja: 本 }
+    scale: discrete
+    note: { zh: 或香草精1茶匙, en: or 1 tsp vanilla extract, ja: またはバニラエッセンス小さじ1 }
+
+  - name: { zh: 柠檬皮（可选）, en: Lemon Zest (optional),  ja: レモンの皮（お好みで） }
+    amount: 1
+    unit: { zh: 片, en: " strip", ja: 枚 }
+    scale: discrete
+
+  - name: { zh: 肉桂粉（表面用）, en: Cinnamon Powder (to finish), ja: シナモンパウダー（仕上げ） }
+    scale: to_taste
