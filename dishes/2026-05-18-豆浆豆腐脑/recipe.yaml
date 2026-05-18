@@ -1,0 +1,27 @@
+dish:
+  zh: 自制豆浆
+  en: Homemade Soy Milk
+  ja: 手作り豆乳
+
+date: 2026-05-18
+url_slug: 2026-05-18-homemade-soy-milk
+base_servings: 2
+category: drink
+tags: [breakfast, vegetarian, vegan, homemade]
+
+ingredients:
+  - name: { zh: 干黄豆,         en: Dried Soybeans,          ja: 乾燥大豆 }
+    amount: 100
+    unit: g
+    scale: linear
+    note: { zh: 提前泡8–12小时, en: soak 8–12 hours, ja: 8〜12時間浸水 }
+
+  - name: { zh: 水,             en: Water,                   ja: 水 }
+    amount: 600
+    unit: ml
+    scale: linear
+    note: { zh: 打浆用，黄豆:水≈1:6, en: for blending, ratio ~1:6, ja: ミキサー用、大豆:水≈1:6 }
+
+  - name: { zh: 糖或蜂蜜,       en: Sugar or Honey,          ja: 砂糖またははちみつ }
+    scale: to_taste
+    note: { zh: 出锅后加, en: add after cooking, ja: 完成後に加える }

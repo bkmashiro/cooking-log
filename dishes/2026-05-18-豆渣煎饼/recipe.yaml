@@ -1,0 +1,44 @@
+dish:
+  zh: 豆渣煎饼
+  en: Okara Pancakes
+  ja: おから煎餅
+
+date: 2026-05-18
+url_slug: 2026-05-18-okara-pancakes
+base_servings: 2
+category: breakfast
+tags: [breakfast, vegetarian, vegan, zero-waste, pan-fried]
+
+ingredients:
+  - name: { zh: 豆渣,             en: Okara (soy pulp),        ja: おから（豆乳の絞りかす） }
+    amount: 200
+    unit: g
+    scale: linear
+    note: { zh: 做豆浆剩下的, en: leftover from making soy milk, ja: 豆乳を作った後の絞りかす }
+
+  - name: { zh: 中筋面粉,         en: Plain flour,             ja: 薄力粉 }
+    amount: 60
+    unit: g
+    scale: linear
+
+  - name: { zh: 鸡蛋,             en: Egg,                     ja: 卵 }
+    amount: 1
+    unit: 个
+    scale: linear
+
+  - name: { zh: 小葱,             en: Spring onion,            ja: 小ねぎ }
+    amount: 2
+    unit: 根
+    scale: linear
+    note: { zh: 切葱花, en: finely chopped, ja: 小口切り }
+
+  - name: { zh: 盐,               en: Salt,                    ja: 塩 }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 食用油,           en: Neutral oil,             ja: サラダ油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+    note: { zh: 煎制用, en: for frying, ja: 焼き用 }
