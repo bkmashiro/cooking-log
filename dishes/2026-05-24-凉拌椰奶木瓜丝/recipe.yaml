@@ -1,0 +1,50 @@
+dish:
+  zh: 凉拌椰奶木瓜丝
+  en: Coconut Milk Papaya Slaw
+  ja: ヤングパパイヤのココナッツミルク和え
+
+date: 2026-05-24
+url_slug: 2026-05-24-coconut-papaya-slaw
+base_servings: 2
+category: salad
+tags: [salad, vegan, cold, Southeast-Asian, no-cook, summer]
+
+ingredients:
+  - name: { zh: 木瓜（硬、半熟）,   en: Firm/unripe papaya,      ja: 硬いパパイヤ（青め） }
+    amount: 1
+    unit: 个
+    scale: linear
+    note: { zh: 约300g，去皮去籽刨丝, en: ~300g, peeled, deseeded and shredded, ja: 約300g、皮と種を除いて千切り }
+
+  - name: { zh: 椰奶,             en: Coconut milk,            ja: ココナッツミルク }
+    amount: 60
+    unit: ml
+    scale: linear
+
+  - name: { zh: 青柠汁,           en: Lime juice,              ja: ライムジュース }
+    amount: 1
+    unit: 个
+    scale: linear
+    note: { zh: 约2 tbsp，柠檬汁亦可, en: ~2 tbsp, lemon works too, ja: 約大さじ2、レモンでも可 }
+
+  - name: { zh: 细砂糖,           en: Caster sugar,            ja: グラニュー糖 }
+    amount: 1
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 盐,               en: Salt,                    ja: 塩 }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 薄荷叶,           en: Fresh mint,              ja: ミント }
+    amount: 1
+    unit: handful
+    scale: fixed
+    note: { zh: 可省略, en: optional, ja: 省略可 }
+
+  - name: { zh: 烤花生碎,         en: Crushed roasted peanuts, ja: ローストピーナッツ（刻み） }
+    amount: 2
+    unit: tbsp
+    scale: fixed
+    note: { zh: 可省略，增加口感, en: optional, adds crunch, ja: 省略可、食感のアクセント }

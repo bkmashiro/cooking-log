@@ -1,0 +1,50 @@
+dish:
+  zh: 黄油蒜香扇贝
+  en: Garlic Butter Seared Scallops
+  ja: ガーリックバタースキャロップ
+
+date: 2026-05-21
+url_slug: 2026-05-21-garlic-butter-scallops
+base_servings: 2
+category: seafood
+tags: [seafood, pan-fried, quick, French-style]
+
+ingredients:
+  - name: { zh: 扇贝（巴塔哥尼亚小扇贝）, en: Patagonian scallops,   ja: パタゴニアホタテ }
+    amount: 250
+    unit: g
+    scale: linear
+    note: { zh: 冷冻需完全解冻后擦干, en: if frozen, fully thaw and pat very dry, ja: 冷凍の場合は完全解凍後に水気を拭き取る }
+
+  - name: { zh: 黄油,             en: Butter,                  ja: バター }
+    amount: 25
+    unit: g
+    scale: linear
+
+  - name: { zh: 大蒜,             en: Garlic cloves,           ja: にんにく }
+    amount: 2
+    unit: 瓣
+    scale: linear
+    note: { zh: 切末, en: finely minced, ja: みじん切り }
+
+  - name: { zh: 柠檬,             en: Lemon,                   ja: レモン }
+    amount: 0.5
+    unit: 个
+    scale: linear
+    note: { zh: 挤汁用, en: for juice, ja: 絞り用 }
+
+  - name: { zh: 欧芹,             en: Fresh parsley,           ja: パセリ }
+    amount: 1
+    unit: tbsp
+    scale: linear
+    note: { zh: 切碎，可省略, en: finely chopped, optional, ja: みじん切り、省略可 }
+
+  - name: { zh: 食用油,           en: Neutral oil,             ja: サラダ油 }
+    amount: 1
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 盐,               en: Salt,                    ja: 塩 }
+    amount: 0.25
+    unit: tsp
+    scale: linear

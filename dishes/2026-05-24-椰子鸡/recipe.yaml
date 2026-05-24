@@ -1,0 +1,51 @@
+dish:
+  zh: 椰子鸡
+  en: Coconut Chicken Soup
+  ja: ココナッツチキンスープ
+
+date: 2026-05-24
+url_slug: 2026-05-24-coconut-chicken-soup
+base_servings: 2
+category: soup
+tags: [soup, chicken, coconut, Hainanese, hotpot, dairy-free]
+
+ingredients:
+  - name: { zh: 鸡腿,             en: Chicken legs/thighs,     ja: 鶏もも肉（骨付き） }
+    amount: 3
+    unit: 个
+    scale: linear
+    note: { zh: 剁块，整只亦可, en: cut into pieces, or leave whole, ja: ぶつ切り、丸ごとでも可 }
+
+  - name: { zh: 椰子水,           en: Coconut water,           ja: ココナッツウォーター }
+    amount: 400
+    unit: ml
+    scale: linear
+    note: { zh: 纯椰子水，不加糖款, en: pure, no added sugar, ja: 無糖のもの }
+
+  - name: { zh: 清水,             en: Water,                   ja: 水 }
+    amount: 400
+    unit: ml
+    scale: linear
+
+  - name: { zh: 椰奶,             en: Coconut milk,            ja: ココナッツミルク }
+    amount: 200
+    unit: ml
+    scale: linear
+    note: { zh: 可选，加了更浓郁, en: optional, makes the soup richer, ja: 省略可、加えるとよりコクが出る }
+
+  - name: { zh: 姜,               en: Fresh ginger,            ja: しょうが }
+    amount: 4
+    unit: 片
+    scale: fixed
+
+  - name: { zh: 盐,               en: Salt,                    ja: 塩 }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 最后调味, en: add at the end, ja: 最後に味を調える }
+
+  - name: { zh: 香茅,             en: Lemongrass,              ja: レモングラス }
+    amount: 1
+    unit: 根
+    scale: fixed
+    note: { zh: 可选，拍扁, en: optional, bruised, ja: 省略可、たたきつぶす }

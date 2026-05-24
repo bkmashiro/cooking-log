@@ -1,0 +1,54 @@
+dish:
+  zh: 香煎安康鱼
+  en: Pan-Seared Monkfish
+  ja: 焼きアンコウ（バターソテー）
+
+date: 2026-05-21
+url_slug: 2026-05-21-pan-seared-monkfish
+base_servings: 2
+category: seafood
+tags: [seafood, pan-fried, French-style, quick]
+
+ingredients:
+  - name: { zh: 安康鱼尾肉,       en: Monkfish tail fillet,    ja: アンコウの尾身 }
+    amount: 400
+    unit: g
+    scale: linear
+    note: { zh: 超市或鱼摊购买, en: available at supermarkets or fishmongers, ja: スーパーまたは魚屋で購入 }
+
+  - name: { zh: 黄油,             en: Butter,                  ja: バター }
+    amount: 30
+    unit: g
+    scale: linear
+
+  - name: { zh: 大蒜,             en: Garlic cloves,           ja: にんにく }
+    amount: 3
+    unit: 瓣
+    scale: linear
+    note: { zh: 拍碎, en: crushed, ja: つぶす }
+
+  - name: { zh: 百里香,           en: Fresh thyme,             ja: タイム }
+    amount: 3
+    unit: 枝
+    scale: linear
+
+  - name: { zh: 柠檬,             en: Lemon,                   ja: レモン }
+    amount: 0.5
+    unit: 个
+    scale: linear
+    note: { zh: 挤汁用, en: for juice, ja: 絞り用 }
+
+  - name: { zh: 食用油,           en: Neutral oil,             ja: サラダ油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+
+  - name: { zh: 盐,               en: Salt,                    ja: 塩 }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 黑胡椒,           en: Black pepper,            ja: 黒こしょう }
+    amount: 0.25
+    unit: tsp
+    scale: linear
