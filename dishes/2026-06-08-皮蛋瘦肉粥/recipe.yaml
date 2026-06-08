@@ -1,0 +1,81 @@
+dish:
+  zh: 皮蛋瘦肉粥
+  en: Century Egg and Pork Congee
+  ja: ピータンと豚肉のお粥
+
+date: 2026-06-08
+url_slug: 2026-06-08-century-egg-pork-congee
+base_servings: 2
+category: breakfast
+tags: [chinese, congee, breakfast, pork, comfort-food, quick]
+
+ingredients:
+  - name: { zh: 剩饭, en: Cooked rice, ja: 炊いたご飯 }
+    amount: 200
+    unit: g
+    scale: linear
+    note: { zh: 约一碗；生米版见注意要点, en: about one bowl; see tips for raw-rice version, ja: 茶碗約1杯分。生米版はポイント参照 }
+
+  - name: { zh: 水, en: Water, ja: 水 }
+    amount: 800
+    unit: ml
+    scale: linear
+    note: { zh: 喜欢稀一点加到900ml, en: use up to 900ml for a looser congee, ja: ゆるめが好みなら900mlまで }
+
+  - name: { zh: 皮蛋, en: Century eggs, ja: ピータン }
+    amount: 2
+    unit: 个
+    scale: linear
+    note: { zh: 切小块，分两次下, en: diced, added in two stages, ja: 小さく切り、2回に分けて加える }
+
+  - name: { zh: 瘦肉, en: Lean pork, ja: 豚赤身肉 }
+    amount: 120
+    unit: g
+    scale: linear
+    note: { zh: 切丝或薄片；也可用猪肉末, en: cut into strips or thin slices; mince also works, ja: 細切りまたは薄切り。ひき肉でも可 }
+
+  - name: { zh: 姜, en: Ginger, ja: しょうが }
+    amount: 5
+    unit: g
+    scale: linear
+    note: { zh: 切细丝, en: julienned, ja: 千切り }
+
+  - name: { zh: 小葱, en: Spring onion, ja: 小ねぎ }
+    amount: 2
+    unit: 根
+    scale: linear
+    note: { zh: 切葱花, en: finely chopped, ja: 小口切り }
+
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 腌肉用，可选, en: optional, for marinating pork, ja: 肉の下味用・省略可 }
+
+  - name: { zh: 淀粉, en: Cornstarch or potato starch, ja: 片栗粉 }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 腌肉用, en: for marinating pork, ja: 肉の下味用 }
+
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 腌肉用, en: for marinating pork, ja: 肉の下味用 }
+
+  - name: { zh: 白胡椒, en: White pepper, ja: 白こしょう }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 盐, en: Salt, ja: 塩 }
+    amount: 0.5
+    unit: tsp
+    scale: to_taste
+
+  - name: { zh: 香油, en: Toasted sesame oil, ja: ごま油 }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+    note: { zh: 出锅前加, en: add at the end, ja: 仕上げに加える }

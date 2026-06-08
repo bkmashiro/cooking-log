@@ -1,0 +1,67 @@
+dish:
+  zh: XO酱炒饭
+  en: XO Sauce Fried Rice
+  ja: XO醤チャーハン
+
+date: 2026-06-08
+url_slug: 2026-06-08-xo-sauce-fried-rice
+base_servings: 2
+category: rice
+tags: [chinese, fried-rice, xo-sauce, seafood, quick, wok-style]
+
+ingredients:
+  - name: { zh: 隔夜饭, en: Day-old cooked rice, ja: 冷やご飯 }
+    amount: 300
+    unit: g
+    scale: linear
+    note: { zh: 提前捏散, en: loosen the grains before cooking, ja: 事前にほぐす }
+
+  - name: { zh: XO酱, en: XO sauce, ja: XO醤 }
+    amount: 1.5
+    unit: tbsp
+    scale: linear
+    note: { zh: 按咸度调整, en: adjust depending on saltiness, ja: 塩気に合わせて調整 }
+
+  - name: { zh: 鸡蛋, en: Eggs, ja: 卵 }
+    amount: 2
+    unit: 个
+    scale: linear
+
+  - name: { zh: 虾仁, en: Prawns, ja: むきえび }
+    amount: 100
+    unit: g
+    scale: linear
+    note: { zh: 可换叉烧、培根、火腿或蟹棒, en: or use char siu, bacon, ham, or crab sticks, ja: チャーシュー、ベーコン、ハム、カニカマでも可 }
+
+  - name: { zh: 小葱, en: Spring onions, ja: 小ねぎ }
+    amount: 3
+    unit: 根
+    scale: linear
+    note: { zh: 葱白葱绿分开, en: separate whites and greens, ja: 白い部分と青い部分を分ける }
+
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 1
+    unit: 瓣
+    scale: linear
+    note: { zh: 切末，可选, en: minced, optional, ja: みじん切り・省略可 }
+
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 1
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 白胡椒, en: White pepper, ja: 白こしょう }
+    amount: 0.25
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 糖, en: Sugar, ja: 砂糖 }
+    amount: 0.25
+    unit: tsp
+    scale: linear
+    note: { zh: 可选，平衡咸鲜, en: optional, balances the savouriness, ja: 省略可。塩気の角を取る }
+
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1.5
+    unit: tbsp
+    scale: linear
