@@ -31,6 +31,6 @@ ingredients:
     unit: { zh: 茶匙, en: " tsp", ja: 小さじ }
     scale: linear
 
-  - name: { zh: 黄油（出锅抹），en: Butter (to finish),      ja: バター（仕上げ用） }
+  - name: { zh: 黄油（出锅抹）, en: Butter (to finish),      ja: バター（仕上げ用） }
     scale: to_taste
     note: { zh: 可选, en: optional, ja: お好みで }

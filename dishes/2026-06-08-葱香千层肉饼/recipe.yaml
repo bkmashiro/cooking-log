@@ -1,0 +1,96 @@
+dish:
+  zh: 葱香千层肉饼
+  en: Scallion Layered Meat Pie
+  ja: ねぎ香る重ね肉餅
+
+date: 2026-06-08
+url_slug: 2026-06-08-scallion-layered-meat-pie
+base_servings: 2
+category: main
+tags: [chinese, pan-fried, pork, beef, quick, flatbread]
+
+ingredients:
+  - name: { zh: 中筋面粉, en: Plain flour, ja: 薄力粉 }
+    amount: 200
+    unit: g
+    scale: linear
+
+  - name: { zh: 开水, en: Boiling water, ja: 熱湯 }
+    amount: 100
+    unit: g
+    scale: linear
+    note: { zh: 烧开后放约1分钟, en: let it stand for about 1 minute after boiling, ja: 沸騰後1分ほど置く }
+
+  - name: { zh: 冷水, en: Cold water, ja: 冷水 }
+    amount: 40
+    unit: g
+    scale: linear
+    note: { zh: 按面粉吸水量增减, en: adjust depending on flour absorption, ja: 粉の吸水に合わせて調整 }
+
+  - name: { zh: 盐, en: Salt, ja: 塩 }
+    amount: 1
+    unit: g
+    scale: linear
+    note: { zh: 入面团, en: for the dough, ja: 生地用 }
+
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 入面团，可省, en: optional, for the dough, ja: 生地用・省略可 }
+
+  - name: { zh: 猪肉馅或牛肉馅, en: Pork or beef mince, ja: 豚ひき肉または牛ひき肉 }
+    amount: 200
+    unit: g
+    scale: linear
+
+  - name: { zh: 小葱, en: Spring onions, ja: 小ねぎ }
+    amount: 4
+    unit: 根
+    scale: linear
+    note: { zh: 切葱花，多一点更香, en: finely chopped; use more for extra aroma, ja: 小口切り、多めがおすすめ }
+
+  - name: { zh: 姜末, en: Minced ginger, ja: しょうがみじん切り }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }
+
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 1.5
+    unit: tbsp
+    scale: linear
+
+  - name: { zh: 蚝油, en: Oyster sauce, ja: オイスターソース }
+    amount: 1
+    unit: tsp
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }
+
+  - name: { zh: 老抽, en: Dark soy sauce, ja: 老抽 }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+    note: { zh: 可选，上色, en: optional, for colour, ja: 色付け用・省略可 }
+
+  - name: { zh: 白胡椒, en: White pepper, ja: 白こしょう }
+    amount: 0.25
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 香油, en: Toasted sesame oil, ja: ごま油 }
+    amount: 1
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 水, en: Water, ja: 水 }
+    amount: 3
+    unit: tbsp
+    scale: linear
+    note: { zh: 分次打入肉馅, en: beat into the mince in batches, ja: 数回に分けて肉に混ぜ込む }
+
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+    note: { zh: 煎饼用, en: for pan-frying, ja: 焼き用 }
