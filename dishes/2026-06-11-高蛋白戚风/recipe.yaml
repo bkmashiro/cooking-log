@@ -1,0 +1,58 @@
+dish:
+  zh: 高蛋白戚风
+  en: High-Egg-White Chiffon Cake
+  ja: 卵白多めのシフォンケーキ
+
+date: 2026-06-11
+url_slug: 2026-06-11-high-egg-white-chiffon
+base_servings: 1
+category: dessert
+tags: [cake, chiffon, egg-white, baking, dessert]
+
+ingredients:
+  - name: { zh: 蛋白, en: Egg whites, ja: 卵白 }
+    amount: 210
+    unit: g
+    scale: linear
+    note: { zh: 冷冻蛋白需完全解冻且无冰渣, en: frozen whites must be fully thawed with no ice crystals, ja: 冷凍卵白は完全に解凍し、氷の粒を残さない }
+
+  - name: { zh: 蛋黄, en: Egg yolks, ja: 卵黄 }
+    amount: 3
+    unit: 个
+    scale: linear
+
+  - name: { zh: 低筋面粉, en: Cake flour, ja: 薄力粉 }
+    amount: 77
+    unit: g
+    scale: linear
+
+  - name: { zh: 牛奶, en: Milk, ja: 牛乳 }
+    amount: 60
+    unit: g
+    scale: linear
+
+  - name: { zh: 植物油, en: Neutral oil, ja: サラダ油 }
+    amount: 44
+    unit: g
+    scale: linear
+
+  - name: { zh: 细砂糖, en: Caster sugar, ja: グラニュー糖 }
+    amount: 72
+    unit: g
+    scale: linear
+
+  - name: { zh: 柠檬汁或白醋, en: Lemon juice or white vinegar, ja: レモン汁または酢 }
+    amount: 1
+    unit: tsp
+    scale: linear
+
+  - name: { zh: 盐, en: Salt, ja: 塩 }
+    amount: 1
+    unit: pinch
+    scale: linear
+
+  - name: { zh: 香草精, en: Vanilla extract, ja: バニラエッセンス }
+    amount: 0.5
+    unit: tsp
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }

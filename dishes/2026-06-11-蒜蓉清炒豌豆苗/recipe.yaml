@@ -1,0 +1,45 @@
+dish:
+  zh: 蒜蓉清炒豌豆苗
+  en: Garlic Pea Shoots Stir-fry
+  ja: 豆苗のにんにく炒め
+
+date: 2026-06-11
+url_slug: 2026-06-11-garlic-pea-shoots
+base_servings: 2
+category: vegetables
+tags: [chinese, vegetables, stir-fry, quick, vegetarian]
+
+ingredients:
+  - name: { zh: 豌豆苗, en: Pea shoots, ja: 豆苗 }
+    amount: 250
+    unit: g
+    scale: linear
+    note: { zh: 洗净后尽量甩干, en: washed and dried well, ja: 洗ってよく水気を切る }
+
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 3
+    unit: 瓣
+    scale: linear
+    note: { zh: 切末或拍碎, en: minced or smashed, ja: みじん切りまたは潰す }
+
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1.5
+    unit: tbsp
+    scale: linear
+
+  - name: { zh: 盐, en: Salt, ja: 塩 }
+    amount: 0.5
+    unit: tsp
+    scale: to_taste
+
+  - name: { zh: 糖, en: Sugar, ja: 砂糖 }
+    amount: 0.25
+    unit: tsp
+    scale: linear
+    note: { zh: 可选，提鲜, en: optional, balances the flavour, ja: 省略可。味をまとめる }
+
+  - name: { zh: 白胡椒, en: White pepper, ja: 白こしょう }
+    amount: 0.25
+    unit: tsp
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }

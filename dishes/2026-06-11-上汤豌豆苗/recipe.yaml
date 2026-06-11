@@ -1,0 +1,60 @@
+dish:
+  zh: 上汤豌豆苗
+  en: Pea Shoots in Superior Broth
+  ja: 豆苗の上湯スープ煮
+
+date: 2026-06-11
+url_slug: 2026-06-11-pea-shoots-superior-broth
+base_servings: 2
+category: vegetables
+tags: [chinese, vegetables, soup, pea-shoots, century-egg]
+
+ingredients:
+  - name: { zh: 豌豆苗, en: Pea shoots, ja: 豆苗 }
+    amount: 250
+    unit: g
+    scale: linear
+
+  - name: { zh: 鸡汤或清水, en: Chicken stock or water, ja: 鶏がらスープまたは水 }
+    amount: 350
+    unit: ml
+    scale: linear
+    note: { zh: 清水版可加少量鸡粉, en: add a little chicken powder if using water, ja: 水の場合は鶏がらスープの素を少量加える }
+
+  - name: { zh: 皮蛋, en: Century egg, ja: ピータン }
+    amount: 1
+    unit: 个
+    scale: linear
+    note: { zh: 切丁, en: diced, ja: 角切り }
+
+  - name: { zh: 火腿或午餐肉, en: Ham or luncheon meat, ja: ハムまたはランチョンミート }
+    amount: 40
+    unit: g
+    scale: linear
+    note: { zh: 切丁，可选, en: diced, optional, ja: 角切り・省略可 }
+
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 2
+    unit: 瓣
+    scale: linear
+    note: { zh: 切片, en: sliced, ja: 薄切り }
+
+  - name: { zh: 姜, en: Ginger, ja: しょうが }
+    amount: 3
+    unit: 片
+    scale: linear
+
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+
+  - name: { zh: 盐, en: Salt, ja: 塩 }
+    amount: 0.5
+    unit: tsp
+    scale: to_taste
+
+  - name: { zh: 白胡椒, en: White pepper, ja: 白こしょう }
+    amount: 0.25
+    unit: tsp
+    scale: linear
