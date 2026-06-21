@@ -1,0 +1,45 @@
+dish:
+  zh: 三杯鸡
+  en: Three-Cup Chicken
+  ja: 三杯鶏
+
+date: 2026-06-21
+url_slug: 2026-06-21-three-cup-chicken
+base_servings: 2
+category: main
+tags: [taiwanese, chicken, basil, braise]
+
+ingredients:
+  - name: { zh: 去骨鸡腿肉, en: Boneless chicken thigh, ja: 骨なし鶏もも肉 }
+    amount: 600
+    unit: g
+    scale: linear
+  - name: { zh: 三杯鸡酱, en: Three-cup chicken sauce, ja: 三杯鶏ソース }
+    amount: 4
+    unit: tbsp
+    scale: linear
+  - name: { zh: 姜, en: Ginger, ja: しょうが }
+    amount: 10
+    unit: 片
+    scale: linear
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 8
+    unit: 瓣
+    scale: linear
+  - name: { zh: 米酒或绍兴酒, en: Rice wine or Shaoxing wine, ja: 米酒または紹興酒 }
+    amount: 3
+    unit: tbsp
+    scale: linear
+  - name: { zh: 麻油, en: Toasted sesame oil, ja: ごま油 }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 九层塔或罗勒, en: Thai basil or basil, ja: バジル }
+    amount: 1
+    unit: 把
+    scale: linear
+  - name: { zh: 辣椒, en: Chilli, ja: 唐辛子 }
+    amount: 2
+    unit: 根
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }

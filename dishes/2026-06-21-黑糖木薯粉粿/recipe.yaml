@@ -1,0 +1,29 @@
+dish:
+  zh: 黑糖木薯粉粿
+  en: Brown Sugar Tapioca Crystal Cake
+  ja: 黒糖タピオカ粉粿
+
+date: 2026-06-21
+url_slug: 2026-06-21-brown-sugar-tapioca-crystal-cake
+base_servings: 2
+category: dessert
+tags: [dessert, tapioca, bubble-tea, brown-sugar, jelly]
+
+ingredients:
+  - name: { zh: 木薯淀粉, en: Tapioca starch, ja: タピオカでん粉 }
+    amount: 100
+    unit: g
+    scale: linear
+  - name: { zh: 水, en: Water, ja: 水 }
+    amount: 500
+    unit: ml
+    scale: linear
+  - name: { zh: 黑糖或红糖, en: Brown sugar, ja: 黒糖 }
+    amount: 50
+    unit: g
+    scale: linear
+  - name: { zh: 牛奶或奶茶, en: Milk or milk tea, ja: 牛乳またはミルクティー }
+    amount: 300
+    unit: ml
+    scale: linear
+    note: { zh: 食用时搭配, en: for serving, ja: 食べる時に合わせる }

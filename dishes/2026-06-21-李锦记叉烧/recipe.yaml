@@ -1,0 +1,42 @@
+dish:
+  zh: 李锦记叉烧
+  en: Lee Kum Kee Char Siu
+  ja: 李錦記チャーシュー
+
+date: 2026-06-21
+url_slug: 2026-06-21-lee-kum-kee-char-siu
+base_servings: 2
+category: main
+tags: [cantonese, pork, char-siu, oven]
+
+ingredients:
+  - name: { zh: 猪肩肉或梅头肉, en: Pork shoulder or collar, ja: 豚肩肉または肩ロース }
+    amount: 600
+    unit: g
+    scale: linear
+  - name: { zh: 李锦记叉烧酱, en: Lee Kum Kee char siu sauce, ja: 李錦記チャーシューソース }
+    amount: 4
+    unit: tbsp
+    scale: linear
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+  - name: { zh: 绍兴酒, en: Shaoxing wine, ja: 紹興酒 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+  - name: { zh: 蜂蜜, en: Honey, ja: はちみつ }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 2
+    unit: 瓣
+    scale: linear
+    note: { zh: 可选，切末, en: optional, minced, ja: 省略可・みじん切り }
+  - name: { zh: 五香粉, en: Five-spice powder, ja: 五香粉 }
+    amount: 0.25
+    unit: tsp
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }

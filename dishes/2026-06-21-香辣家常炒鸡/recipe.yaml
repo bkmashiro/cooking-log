@@ -1,0 +1,56 @@
+dish:
+  zh: 香辣家常炒鸡
+  en: Spicy Homestyle Chicken Stir-fry
+  ja: 家庭風ピリ辛鶏炒め
+
+date: 2026-06-21
+url_slug: 2026-06-21-spicy-homestyle-chicken
+base_servings: 3
+category: main
+tags: [chinese, chicken, spicy, stir-fry, braise]
+
+ingredients:
+  - name: { zh: 鸡腿块, en: Chicken thigh pieces, ja: 鶏もも肉 }
+    amount: 700
+    unit: g
+    scale: linear
+  - name: { zh: 青椒或尖椒, en: Green chillies or peppers, ja: 青唐辛子またはピーマン }
+    amount: 3
+    unit: 个
+    scale: linear
+  - name: { zh: 姜, en: Ginger, ja: しょうが }
+    amount: 8
+    unit: 片
+    scale: linear
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 6
+    unit: 瓣
+    scale: linear
+  - name: { zh: 干辣椒, en: Dried chillies, ja: 乾燥唐辛子 }
+    amount: 8
+    unit: 个
+    scale: linear
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 老抽, en: Dark soy sauce, ja: 老抽 }
+    amount: 1
+    unit: tsp
+    scale: linear
+  - name: { zh: 料酒, en: Shaoxing wine, ja: 紹興酒 }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 蚝油, en: Oyster sauce, ja: オイスターソース }
+    amount: 1
+    unit: tbsp
+    scale: linear
+  - name: { zh: 啤酒或热水, en: Beer or hot water, ja: ビールまたは熱湯 }
+    amount: 250
+    unit: ml
+    scale: linear
+  - name: { zh: 糖, en: Sugar, ja: 砂糖 }
+    amount: 1
+    unit: tsp
+    scale: linear

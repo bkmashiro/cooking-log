@@ -1,0 +1,48 @@
+dish:
+  zh: 葱爆羊颈柳
+  en: Scallion Lamb Neck Fillet Stir-fry
+  ja: ラムネックフィレのねぎ炒め
+
+date: 2026-06-21
+url_slug: 2026-06-21-scallion-lamb-neck-fillet
+base_servings: 2
+category: main
+tags: [chinese, lamb, stir-fry, scallion, cumin]
+
+ingredients:
+  - name: { zh: 羊颈柳, en: Lamb neck fillet, ja: ラムネックフィレ }
+    amount: 350
+    unit: g
+    scale: linear
+  - name: { zh: 大葱, en: Leeks or large spring onions, ja: 長ねぎ }
+    amount: 2
+    unit: 根
+    scale: linear
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 料酒, en: Shaoxing wine, ja: 紹興酒 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+  - name: { zh: 淀粉, en: Starch, ja: 片栗粉 }
+    amount: 1
+    unit: tsp
+    scale: linear
+  - name: { zh: 蚝油, en: Oyster sauce, ja: オイスターソース }
+    amount: 1
+    unit: tsp
+    scale: linear
+  - name: { zh: 孜然粉或孜然粒, en: Cumin, ja: クミン }
+    amount: 1
+    unit: tsp
+    scale: linear
+  - name: { zh: 姜, en: Ginger, ja: しょうが }
+    amount: 4
+    unit: 片
+    scale: linear
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 2
+    unit: tbsp
+    scale: linear

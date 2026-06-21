@@ -1,0 +1,37 @@
+dish:
+  zh: 豆豉鲮鱼拍黄瓜
+  en: Smashed Cucumber with Fried Dace
+  ja: 豆鼓鯪魚とたたききゅうり
+
+date: 2026-06-21
+url_slug: 2026-06-21-fried-dace-smashed-cucumber
+base_servings: 2
+category: appetizer
+tags: [chinese, canned-fish, cucumber, no-cook, quick]
+
+ingredients:
+  - name: { zh: 黄瓜, en: Cucumber, ja: きゅうり }
+    amount: 1
+    unit: 根
+    scale: linear
+  - name: { zh: 豆豉鲮鱼罐头, en: Canned fried dace with black beans, ja: 豆鼓鯪魚缶 }
+    amount: 0.5
+    unit: 罐
+    scale: linear
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 1
+    unit: 瓣
+    scale: linear
+  - name: { zh: 香醋或陈醋, en: Chinese vinegar, ja: 黒酢 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+  - name: { zh: 辣椒油, en: Chilli oil, ja: ラー油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }
+  - name: { zh: 糖, en: Sugar, ja: 砂糖 }
+    amount: 0.5
+    unit: tsp
+    scale: linear

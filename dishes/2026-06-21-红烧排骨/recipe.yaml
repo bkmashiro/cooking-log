@@ -1,0 +1,57 @@
+dish:
+  zh: 红烧排骨
+  en: Red-Braised Pork Ribs
+  ja: 豚スペアリブの醤油煮
+
+date: 2026-06-21
+url_slug: 2026-06-21-red-braised-pork-ribs
+base_servings: 2
+category: main
+tags: [chinese, pork, ribs, braise, rice]
+
+ingredients:
+  - name: { zh: 小块猪排骨, en: Pork ribs, ja: 豚スペアリブ }
+    amount: 600
+    unit: g
+    scale: linear
+  - name: { zh: 姜, en: Ginger, ja: しょうが }
+    amount: 6
+    unit: 片
+    scale: linear
+  - name: { zh: 葱, en: Spring onion, ja: ねぎ }
+    amount: 1
+    unit: 根
+    scale: linear
+  - name: { zh: 蒜, en: Garlic, ja: にんにく }
+    amount: 3
+    unit: 瓣
+    scale: linear
+  - name: { zh: 冰糖或白糖, en: Rock sugar or sugar, ja: 氷砂糖または砂糖 }
+    amount: 25
+    unit: g
+    scale: linear
+  - name: { zh: 生抽, en: Light soy sauce, ja: 薄口醤油 }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 老抽, en: Dark soy sauce, ja: 老抽 }
+    amount: 1
+    unit: tsp
+    scale: linear
+  - name: { zh: 料酒或绍兴酒, en: Shaoxing wine, ja: 紹興酒 }
+    amount: 2
+    unit: tbsp
+    scale: linear
+  - name: { zh: 八角, en: Star anise, ja: 八角 }
+    amount: 1
+    unit: 个
+    scale: linear
+    note: { zh: 可选, en: optional, ja: 省略可 }
+  - name: { zh: 热水, en: Hot water, ja: 熱湯 }
+    amount: 600
+    unit: ml
+    scale: linear
+  - name: { zh: 食用油, en: Neutral oil, ja: サラダ油 }
+    amount: 1
+    unit: tbsp
+    scale: linear
