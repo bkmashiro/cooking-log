@@ -1,0 +1,60 @@
+dish:
+  zh: 抹茶提拉米苏
+  en: Matcha Tiramisu
+  ja: 抹茶ティラミス
+
+date: 2026-07-03
+url_slug: 2026-07-03-matcha-tiramisu
+base_servings: 4
+category: dessert
+tags: [dessert, no-bake, matcha, tiramisu, birthday]
+
+ingredients:
+  - name: { zh: 马斯卡彭, en: Mascarpone, ja: マスカルポーネ }
+    amount: 250
+    unit: g
+    scale: linear
+  - name: { zh: 淡奶油或 whipping cream, en: Double cream or whipping cream, ja: 生クリーム }
+    amount: 180
+    unit: g
+    scale: linear
+    note: { zh: 想更轻盈可用到200g, en: use up to 200g for a lighter cream, ja: 軽めにしたい場合は200gまで増やす }
+  - name: { zh: 细砂糖, en: Caster sugar, ja: グラニュー糖 }
+    amount: 40
+    unit: g
+    scale: linear
+    note: { zh: 不爱甜可减到35g, en: reduce to 35g if you prefer less sweet, ja: 甘さ控えめなら35g }
+  - name: { zh: 抹茶粉, en: Matcha powder, ja: 抹茶パウダー }
+    amount: 10
+    unit: g
+    scale: linear
+    note: { zh: 6–8g做浸泡液，2–3g吃前撒表面, en: 6–8g for soaking liquid, 2–3g for dusting before serving, ja: 6〜8gは浸し液、2〜3gは仕上げ用 }
+  - name: { zh: 热水, en: Hot water, ja: お湯 }
+    amount: 60
+    unit: g
+    scale: linear
+    note: { zh: 70–80°C，先化开抹茶, en: 70–80°C, for dissolving matcha, ja: 70〜80℃、抹茶を溶く用 }
+  - name: { zh: 牛奶, en: Milk, ja: 牛乳 }
+    amount: 120
+    unit: g
+    scale: linear
+  - name: { zh: 抹茶液用糖, en: Sugar for matcha soaking liquid, ja: 抹茶液用の砂糖 }
+    amount: 12
+    unit: g
+    scale: linear
+    note: { zh: 10–15g按口味调, en: adjust between 10–15g to taste, ja: 好みで10〜15g }
+  - name: { zh: Savoiardi手指饼干, en: Savoiardi ladyfingers, ja: サヴォイアルディ }
+    amount: 14
+    unit: 根
+    scale: linear
+    note: { zh: 12–16根，选硬、干、吸水强的, en: 12–16 pieces; choose dry, firm ladyfingers, ja: 12〜16本。硬めで乾いたものを使う }
+  - name: { zh: 草莓或蓝莓, en: Strawberries or blueberries, ja: いちごまたはブルーベリー }
+    amount: 1
+    unit: 少量
+    scale: fixed
+    note: { zh: 可选，装饰用, en: optional garnish, ja: 任意、飾り用 }
+  - name: { zh: 白巧克力碎, en: White chocolate shavings, ja: ホワイトチョコレート削り }
+    amount: 1
+    unit: 少量
+    scale: fixed
+    note: { zh: 可选，装饰用, en: optional garnish, ja: 任意、飾り用 }
