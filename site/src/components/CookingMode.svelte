@@ -577,6 +577,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -865,6 +866,7 @@
   align-items: center;
   justify-content: center;
   padding: 14px 20px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   background: var(--bg-surface);
   border-top: 1px solid var(--border);
   gap: 16px;
@@ -1220,7 +1222,10 @@
     color: var(--text-muted);
   }
   .cm-timer-body { max-height: 280px; }
-  .cm-footer { padding: 10px 14px; }
+  .cm-footer {
+    padding: 10px 14px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
   .cm-nav-btn { min-width: 80px; font-size: 0.85rem; padding: 8px 12px; }
   .cm-prep-body { padding: 16px 14px; }
   .cm-ing-label { padding: 12px 14px; min-height: 52px; }
